@@ -248,6 +248,7 @@ INSERT INTO `ea_system_menu` VALUES ('250', '249', '商品分类', 'fa fa-calend
 INSERT INTO `ea_system_menu` VALUES ('251', '249', '商品管理', 'fa fa-list', 'mall.goods/index', '', '_self', '0', '1', '', '1589439931', '1589439942', null);
 INSERT INTO `ea_system_menu` VALUES ('252', '228', '快捷入口', 'fa fa-list', 'system.quick/index', '', '_self', '0', '1', '', '1589623683', '1589623683', null);
 INSERT INTO `ea_system_menu` VALUES ('253', '228', '日志管理', 'fa fa-connectdevelop', 'system.log/index', '', '_self', '0', '1', '', '1589623684', '1589623684', null);
+INSERT INTO `ea_system_menu` VALUES ('254', '228', '定时任务', 'fa fa-clock-o', 'system.crontab/index', '', '_self', '0', '1', '', '1642576980', '1642576980', null);
 
 -- ----------------------------
 -- Table structure for ea_system_node

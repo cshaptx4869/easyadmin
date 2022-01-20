@@ -19,6 +19,22 @@
 ## 安装教程
 >EasyAdmin 使用 Composer 来管理项目依赖。因此，在使用 EasyAdmin 之前，请确保你的机器已经安装了 Composer。
 
+#### 扩展分支安装教程`非官方`
+
+> **v2-csh** 分支为基于官方 v2 分支，**个人**觉得好用而集成但未被官方合并的代码。
+>
+> 主要包含 easy-admin.js 功能的扩展，以及增加了[可视化定时任务管理模块](https://www.cnblogs.com/cshaptx4869/p/14679615.html)等。
+
+```bash
+第一步，下载安装包
+git clone https://github.com/cshaptx4869/easyadmin
+或者
+git clone https://gitee.com/cshaptx4869/easyadmin
+
+第二步，安装依赖包
+composer install
+```
+
 #### 通过 Composer 创建项目`建议`
 `composer create-project --prefer-dist zhongshaofa/easyadmin blog`  
 

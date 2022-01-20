@@ -90,7 +90,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     type: type,
                     contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                     dataType: "json",
-                    headers:admin.headers(),
+                    headers: admin.headers(),
                     data: option.data,
                     timeout: 60000,
                     success: function (res) {
@@ -107,7 +107,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         });
                         return false;
                     },
-                    complete: function(){
+                    complete: function () {
                         // @todo 刷新csrf-token
                     }
                 });
@@ -208,6 +208,19 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     icon: 'layui-icon-search',
                     extend: 'data-table-id="' + options.id + '"'
                 }];
+                // 解决非默认高度时，固定列行错位问题
+                options.done = options.done || function () {
+                    $(".layui-table-main tr").each(function (index, val) {
+                        $(".layui-table-fixed").each(function () {
+                            $($(this).find(".layui-table-body tbody tr")[index]).height($(val).height());
+                        });
+                    });
+                    $(".layui-table-header tr").each(function (index, val) {
+                        $(".layui-table-fixed").each(function () {
+                            $($(this).find(".layui-table-header thead tr")[index]).height($(val).height());
+                        });
+                    });
+                };
 
                 // 判断是否为移动端
                 if (admin.checkMobile()) {
@@ -443,14 +456,14 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 formatToolbar.class = formatToolbar.class !== '' ? 'class="' + formatToolbar.class + '" ' : '';
                 if (toolbar.method === 'open') {
                     formatToolbar.method = formatToolbar.method !== '' ? 'data-open="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
-                } else if (toolbar.method === 'none'){ // 常用于与extend配合，自定义监听按钮
+                } else if (toolbar.method === 'none') { // 常用于与extend配合，自定义监听按钮
                     formatToolbar.method = '';
                 } else {
                     formatToolbar.method = formatToolbar.method !== '' ? 'data-request="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
                 }
                 formatToolbar.checkbox = toolbar.checkbox ? ' data-checkbox="true" ' : '';
                 formatToolbar.tableId = tableId !== undefined ? ' data-table="' + tableId + '" ' : '';
-                html = '<button ' + formatToolbar.class + formatToolbar.method + formatToolbar.extend + formatToolbar.checkbox +  formatToolbar.tableId + '>' + formatToolbar.icon + formatToolbar.text + '</button>';
+                html = '<button ' + formatToolbar.class + formatToolbar.method + formatToolbar.extend + formatToolbar.checkbox + formatToolbar.tableId + '>' + formatToolbar.icon + formatToolbar.text + '</button>';
 
                 return html;
             },
@@ -471,7 +484,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 formatOperat.class = formatOperat.class !== '' ? 'class="' + formatOperat.class + '" ' : '';
                 if (operat.method === 'open') {
                     formatOperat.method = formatOperat.method !== '' ? 'data-open="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
-                } else if (operat.method === 'none'){ // 常用于与extend配合，自定义监听按钮
+                } else if (operat.method === 'none') { // 常用于与extend配合，自定义监听按钮
                     formatOperat.method = '';
                 } else {
                     formatOperat.method = formatOperat.method !== '' ? 'data-request="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
@@ -563,7 +576,11 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                 };
                                 operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                                 if (admin.checkAuth(operat.auth, elem)) {
-                                    html += admin.table.buildOperatHtml(operat);
+                                    if (typeof operat.render === 'function') {
+                                        html += operat.render(data, option) ? admin.table.buildOperatHtml(operat) : '';
+                                    } else {
+                                        html += admin.table.buildOperatHtml(operat);
+                                    }
                                 }
                                 break;
                             case 'delete':
@@ -580,7 +597,11 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                 };
                                 operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                                 if (admin.checkAuth(operat.auth, elem)) {
-                                    html += admin.table.buildOperatHtml(operat);
+                                    if (typeof operat.render === 'function') {
+                                        html += operat.render(data, option) ? admin.table.buildOperatHtml(operat) : '';
+                                    } else {
+                                        html += admin.table.buildOperatHtml(operat);
+                                    }
                                 }
                                 break;
                         }
@@ -605,7 +626,11 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
                             operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                             if (admin.checkAuth(operat.auth, elem)) {
-                                html += admin.table.buildOperatHtml(operat);
+                                if (typeof operat.render === 'function') {
+                                    html += operat.render(data, option) ? admin.table.buildOperatHtml(operat) : '';
+                                } else {
+                                    html += admin.table.buildOperatHtml(operat);
+                                }
                             }
                         });
                     }
@@ -633,13 +658,13 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 option.imageJoin = option.imageJoin || '<br>';
                 option.title = option.title || option.field;
                 var field = option.field,
-                    title = data[option.title];
+                    title = data[option.title] ? data[option.title] : option.title;
                 try {
                     var value = eval("data." + field);
                 } catch (e) {
                     var value = undefined;
                 }
-                if (value === undefined || value===null) {
+                if (value === undefined || value === null) {
                     return '<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">';
                 } else {
                     var values = value.split(option.imageSplit),
@@ -722,8 +747,9 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 var field = option.field, value = '';
                 try {
                     value = eval("data." + field);
-                } catch (e) {}
-                if (!admin.empty(value)){
+                } catch (e) {
+                }
+                if (!admin.empty(value)) {
                     value = util.toDateString(value * 1000, option.format || 'yyyy-MM-dd HH:mm:ss');
                 }
                 return '<span>' + value + '</span>';
@@ -736,7 +762,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     $.each(dataField, function (key, val) {
                         if (val !== '') {
                             formatFilter[key] = val;
-                            var op = $('#c-' + key).attr('data-search-op');
+                            var op = $('[id=\'c-' + key + '\']').attr('data-search-op');
                             op = op || '%*%';
                             formatOp[key] = op;
                         }
@@ -935,7 +961,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     external = $(this).attr('data-external') || false,
                     tableId = $(this).attr('data-table');
 
-                if(checkbox === 'true'){
+                if (checkbox === 'true') {
                     tableId = tableId || init.table_render_id;
                     var checkStatus = table.checkStatus(tableId),
                         data = checkStatus.data;
@@ -980,20 +1006,32 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
 
             // 放大图片
             $('body').on('click', '[data-image]', function () {
-                var title = $(this).attr('data-image'),
-                    src = $(this).attr('src'),
-                    alt = $(this).attr('alt');
+                var currentSrc = $(this).attr('src'),
+                    start = 0,
+                    data = [];
+
+                $(this).parent().children('[data-image]').each(function (i, v) {
+                    var title = $(this).attr('data-image'),
+                        alt = $(this).attr('alt'),
+                        src = $(this).attr('src');
+
+                    data.push({
+                        "alt": alt ? alt : title,
+                        "pid": Math.random(),
+                        "src": src,
+                        "thumb": src
+                    });
+
+                    if (currentSrc === src) {
+                        start = i;
+                    }
+                });
+
                 var photos = {
-                    "title": title,
+                    "title": '',
+                    "start": start,
                     "id": Math.random(),
-                    "data": [
-                        {
-                            "alt": alt,
-                            "pid": Math.random(),
-                            "src": src,
-                            "thumb": src
-                        }
-                    ]
+                    "data": data
                 };
                 layer.photos({
                     photos: photos,
@@ -1011,9 +1049,9 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     now_src = $(this).attr('src'),
                     alt = $(this).attr('alt'),
                     data = [];
-                $.each(doms, function(key, value){
+                $.each(doms, function (key, value) {
                     var src = $(value).find('img').attr('src');
-                    if(src != now_src){
+                    if (src != now_src) {
                         // 压入其他图片地址
                         data.push({
                             "alt": alt,
@@ -1021,7 +1059,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             "src": src,
                             "thumb": src
                         });
-                    }else{
+                    } else {
                         // 把当前图片插入到头部
                         data.unshift({
                             "alt": alt,
@@ -1090,7 +1128,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 }
 
                 var postData = {};
-                if(checkbox === 'true'){
+                if (checkbox === 'true') {
                     tableId = tableId || init.table_render_id;
                     var checkStatus = table.checkStatus(tableId),
                         data = checkStatus.data;
@@ -1115,7 +1153,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         data: postData,
                     }, function (res) {
                         admin.msg.success(res.msg, function () {
-                            table.reload(tableId);
+                            $('button[data-treetable-refresh]').length > 0 ? $('[data-treetable-refresh]').trigger("click") : table.reload(tableId);
                         });
                     })
                 });
@@ -1308,7 +1346,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             accept: uploadAccept,//指定允许上传时校验的文件类型
                             acceptMime: uploadAcceptMime,//规定打开文件选择框时，筛选出的文件类型
                             multiple: uploadNumber !== 'one',//是否多文件上传
-                            headers:admin.headers(),
+                            headers: admin.headers(),
                             done: function (res) {
                                 if (res.code === 1) {
                                     var url = res.data.url;
@@ -1441,8 +1479,9 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                     var url = $(this).attr('data-select'),
                         selectFields = $(this).attr('data-fields'),
                         value = $(this).attr('data-value'),
+                        placeholder = $(this).attr('data-placeholder'),
                         that = this,
-                        html = '<option value=""></option>';
+                        html = '<option value="">' + (placeholder ? placeholder : '') + '</option>';
                     var fields = selectFields.replace(/\s/g, "").split(',');
                     if (fields.length !== 2) {
                         return admin.msg.error('下拉选择字段有误');
@@ -1476,7 +1515,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                         var format = $(this).attr('data-date'),
                             type = $(this).attr('data-date-type'),
                             range = $(this).attr('data-date-range');
-                        if(type === undefined || type === '' || type ===null){
+                        if (type === undefined || type === '' || type === null) {
                             type = 'datetime';
                         }
                         var options = {
@@ -1487,7 +1526,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             options['format'] = format;
                         }
                         if (range !== undefined) {
-                            if(range === null || range === ''){
+                            if (range === null || range === '') {
                                 range = '-';
                             }
                             options['range'] = range;

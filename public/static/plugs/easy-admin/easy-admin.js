@@ -339,7 +339,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                 formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<select class="layui-select" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '" >\n' +
+                                    '<select class="layui-select" ' + (d.laySearch ? 'lay-search' : '') + ' id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '" >\n' +
                                     '<option value="">- 全部 -</option> \n' +
                                     selectHtml +
                                     '</select>\n' +

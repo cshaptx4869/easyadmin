@@ -1,4 +1,4 @@
-define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefined) {
+define(["jquery", "tableSelect", "xmSelect", "ckeditor"], function ($, tableSelect, xmSelect, undefined) {
 
     var form = layui.form,
         layer = layui.layer,
@@ -306,13 +306,14 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                 cols = cols[0] || {};
                 var newCols = [];
                 var formHtml = '';
+                var xmSelectOptions = [];
                 $.each(cols, function (i, d) {
                     d.field = d.field || false;
                     d.fieldAlias = admin.parame(d.fieldAlias, d.field);
                     d.title = d.title || d.field || '';
                     d.selectList = d.selectList || {};
                     d.search = admin.parame(d.search, true);
-                    d.searchTip = d.searchTip || '请输入' + d.title || '';
+                    d.searchTip = d.searchTip || (d.search === 'xmSelect' ? '请选择' : '请输入') + d.title || '';
                     d.searchValue = d.searchValue || '';
                     d.searchOp = d.searchOp || '%*%';
                     d.timeType = d.timeType || 'datetime';
@@ -345,6 +346,28 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                                     '</select>\n' +
                                     '</div>\n' +
                                     '</div>';
+                                break;
+                            case 'xmSelect':
+                                d.searchOp = 'in';
+                                formHtml += '\t<div class="layui-form-item layui-inline">\n' +
+                                    '<label class="layui-form-label">' + d.title + '</label>\n' +
+                                    '<div class="layui-input-inline">\n' +
+                                    '<div id="c-' + d.fieldAlias + '" data-search-op="' + d.searchOp + '"></div>\n' +
+                                    '</div>\n' +
+                                    '</div>';
+                                var data = [];
+                                $.each(d.selectList, function (sI, sV) {
+                                    data.push({name: sV, value: sI});
+                                })
+                                xmSelectOptions.push({
+                                    el: '#c-' + d.fieldAlias,
+                                    name: d.fieldAlias,
+                                    data: data,
+                                    initValue: d.searchValue.split(','),
+                                    tips: d.searchTip,
+                                    filterable: d.laySearch === true,
+                                    size: 'small',
+                                })
                                 break;
                             case 'range':
                                 d.searchOp = 'range';
@@ -393,6 +416,9 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
                             laydate.render({type: ncV.timeType, elem: '[name="' + ncV.fieldAlias + '"]'});
                         }
                     });
+                    $.each(xmSelectOptions, function (xmI, xmV) {
+                        xmSelect.render(xmV);
+                    })
                 }
             },
             renderSwitch: function (cols, tableInit, tableId, modifyReload) {

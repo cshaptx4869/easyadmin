@@ -5,7 +5,7 @@
 // +----------------------------------------------------------------------
 // | PHP交流群: 763822524
 // +----------------------------------------------------------------------
-// | 开源协议  https://mit-license.org 
+// | 开源协议  https://mit-license.org
 // +----------------------------------------------------------------------
 // | github开源项目：https://github.com/zhongshaofa/EasyAdmin
 // +----------------------------------------------------------------------
@@ -190,6 +190,9 @@ class AdminController extends BaseController
                     [$beginTime, $endTime] = explode(' - ', $val);
                     $where[] = [$key, '>=', strtotime($beginTime)];
                     $where[] = [$key, '<=', strtotime($endTime)];
+                    break;
+                case 'in':
+                    $where[] = [$key, 'IN', $val];
                     break;
                 default:
                     $where[] = [$key, $op, "%{$val}"];

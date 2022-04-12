@@ -251,16 +251,16 @@
         },
         {
             "name": "cshaptx4869/http-crontab",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cshaptx4869/http-crontab.git",
-                "reference": "8c5a894554a2982bd4b427022d75c2c2bcaff830"
+                "reference": "c5ab32261e5402d4dc660ce02bb62d028329e6fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cshaptx4869/http-crontab/zipball/8c5a894554a2982bd4b427022d75c2c2bcaff830",
-                "reference": "8c5a894554a2982bd4b427022d75c2c2bcaff830",
+                "url": "https://api.github.com/repos/cshaptx4869/http-crontab/zipball/c5ab32261e5402d4dc660ce02bb62d028329e6fa",
+                "reference": "c5ab32261e5402d4dc660ce02bb62d028329e6fa",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -300,9 +300,9 @@
             ],
             "support": {
                 "issues": "https://github.com/cshaptx4869/http-crontab/issues",
-                "source": "https://github.com/cshaptx4869/http-crontab/tree/v1.0.3"
+                "source": "https://github.com/cshaptx4869/http-crontab/tree/v1.0.4"
             },
-            "time": "2022-01-20T06:06:36+00:00"
+            "time": "2022-04-12T06:46:14+00:00"
         },
         {
             "name": "danielstjules/stringy",

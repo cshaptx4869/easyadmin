@@ -1,4 +1,4 @@
-define(["easy-admin"], function (ea) {
+define(["easy-admin", "jquery", "jquery-particleground"], function (ea, $) {
 
     var Controller = {
         index: function () {
@@ -27,6 +27,11 @@ define(["easy-admin"], function (ea) {
             
             $('.login-tip').on('click', function () {
                 $('.icon-nocheck').click();
+            });
+
+            $('body').particleground({
+                dotColor: '#7ec7fd',
+                lineColor: '#7ec7fd'
             });
 
             ea.listen(function (data) {

@@ -19,24 +19,37 @@
 ## 安装教程
 >EasyAdmin 使用 Composer 来管理项目依赖。因此，在使用 EasyAdmin 之前，请确保你的机器已经安装了 Composer。
 
-#### 扩展分支安装教程`非官方`
+### 个人扩展版
 
-> **v2-csh** 分支为基于官方 v2 分支，**个人**觉得好用而集成但未被官方合并的代码。
->
-> 主要包含 easy-admin.js 功能的扩展，以及增加了[可视化定时任务管理模块](https://www.cnblogs.com/cshaptx4869/p/14679615.html)等。
+> **v2-csh** 分支为基于官方 v2 分支，**个人**觉得好用而集成但部分未被官方合并的代码。
+
+- [增加可视化定时任务管理模块](https://www.cnblogs.com/cshaptx4869/p/14679615.html)
+- [支持根据检索条件导出数据](https://github.com/zhongshaofa/easyadmin/pull/123)
+- [增加列表图片懒加载](https://github.com/zhongshaofa/easyadmin/pull/122)
+- [增加列表检索条件的下拉多选支持](https://github.com/zhongshaofa/easyadmin/pull/121)
+- [修复列表检索条件有关联查询时，字段名带点号比如 category.id, 设置的 searchOp 配置参数不生效问题](https://github.com/zhongshaofa/easyadmin/pull/99)
+- [修改列内置的 image 方法，如果有多张图时支持放大一组图片](https://github.com/zhongshaofa/easyadmin/pull/98)
+- [修复列表操作列点击删除后，树表格没有自动刷新问题](https://github.com/zhongshaofa/easyadmin/pull/92)
+- [增加列 operat 操作栏的 render 参数](https://github.com/zhongshaofa/easyadmin/pull/91)
+- [......](https://github.com/zhongshaofa/easyadmin/pulls/cshaptx4869)
 
 ```bash
 第一步，下载安装包
-git clone https://github.com/cshaptx4869/easyadmin
+git clone -b v2-csh https://github.com/cshaptx4869/easyadmin
 或者
-git clone https://gitee.com/cshaptx4869/easyadmin
+git clone -b v2-csh https://gitee.com/cshaptx4869/easyadmin
 
 第二步，安装依赖包
 composer install
 ```
 
-#### 通过 Composer 创建项目`建议`
-`composer create-project --prefer-dist zhongshaofa/easyadmin blog`  
+### 官方版
+
+#### 通过 Composer 创建项目
+
+```bash
+composer create-project --prefer-dist zhongshaofa/easyadmin blog
+```
 
 #### 通过git下载安装包，composer安装依赖包
 
@@ -50,10 +63,7 @@ git clone https://gitee.com/zhongshaofa/easyadmin
 
 第二步，安装依赖包
 composer install
-
 ```
-
-
 
 ## 站点地址
 
@@ -62,7 +72,7 @@ composer install
 * 文档地址：[http://easyadmin.99php.cn/docs](http://easyadmin.99php.cn/docs)
 
 * 演示地址：[http://easyadmin.99php.cn/admindemo](http://easyadmin.99php.cn/admindemo)（账号：admin，密码：123456。备注：只有查看信息的权限）
- 
+
 ## 代码仓库
 
 * GitHub地址：[https://github.com/zhongshaofa/easyadmin](https://github.com/zhongshaofa/easyadmin)
@@ -123,7 +133,7 @@ composer install
 * CKEditor：[https://github.com/ckeditor/ckeditor4](https://github.com/ckeditor/ckeditor4)
 
 * Echarts：[https://github.com/apache/incubator-echarts](https://github.com/apache/incubator-echarts)
- 
+
  ## 免责声明
 
 >任何用户在使用`EasyAdmin`后台框架前，请您仔细阅读并透彻理解本声明。您可以选择不使用`EasyAdmin`后台框架，若您一旦使用`EasyAdmin`后台框架，您的使用行为即被视为对本声明全部内容的认可和接受。
@@ -138,7 +148,7 @@ composer install
   
   
  ## 捐赠支持
- 
+
 开源项目不易，若此项目能得到你的青睐，可以捐赠支持作者持续开发与维护，感谢所有支持开源的朋友。
 
  ![Image text](https://chung-common.oss-cn-beijing.aliyuncs.com/donate_qrcode.png)

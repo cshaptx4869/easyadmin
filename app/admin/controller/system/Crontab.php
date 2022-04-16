@@ -33,21 +33,12 @@ class Crontab extends AdminController
     {
         if ($this->request->isAjax()) {
             $response = $this->httpRequest(HttpCrontabService::INDEX_PATH . '?' . $this->request->query());
-            if ($response['ok']) {
-                $data = [
-                    'code' => 0,
-                    'msg' => '',
-                    'count' => $response['data']['count'],
-                    'data' => $response['data']['list'],
-                ];
-            } else {
-                $data = [
-                    'code' => 1,
-                    'msg' => $response['msg'],
-                    'count' => 0,
-                    'data' => [],
-                ];
-            }
+            $data = [
+                'code' => 0,
+                'msg' => $response['msg'],
+                'count' => $response['ok'] ? $response['data']['count'] : 0,
+                'data' => $response['ok'] ? $response['data']['list'] : [],
+            ];
             return json($data);
         }
         return $this->fetch();
@@ -119,22 +110,12 @@ class Crontab extends AdminController
         $id = $this->request->get('id');
         if ($this->request->isAjax()) {
             $response = $this->httpRequest(HttpCrontabService::FLOW_PATH . '?' . $this->request->query());
-            if ($response['ok']) {
-                $data = [
-                    'code' => 0,
-                    'msg' => 'OK',
-                    'count' => $response['data']['count'],
-                    'data' => $response['data']['list'],
-                ];
-            } else {
-                $data = [
-                    'code' => 1,
-                    'msg' => $response['msg'],
-                    'count' => 0,
-                    'data' => [],
-                ];
-            }
-
+            $data = [
+                'code' => 0,
+                'msg' => $response['msg'],
+                'count' => $response['ok'] ? $response['data']['count'] : 0,
+                'data' => $response['ok'] ? $response['data']['list'] : [],
+            ];
             return json($data);
         }
 

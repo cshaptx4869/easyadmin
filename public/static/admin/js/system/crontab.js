@@ -8,7 +8,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         delete_url: 'system.crontab/delete',
         modify_url: 'system.crontab/modify',
         flow_url: 'system.crontab/flow',
-        relod_url: 'system.crontab/reload',
+        reload_url: 'system.crontab/reload',
         ping_url: 'system.crontab/ping',
     };
 
@@ -27,7 +27,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         table.reload(init.table_render_id);
                     },
                     function (res) {
-                        $('#crontab-status').html('定时任务 <span class="layui-badge layui-bg-red">未启动</span> 请在项目根目录执行命令 <b>php crontab.php</b>');
+                        $('#crontab-status').html('定时任务 <span class="layui-badge layui-bg-red">未启动</span> 请在项目根目录执行命令 <b>php think crontab start -d</b>');
                         table.reload(init.table_render_id);
                     }
                 );
@@ -57,7 +57,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         width: 150, title: '操作', templet: ea.table.tool, operat: [
                             [{
                                 text: '重启',
-                                url: init.relod_url,
+                                url: init.reload_url,
                                 field: 'id',
                                 method: 'request',
                                 title: '确定重启吗？',

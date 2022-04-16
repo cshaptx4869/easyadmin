@@ -8,5 +8,6 @@ return [
         'curd'      => 'app\common\command\Curd',
         'node'      => 'app\common\command\Node',
         'OssStatic' => 'app\common\command\OssStatic',
+        'crontab'   => \app\common\command\Crontab::class
     ],
 ];

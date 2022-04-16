@@ -25,7 +25,6 @@
 
 - [增加可视化定时任务管理模块](https://www.cnblogs.com/cshaptx4869/p/14679615.html)
 - [支持根据检索条件导出数据](https://github.com/zhongshaofa/easyadmin/pull/123)
-- [增加列表图片懒加载](https://github.com/zhongshaofa/easyadmin/pull/122)
 - [增加列表检索条件的下拉多选支持](https://github.com/zhongshaofa/easyadmin/pull/121)
 - [修复列表检索条件有关联查询时，字段名带点号比如 category.id, 设置的 searchOp 配置参数不生效问题](https://github.com/zhongshaofa/easyadmin/pull/99)
 - [修改列内置的 image 方法，如果有多张图时支持放大一组图片](https://github.com/zhongshaofa/easyadmin/pull/98)

@@ -30,6 +30,9 @@
 - [修改列内置的 image 方法，如果有多张图时支持放大一组图片](https://github.com/zhongshaofa/easyadmin/pull/98)
 - [修复列表操作列点击删除后，树表格没有自动刷新问题](https://github.com/zhongshaofa/easyadmin/pull/92)
 - [增加列 operat 操作栏的 render 参数](https://github.com/zhongshaofa/easyadmin/pull/91)
+- 增加上传图片回显的一组放大功能
+- 修复设置管理员密码checkPostRequest方法判断问题
+- 修复编辑管理员时个别字段数据回显错乱问题
 - [......](https://github.com/zhongshaofa/easyadmin/pulls/cshaptx4869)
 
 ```bash

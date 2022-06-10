@@ -5,7 +5,7 @@
 // +----------------------------------------------------------------------
 // | PHP交流群: 763822524
 // +----------------------------------------------------------------------
-// | 开源协议  https://mit-license.org 
+// | 开源协议  https://mit-license.org
 // +----------------------------------------------------------------------
 // | github开源项目：https://github.com/zhongshaofa/EasyAdmin
 // +----------------------------------------------------------------------
@@ -128,10 +128,10 @@ class Admin extends AdminController
      */
     public function password($id)
     {
-        $this->checkPostRequest();
         $row = $this->model->find($id);
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
+            $this->checkPostRequest();
             $post = $this->request->post();
             $rule = [
                 'password|登录密码'       => 'require',

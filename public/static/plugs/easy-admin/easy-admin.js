@@ -1066,7 +1066,7 @@ define(["jquery", "tableSelect", "xmSelect", "ckeditor"], function ($, tableSele
                 return false;
             });
 
-            // 放大一组图片
+            // 放大一组上传回显的图片
             $('body').on('click', '[data-images]', function () {
                 var title = $(this).attr('data-images'),
                     // 从当前元素向上找layuimini-upload-show找到第一个后停止, 再找其所有子元素li
@@ -1413,7 +1413,7 @@ define(["jquery", "tableSelect", "xmSelect", "ckeditor"], function ($, tableSele
                                 var parant = $(this).parent('div');
                                 var liHtml = '';
                                 $.each(urlArray, function (i, v) {
-                                    liHtml += '<li><a><img src="' + v + '" data-image  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+                                    liHtml += '<li><a><img src="' + v + '" data-images  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
                                 });
                                 parant.after('<ul id="bing-' + uploadName + '" class="layui-input-block layuimini-upload-show">\n' + liHtml + '</ul>');
                             }

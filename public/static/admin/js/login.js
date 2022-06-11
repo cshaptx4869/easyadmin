@@ -24,15 +24,16 @@ define(["easy-admin", "jquery", "jquery-particleground"], function (ea, $) {
                     $(this).addClass('icon-check');
                 }
             });
-            
+
             $('.login-tip').on('click', function () {
                 $('.icon-nocheck').click();
             });
 
-            $('body').particleground({
-                dotColor: '#7ec7fd',
-                lineColor: '#7ec7fd'
-            });
+            // 登录页面背景动画
+            // $('body').particleground({
+            //     dotColor: '#7ec7fd',
+            //     lineColor: '#7ec7fd'
+            // });
 
             ea.listen(function (data) {
                 data['keep_login'] = $('.icon-nocheck').hasClass('icon-check') ? 1 : 0;

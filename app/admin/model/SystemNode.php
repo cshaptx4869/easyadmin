@@ -5,7 +5,7 @@
 // +----------------------------------------------------------------------
 // | PHP交流群: 763822524
 // +----------------------------------------------------------------------
-// | 开源协议  https://mit-license.org 
+// | 开源协议  https://mit-license.org
 // +----------------------------------------------------------------------
 // | github开源项目：https://github.com/zhongshaofa/EasyAdmin
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ class SystemNode extends TimeModel
 
     public function getNodeTreeList()
     {
-        $list = $this->select()->toArray();
+        $list = $this->order(['node' => 'asc', 'id' => 'desc'])->select()->toArray();
         $list = $this->buildNodeTree($list);
         return $list;
     }

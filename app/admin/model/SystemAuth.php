@@ -5,7 +5,7 @@
 // +----------------------------------------------------------------------
 // | PHP交流群: 763822524
 // +----------------------------------------------------------------------
-// | 开源协议  https://mit-license.org 
+// | 开源协议  https://mit-license.org
 // +----------------------------------------------------------------------
 // | github开源项目：https://github.com/zhongshaofa/EasyAdmin
 // +----------------------------------------------------------------------
@@ -37,6 +37,7 @@ class SystemAuth extends TimeModel
         $nodelList = $systemNode
             ->where('is_auth', 1)
             ->field('id,node,title,type,is_auth')
+            ->order(['node' => 'asc', 'id' => 'desc'])
             ->select()
             ->toArray();
         $newNodeList = [];

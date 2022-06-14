@@ -1,7 +1,6 @@
 
 ![EasyAdmin-logo](public/static/common/images/logo-2.png)
 
-
 [![Php Version](https://img.shields.io/badge/php-%3E=7.1.0-brightgreen.svg?maxAge=2592000&color=yellow)](https://github.com/php/php-src)
 [![Mysql Version](https://img.shields.io/badge/mysql-%3E=5.7-brightgreen.svg?maxAge=2592000&color=orange)](https://www.mysql.com/)
 [![Thinkphp Version](https://img.shields.io/badge/thinkphp-%3E=6.0.2-brightgreen.svg?maxAge=2592000)](https://github.com/top-think/framework)
@@ -21,25 +20,28 @@
 
 ### 个人扩展版
 
-> **v2-csh** 分支为基于官方 v2 分支，**个人**觉得好用而集成但部分未被官方合并的代码。
+> 本仓库 **master** 分支为基于官方 v2 分支，**个人**觉得好用而集成但部分未被官方合并的代码。
 
 - [增加可视化定时任务管理模块](https://www.cnblogs.com/cshaptx4869/p/14679615.html)
 - [支持根据检索条件导出数据](https://github.com/zhongshaofa/easyadmin/pull/123)
 - [增加列表检索条件的下拉多选支持](https://github.com/zhongshaofa/easyadmin/pull/121)
-- [修复列表检索条件有关联查询时，字段名带点号比如 category.id, 设置的 searchOp 配置参数不生效问题](https://github.com/zhongshaofa/easyadmin/pull/99)
 - [修改列内置的 image 方法，如果有多张图时支持放大一组图片](https://github.com/zhongshaofa/easyadmin/pull/98)
-- [修复列表操作列点击删除后，树表格没有自动刷新问题](https://github.com/zhongshaofa/easyadmin/pull/92)
 - [增加列 operat 操作栏的 render 参数](https://github.com/zhongshaofa/easyadmin/pull/91)
-- 增加上传图片回显的一组放大功能
-- 修复设置管理员密码checkPostRequest方法判断问题
-- 修复编辑管理员时个别字段数据回显错乱问题
+- [增加上传图片回显的批量放大功能](https://github.com/cshaptx4869/easyadmin/commit/5dc472c5a2f2dc812852dabd3171cf403759e640) 
+- [增加系统节点按节点字典排序](https://github.com/cshaptx4869/easyadmin/commit/9a6a542c2edd4ee079e0d5fba6fc6829f09f84dd) 
+- [修复列表检索条件有关联查询时，字段名带点号比如 category.id, 设置的 searchOp 配置参数不生效问题](https://github.com/zhongshaofa/easyadmin/pull/99)
+- [修复列表操作列点击删除后，树表格没有自动刷新问题](https://github.com/zhongshaofa/easyadmin/pull/92)
+- [修复设置管理员密码checkPostRequest方法判断问题](https://github.com/cshaptx4869/easyadmin/commit/2b612081d7c74d7d273eafa7af1717c9a02b694d) 
+- [修复编辑管理员时个别字段数据回显错乱问题](https://github.com/cshaptx4869/easyadmin/commit/91a11f59813c22779c27a0e216a2e155cfcde14b) 
+- [修复tableSelect文件列表非图片时的渲染问题](https://github.com/cshaptx4869/easyadmin/commit/fa648c8cc0372973842cfc4a507dcc05be29887a) 
+- [更新OSCS检测出存在安全隐患的扩展包](https://github.com/cshaptx4869/easyadmin/commit/9d877351475deaf97d164acb3ed86a1beb31cd62) 
 - [......](https://github.com/zhongshaofa/easyadmin/pulls/cshaptx4869)
 
 ```bash
 第一步，下载安装包
-git clone -b v2-csh https://github.com/cshaptx4869/easyadmin
+git clone https://github.com/cshaptx4869/easyadmin
 或者
-git clone -b v2-csh https://gitee.com/cshaptx4869/easyadmin
+git clone https://gitee.com/cshaptx4869/easyadmin
 
 第二步，安装依赖包
 composer install

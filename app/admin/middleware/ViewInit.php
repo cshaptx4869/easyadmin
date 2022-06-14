@@ -5,7 +5,7 @@
 // +----------------------------------------------------------------------
 // | PHP交流群: 763822524
 // +----------------------------------------------------------------------
-// | 开源协议  https://mit-license.org 
+// | 开源协议  https://mit-license.org
 // +----------------------------------------------------------------------
 // | github开源项目：https://github.com/zhongshaofa/EasyAdmin
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use think\facade\Request;
 use think\facade\View;
 
 /**
- * @deprecated  废弃，新版TP不支持在中间件获取控制器相关信息
+ * @deprecated  废弃，新版TP不支持在中间件获取控制器相关信息 转而通过AdminController的viewInit方法实现
  * Class ViewInit
  * @package app\admin\middleware
  */

@@ -1,4 +1,4 @@
-define(["jquery", "tableSelect", "xmSelect", "ckeditor"], function ($, tableSelect, xmSelect, undefined) {
+define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect) {
 
     var form = layui.form,
         layer = layui.layer,
@@ -1471,7 +1471,11 @@ define(["jquery", "tableSelect", "xmSelect", "ckeditor"], function ($, tableSele
                                 cols: [[
                                     {type: selectCheck},
                                     {field: 'id', title: 'ID'},
-                                    {field: 'url', minWidth: 80, search: false, title: '图片信息', imageHeight: 40, align: "center", templet: admin.table.image},
+                                    {
+                                        field: 'url', minWidth: 100, search: false, title: '图片信息', imageHeight: 40, align: "center", templet: function (d, o) {
+                                            return ['gif', 'jpg', 'jpeg', 'png'].includes(d.file_ext) ? admin.table.image(d, o) : '';
+                                        }
+                                    },
                                     {field: 'original_name', width: 150, title: '文件原名', align: "center"},
                                     {field: 'mime_type', width: 120, title: 'mime类型', align: "center"},
                                     {field: 'create_time', width: 200, title: '创建时间', align: "center", search: 'range'},

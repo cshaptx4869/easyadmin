@@ -23,7 +23,17 @@
         <div class="layui-form-item">
             <label class="layui-form-label">任务频率</label>
             <div class="layui-input-block">
-                <input type="text" name="frequency" class="layui-input" lay-verify="required" lay-reqtext="任务频率不能为空" placeholder="请输入任务频率" value="* * * * * *">
+                <input type="text" name="frequency" class="layui-input" style="word-spacing:18px;" lay-verify="required" lay-reqtext="任务频率不能为空" placeholder="请输入任务频率" value="* * * * * *">
+                <blockquote class="layui-elem-quote" style="border-left: none;margin-top: 7px;">
+                    <pre><code>*   *   *   *   *   *
+-   -   -   -   -   -
+|   |   |   |   |   +------ day of week (0 - 6) (Sunday=0)
+|   |   |   |   +---------- month (1 - 12)
+|   |   |   +-------------- day of month (1 - 31)
+|   |   +------------------ hour (0 - 23)
+|   +---------------------- min (0 - 59)
++-------------------------- sec (0-59)[可省略，如果没有0位,则最小时间粒度是分钟]</code></pre>
+                </blockquote>
             </div>
         </div>
 

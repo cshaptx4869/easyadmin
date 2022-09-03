@@ -19,11 +19,18 @@ class Crontab extends AdminController
     private $baseUri;
     private $safeKey;
 
+    protected $allowModifyFields = [
+        'status',
+        'sort'
+    ];
+
     public function __construct(App $app)
     {
         parent::__construct($app);
         $this->baseUri = env('easyadmin.crontab_base_uri') ?: 'http://127.0.0.1:2345';
         $this->safeKey = env('easyadmin.crontab_safe_key') ?: null;
+
+        $this->assign('typeOptions', [0 => '请求url', 1 => '执行sql', 2 => '执行shell']);
     }
 
     /**
@@ -62,6 +69,25 @@ class Crontab extends AdminController
             $response['ok'] ? $this->success('保存成功') : $this->error($response['msg']);
         }
 
+        return $this->fetch();
+    }
+
+
+    /**
+     * @NodeAnotation(title="编辑")
+     */
+    public function edit($id)
+    {
+        if ($this->request->isPost()) {
+            $post = $this->request->post();
+            $rule = [];
+            $this->validate($post, $rule);
+            $response = $this->httpRequest(HttpCrontabService::EDIT_PATH . '?' . $this->request->query(), 'POST', $post);
+            $response['ok'] ? $this->success('更新成功') : $this->error($response['msg']);
+        }
+
+        $response = $this->httpRequest(HttpCrontabService::READ_PATH . '?id=' . $id);
+        $this->assign('row', $response['data']);
         return $this->fetch();
     }
 
@@ -122,6 +148,9 @@ class Crontab extends AdminController
         return $this->fetch('', ['sid' => $id]);
     }
 
+    /**
+     * @NodeAnotation(title="心跳")
+     */
     public function ping()
     {
         $response = $this->httpRequest(HttpCrontabService::PING_PATH);

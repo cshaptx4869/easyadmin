@@ -4,7 +4,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">任务标题</label>
             <div class="layui-input-block">
-                <input type="text" name="title" class="layui-input" lay-verify="required" lay-reqtext="任务标题不能为空" placeholder="请输入任务标题" value="">
+                <input type="text" name="title" class="layui-input" lay-verify="required" lay-reqtext="任务标题不能为空" placeholder="请输入任务标题" value="{$row.title}">
             </div>
         </div>
 
@@ -14,7 +14,7 @@
                 <select name="type" lay-verify="required" lay-reqtext="任务类型不能为空">
                     <option value=""></option>
                     {foreach $typeOptions as $k=>$v}
-                    <option value='{$k}'>{$v}</option>
+                    <option value='{$k}' {in name="k" value="$row.type"}selected=""{/in}>{$v}</option>
                     {/foreach}
                 </select>
             </div>
@@ -23,14 +23,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">任务脚本</label>
             <div class="layui-input-block">
-                <input type="text" name="shell" class="layui-input" lay-verify="required" lay-reqtext="任务脚本不能为空" placeholder="请输入任务脚本" value="">
+                <input type="text" name="shell" class="layui-input" lay-verify="required" lay-reqtext="任务脚本不能为空" placeholder="请输入任务脚本" value="{$row.shell}">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">任务频率</label>
             <div class="layui-input-block">
-                <input type="text" name="frequency" class="layui-input" style="word-spacing: 18px;" lay-verify="required" lay-reqtext="任务频率不能为空" placeholder="请输入任务频率" value="* * * * * *">
+                <input type="text" name="frequency" class="layui-input" style="word-spacing: 18px;" lay-verify="required" lay-reqtext="任务频率不能为空" placeholder="请输入任务频率" value="{$row.frequency}">
                 <blockquote class="layui-elem-quote" style="border-left: none;margin-top: 7px;">
                     <pre><code>*   *   *   *   *   *
 -   -   -   -   -   -
@@ -47,22 +47,7 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-block">
-                <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">排序</label>
-            <div class="layui-input-block">
-                <input type="number" name="sort" class="layui-input" lay-verify="number" lay-reqtext="排序不能为空" placeholder="请输入排序" value="0">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">状态</label>
-            <div class="layui-input-block">
-                <input type="radio" name="status" value="0" title="禁用" checked>
-                <input type="radio" name="status" value="1" title="启用">
+                <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息">{$row.remark}</textarea>
             </div>
         </div>
 

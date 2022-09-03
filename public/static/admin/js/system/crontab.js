@@ -5,7 +5,9 @@ define(["jquery", "easy-admin"], function ($, ea) {
         table_render_id: 'currentTableRenderId',
         index_url: 'system.crontab/index',
         add_url: 'system.crontab/add',
+        edit_url: 'system.crontab/edit',
         delete_url: 'system.crontab/delete',
+        export_url: 'system.crontab/export',
         modify_url: 'system.crontab/modify',
         flow_url: 'system.crontab/flow',
         reload_url: 'system.crontab/reload',
@@ -34,27 +36,27 @@ define(["jquery", "easy-admin"], function ($, ea) {
             }
 
             ping();
-            setInterval(ping, 60000);
+            // setInterval(ping, 60000);
 
             ea.table.render({
                 init: init,
-                toolbar: ['refresh', 'delete', 'add'],
+                toolbar: ['refresh', 'add', 'delete'],
                 cellMinWidth: 100,
                 cols: [[
                     {type: 'checkbox'},
                     {field: 'id', title: 'ID', sort: true, width: 80, search: false},
-                    {field: 'title', title: '任务标题', edit: "text"},
-                    {field: 'type', title: '任务类型', selectList: {0: '请求url', 1: '执行sql', 2: '执行shell'}},
-                    {field: 'frequency', title: '任务频率', edit: "text", search: false},
-                    {field: 'shell', title: '任务脚本', edit: "text", search: false},
-                    {field: 'remark', title: '任务备注', edit: "text", search: false},
-                    {field: 'last_running_time', title: '任务上次执行时间', templet: ea.table.date, search: false},
-                    {field: 'running_times', title: '任务已执行次数', search: false},
+                    {field: 'title', title: '任务标题', minWidth: 180},
+                    {field: 'type', title: '任务类型', selectList: typeOptions},
+                    {field: 'frequency', title: '任务频率', minWidth: 180, search: false},
+                    {field: 'shell', title: '任务脚本', minWidth: 200, search: false},
+                    {field: 'remark', title: '任务备注', search: false},
+                    {field: 'last_running_time', title: '上次执行时间', minWidth: 180, templet: ea.table.date, search: false},
+                    {field: 'running_times', title: '已执行次数', search: false},
                     {field: 'sort', title: '排序', sort: true, edit: 'text', search: false},
-                    {field: 'status', title: '状态', sort: true, templet: ea.table.switch, selectList: {0: '禁用', 1: '启用'}},
-                    {field: 'create_time', title: '创建时间', sort: true, templet: ea.table.date, search: 'range'},
+                    {field: 'status', title: '状态', templet: ea.table.switch, selectList: {0: '禁用', 1: '启用'}},
+                    {field: 'create_time', title: '创建时间', minWidth: 180, sort: true, templet: ea.table.date, search: 'range'},
                     {
-                        width: 150, title: '操作', templet: ea.table.tool, operat: [
+                        width: 250, title: '操作', fixed: 'right', templet: ea.table.tool, operat: [
                             [{
                                 text: '重启',
                                 url: init.reload_url,
@@ -62,7 +64,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 method: 'request',
                                 title: '确定重启吗？',
                                 auth: 'reload',
-                                class: 'layui-btn layui-btn-xs layui-btn-success'
+                                class: 'layui-btn layui-btn-xs layui-btn-warm'
                             }, {
                                 text: '日志',
                                 url: init.flow_url,
@@ -72,6 +74,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
                                 extend: 'data-full="false"',
                             }],
+                            'edit',
                             'delete']
                     }
                 ]],
@@ -80,6 +83,9 @@ define(["jquery", "easy-admin"], function ($, ea) {
             ea.listen();
         },
         add: function () {
+            ea.listen();
+        },
+        edit: function () {
             ea.listen();
         },
         flow: function () {

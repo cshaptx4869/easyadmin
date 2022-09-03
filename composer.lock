@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b28e5dfa1dc0c4950b8fcf917ef0acc",
+    "content-hash": "799b22a8ceaa41b28e278b3b9f23a379",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -251,12 +251,23 @@
         },
         {
             "name": "cshaptx4869/http-crontab",
-            "version": "v1.0.5",
+            "version": "v1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cshaptx4869/http-crontab.git",
+                "reference": "13395814b9b8f0e7fd55970518694fdc1a66218c"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/cshaptx4869/http-crontab/v1.0.5/cshaptx4869-http-crontab-v1.0.5.zip",
-                "reference": "000cf0b2dd2dd7a748899a37e1561000452744ce",
-                "shasum": ""
+                "url": "https://api.github.com/repos/cshaptx4869/http-crontab/zipball/13395814b9b8f0e7fd55970518694fdc1a66218c",
+                "reference": "13395814b9b8f0e7fd55970518694fdc1a66218c",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
             },
             "require": {
                 "ext-json": "*",
@@ -272,6 +283,7 @@
                     "Fairy\\": "src"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -286,7 +298,11 @@
                 "crontab",
                 "http"
             ],
-            "time": "2022-09-03T03:28:26+00:00"
+            "support": {
+                "issues": "https://github.com/cshaptx4869/http-crontab/issues",
+                "source": "https://github.com/cshaptx4869/http-crontab/tree/v1.0.6"
+            },
+            "time": "2022-09-03T08:32:08+00:00"
         },
         {
             "name": "danielstjules/stringy",

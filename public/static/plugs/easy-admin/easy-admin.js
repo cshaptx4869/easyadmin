@@ -691,12 +691,12 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                     var value = undefined;
                 }
                 if (value === undefined || value === null) {
-                    return '<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">';
+                    return '<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '" onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/image.png\'">';
                 } else {
                     var values = value.split(option.imageSplit),
                         valuesHtml = [];
                     values.forEach((value, index) => {
-                        valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">');
+                        valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '" onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/image.png\'">');
                     });
                     return valuesHtml.join(option.imageJoin);
                 }
@@ -1471,11 +1471,7 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                                 cols: [[
                                     {type: selectCheck},
                                     {field: 'id', title: 'ID'},
-                                    {
-                                        field: 'url', minWidth: 100, search: false, title: '图片信息', imageHeight: 40, align: "center", templet: function (d, o) {
-                                            return ['gif', 'jpg', 'jpeg', 'png'].includes(d.file_ext) ? admin.table.image(d, o) : '';
-                                        }
-                                    },
+                                    {field: 'url', minWidth: 80, search: false, title: '图片信息', imageHeight: 40, align: "center", templet: admin.table.image},
                                     {field: 'original_name', width: 150, title: '文件原名', align: "center"},
                                     {field: 'mime_type', width: 120, title: 'mime类型', align: "center"},
                                     {field: 'create_time', width: 200, title: '创建时间', align: "center", search: 'range'},

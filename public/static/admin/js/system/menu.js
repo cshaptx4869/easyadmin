@@ -98,7 +98,11 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
 
             renderTable();
 
-            $('body').on('click', '[data-treetable-refresh]', function () { //刷新
+            $('body').on('click', '[data-treetable-expand]', function () { //展开
+                treetable.expandAll(init.table_elem);
+            }).on('click', '[data-treetable-fold]', function () { //合拢
+                treetable.foldAll(init.table_elem);
+            }).on('click', '[data-treetable-refresh]', function () { //刷新
                 renderTable();
             }).on('click', '[data-treetable-delete]', function () { //多选删除
                 var tableId = $(this).attr('data-treetable-delete'),

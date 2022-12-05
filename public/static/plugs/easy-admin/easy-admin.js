@@ -145,7 +145,7 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                     callback = function () {
                     }
                 }
-                var index = layer.msg(msg, {icon: 1, shade: admin.config.shade, scrollbar: false, time: 2000, shadeClose: true}, callback);
+                var index = layer.msg(msg, {icon: 1, shade: admin.config.shade, scrollbar: false, time: 800, shadeClose: true}, callback);
                 return index;
             },
             // 失败消息

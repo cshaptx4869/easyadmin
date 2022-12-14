@@ -694,8 +694,8 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                 } catch (e) {
                     var value = undefined;
                 }
-                if (value === undefined || value === null) {
-                    return '<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '" onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/image.png\'">';
+                if (value === undefined || value === null || value === '') {
+                    return ''
                 } else {
                     var values = value.split(option.imageSplit),
                         valuesHtml = [];

@@ -644,6 +644,7 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                             operat.url = operat.url || '';
                             operat.method = operat.method || 'open';
                             operat.field = operat.field || 'id';
+							operat.fieldAlias = admin.parame(operat.fieldAlias, operat.field);
                             operat.title = operat.title || operat.text;
                             operat.text = operat.text || operat.title;
                             operat.extend = operat.extend || '';
@@ -654,7 +655,11 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                                 operat.title = data[operat.extra] + ' - ' + operat.title;
                             }
 
-                            operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
+                            if (data[operat.fieldAlias] === undefined) {
+                                data[operat.fieldAlias] = data[operat.field];
+                            }
+
+                            operat.url = admin.table.toolSpliceUrl(operat.url, operat.fieldAlias, data);
                             if (admin.checkAuth(operat.auth, elem)) {
                                 if (typeof operat.render === 'function') {
                                     html += operat.render(data, option) ? admin.table.buildOperatHtml(operat) : '';

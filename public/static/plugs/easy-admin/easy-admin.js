@@ -19,6 +19,7 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
         table_render_id: 'currentTableRenderId',
         upload_url: 'ajax/upload',
         upload_exts: 'doc|gif|ico|icon|jpg|mp3|mp4|p12|pem|png|rar',
+        image_exts: ['bmp', 'ico', 'gif', 'jpg', 'jpeg', 'png', 'svg', 'tif', 'tiff', 'webp']
     };
 
     var admin = {
@@ -723,7 +724,9 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                     var values = value.split(option.imageSplit),
                         valuesHtml = [];
                     values.forEach((value, index) => {
-                        valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '" onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/image.png\'">');
+                        if (init.image_exts.includes(value.split('.').pop())) {
+                            valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '" onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/image.png\'">');
+                        }
                     });
                     return valuesHtml.join(option.imageJoin);
                 }

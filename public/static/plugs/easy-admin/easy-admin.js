@@ -18,13 +18,66 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
         upload_url: 'ajax/upload',
-        upload_exts: 'doc|gif|ico|icon|jpg|mp3|mp4|p12|pem|png|rar',
-        image_exts: ['bmp', 'ico', 'gif', 'jpg', 'jpeg', 'png', 'svg', 'tif', 'tiff', 'webp']
+        upload_exts: 'doc|gif|ico|icon|jpg|mp3|mp4|p12|pem|png|rar'
     };
 
     var admin = {
         config: {
             shade: [0.02, '#000'],
+        },
+        fileExt: function (filename) {
+            return filename.split('.').pop();
+        },
+        isImage(filename) {
+            return ['bmp', 'ico', 'gif', 'jpg', 'jpeg', 'png', 'svg', 'tif', 'tiff', 'webp'].includes(admin.fileExt(filename));
+        },
+        uploadIcon: function (ext, parse = false) {
+            parse && (ext = admin.fileExt(ext));
+            var icon = '';
+            switch (ext) {
+                case 'doc':
+                case 'docx':
+                    icon = 'doc.png';
+                    break;
+                case 'gif':
+                case 'jpeg':
+                case 'jpg':
+                case 'png':
+                    icon = 'image.png';
+                    break;
+                case 'mp3':
+                    icon = 'mp3.png';
+                    break;
+                case 'mp4':
+                    icon = 'mp4.png';
+                    break;
+                case 'pdf':
+                    icon = 'pdf.png';
+                    break;
+                case 'ppt':
+                case 'pptx':
+                    icon = 'ppt.png';
+                    break;
+                case 'rar':
+                    icon = 'rar.png';
+                    break;
+                case 'zip':
+                    icon = 'zip.png';
+                    break;
+                case 'txt':
+                    icon = 'txt.png';
+                    break;
+                case 'vsd':
+                    icon = 'visio.png';
+                    break;
+                case 'xls':
+                case 'xlsx':
+                    icon = 'xls.png';
+                    break;
+                default:
+                    icon = 'file.png';
+            }
+            return icon;
         },
         url: function (url) {
             return '/' + CONFIG.ADMIN + '/' + url;
@@ -645,7 +698,7 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                             operat.url = operat.url || '';
                             operat.method = operat.method || 'open';
                             operat.field = operat.field || 'id';
-							operat.fieldAlias = admin.parame(operat.fieldAlias, operat.field);
+                            operat.fieldAlias = admin.parame(operat.fieldAlias, operat.field);
                             operat.title = operat.title || operat.text;
                             operat.text = operat.text || operat.title;
                             operat.extend = operat.extend || '';
@@ -718,13 +771,13 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                 } catch (e) {
                     var value = undefined;
                 }
-                if (value === undefined || value === null || value === '') {
-                    return ''
+                if (value === undefined || value === null || value === "") {
+                    return '';
                 } else {
                     var values = value.split(option.imageSplit),
                         valuesHtml = [];
                     values.forEach((value, index) => {
-                        if (init.image_exts.includes(value.split('.').pop())) {
+                        if (admin.isImage(value)) {
                             valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '" onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/image.png\'">');
                         }
                     });
@@ -1428,14 +1481,18 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                         $(elem).bind("input propertychange", function (event) {
                             var urlString = $(this).val(),
                                 urlArray = urlString.split(uploadSign),
-                                uploadIcon = $(uploadElem).attr('data-upload-icon') || "file";
+                                uploadIcon = $(uploadElem).attr('data-upload-icon');
 
                             $('#bing-' + uploadName).remove();
                             if (urlString.length > 0) {
                                 var parant = $(this).parent('div');
                                 var liHtml = '';
                                 $.each(urlArray, function (i, v) {
-                                    liHtml += '<li><a><img src="' + v + '" data-images  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/' + uploadIcon + '.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+                                    if (admin.isImage(v)) {
+                                        liHtml += '<li><a><img src="' + v + '" data-images  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/image.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+                                    } else {
+                                        liHtml += '<li><a><img src="' + BASE_URL + 'admin/images/upload-icons/' + (uploadIcon ? uploadIcon + '.png' : admin.uploadIcon(v, true)) + '" data-images></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+                                    }
                                 });
                                 parant.after('<ul id="bing-' + uploadName + '" class="layui-input-block layuimini-upload-show">\n' + liHtml + '</ul>');
                             }

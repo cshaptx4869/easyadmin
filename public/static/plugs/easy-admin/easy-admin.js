@@ -1475,7 +1475,8 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                     $.each(uploadSelectList, function (i, v) {
                         var uploadName = $(this).attr('data-upload-select'),
                             uploadNumber = $(this).attr('data-upload-number') || 'one',
-                            uploadSign = $(this).attr('data-upload-sign') || '|';
+                            uploadSign = $(this).attr('data-upload-sign') || '|',
+                            uploadExts = $(this).attr('data-upload-exts') || '*';
 
                         var selectCheck = uploadNumber === 'one' ? 'radio' : 'checkbox';
                         var elem = "input[name='" + uploadName + "']",
@@ -1489,7 +1490,7 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                                 {searchKey: 'title', searchPlaceholder: '请输入文件名'},
                             ],
                             table: {
-                                url: admin.url('ajax/getUploadFiles'),
+                                url: admin.url('ajax/getUploadFiles') + (uploadExts !== '*' ? '?ext=' + uploadExts : ''),
                                 cols: [[
                                     {type: selectCheck},
                                     {field: 'id', title: 'ID'},

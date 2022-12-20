@@ -146,15 +146,18 @@ class Ajax extends AdminController
         $page = isset($get['page']) && !empty($get['page']) ? $get['page'] : 1;
         $limit = isset($get['limit']) && !empty($get['limit']) ? $get['limit'] : 10;
         $title = isset($get['title']) && !empty($get['title']) ? $get['title'] : null;
+        $ext = isset($get['ext']) && !empty($get['ext']) ? $get['ext'] : null;
         $this->model = new SystemUploadfile();
         $count = $this->model
-            ->where(function (Query $query) use ($title) {
+            ->where(function (Query $query) use ($title, $ext) {
                 !empty($title) && $query->where('original_name', 'like', "%{$title}%");
+                !empty($ext) && $query->where('file_ext', 'in', str_replace('|', ',', $ext));
             })
             ->count();
         $list = $this->model
-            ->where(function (Query $query) use ($title) {
+            ->where(function (Query $query) use ($title, $ext) {
                 !empty($title) && $query->where('original_name', 'like', "%{$title}%");
+                !empty($ext) && $query->where('file_ext', 'in', str_replace('|', ',', $ext));
             })
             ->page($page, $limit)
             ->order($this->sort)

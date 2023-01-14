@@ -30,7 +30,7 @@
         "jianyan74/php-excel": "^1.0",
         "zhongshaofa/easy-admin": "^1.0.2",
         "zhongshaofa/thinkphp-log-trace": "^1.0",
-        "cshaptx4869/http-crontab": "^1.0",
+        "cshaptx4869/http-crontab": "dev-master",
         "guzzlehttp/guzzle": "^6.0"
     },
     "require-dev": {
@@ -54,11 +54,5 @@
             "@php think service:discover",
             "@php think vendor:publish"
         ]
-    },
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://mirrors.aliyun.com/composer/"
-        }
     }
 }

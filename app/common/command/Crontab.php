@@ -3,7 +3,7 @@
 namespace app\common\command;
 
 use EasyAdmin\console\CliEcho;
-use Fairy\HttpCrontabService;
+use Fairy\HttpCrontab;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
@@ -39,9 +39,12 @@ class Crontab extends Command
             }
             $url = $env['EASYADMIN']['CRONTAB_BASE_URI'];
         }
-        $server = new HttpCrontabService($url);
+        $server = new HttpCrontab($url);
         $server->setName($options['name'])
-            ->setDbConfig($env['DATABASE'] ?? []);
+            ->setDbConfig($env['DATABASE'] ?? [])
+            ->setTaskTable('system_crontab')
+            ->setTaskLogTable('system_crontab_flow')
+            ->setTaskLockTable('system_crontab_lock');
         if (isset($env['EASYADMIN']['CRONTAB_SAFE_KEY']) && $env['EASYADMIN']['CRONTAB_SAFE_KEY']) {
             $server->setSafeKey($env['EASYADMIN']['CRONTAB_SAFE_KEY']);
         }

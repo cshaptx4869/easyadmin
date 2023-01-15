@@ -6,7 +6,7 @@ namespace app\admin\controller\system;
 use app\common\controller\AdminController;
 use EasyAdmin\annotation\ControllerAnnotation;
 use EasyAdmin\annotation\NodeAnotation;
-use Fairy\HttpCrontabService;
+use Fairy\HttpCrontab;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use think\App;
@@ -39,7 +39,7 @@ class Crontab extends AdminController
     public function index()
     {
         if ($this->request->isAjax()) {
-            $response = $this->httpRequest(HttpCrontabService::INDEX_PATH . '?' . $this->request->query());
+            $response = $this->httpRequest(HttpCrontab::INDEX_PATH . '?' . $this->request->query());
             $data = [
                 'code' => 0,
                 'msg' => $response['msg'],
@@ -65,7 +65,7 @@ class Crontab extends AdminController
                 'shell|脚本' => 'require',
             ];
             $this->validate($post, $rule);
-            $response = $this->httpRequest(HttpCrontabService::ADD_PATH, 'POST', $post);
+            $response = $this->httpRequest(HttpCrontab::ADD_PATH, 'POST', $post);
             $response['ok'] ? $this->success('保存成功') : $this->error($response['msg']);
         }
 
@@ -82,11 +82,11 @@ class Crontab extends AdminController
             $post = $this->request->post();
             $rule = [];
             $this->validate($post, $rule);
-            $response = $this->httpRequest(HttpCrontabService::EDIT_PATH . '?' . $this->request->query(), 'POST', $post);
+            $response = $this->httpRequest(HttpCrontab::EDIT_PATH . '?' . $this->request->query(), 'POST', $post);
             $response['ok'] ? $this->success('更新成功') : $this->error($response['msg']);
         }
 
-        $response = $this->httpRequest(HttpCrontabService::READ_PATH . '?id=' . $id);
+        $response = $this->httpRequest(HttpCrontab::READ_PATH . '?id=' . $id);
         $this->assign('row', $response['data']);
         return $this->fetch();
     }
@@ -106,7 +106,7 @@ class Crontab extends AdminController
         if (!in_array($post['field'], $this->allowModifyFields)) {
             $this->error('该字段不允许修改：' . $post['field']);
         }
-        $response = $this->httpRequest(HttpCrontabService::MODIFY_PATH, 'POST', $post);
+        $response = $this->httpRequest(HttpCrontab::MODIFY_PATH, 'POST', $post);
         $response['ok'] ? $this->success('修改成功') : $this->error($response['msg']);
     }
 
@@ -115,7 +115,7 @@ class Crontab extends AdminController
      */
     public function delete($id)
     {
-        $response = $this->httpRequest(HttpCrontabService::DELETE_PATH, 'POST', ['id' => is_array($id) ? join(',', $id) : $id]);
+        $response = $this->httpRequest(HttpCrontab::DELETE_PATH, 'POST', ['id' => is_array($id) ? join(',', $id) : $id]);
         $response['ok'] ? $this->success('删除成功') : $this->error($response['msg']);
     }
 
@@ -124,7 +124,7 @@ class Crontab extends AdminController
      */
     public function reload($id)
     {
-        $response = $this->httpRequest(HttpCrontabService::RELOAD_PATH, 'POST', ['id' => $id]);
+        $response = $this->httpRequest(HttpCrontab::RELOAD_PATH, 'POST', ['id' => $id]);
         $response['ok'] ? $this->success('重启成功') : $this->error($response['msg']);
     }
 
@@ -135,7 +135,7 @@ class Crontab extends AdminController
     {
         $id = $this->request->get('id');
         if ($this->request->isAjax()) {
-            $response = $this->httpRequest(HttpCrontabService::FLOW_PATH . '?' . $this->request->query());
+            $response = $this->httpRequest(HttpCrontab::FLOW_PATH . '?' . $this->request->query());
             $data = [
                 'code' => 0,
                 'msg' => $response['msg'],
@@ -153,7 +153,7 @@ class Crontab extends AdminController
      */
     public function ping()
     {
-        $response = $this->httpRequest(HttpCrontabService::PING_PATH);
+        $response = $this->httpRequest(HttpCrontab::PING_PATH);
         return json(['code' => $response['ok'] ? 1 : 0]);
     }
 

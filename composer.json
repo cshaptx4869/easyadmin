@@ -30,7 +30,7 @@
         "jianyan74/php-excel": "^1.0",
         "zhongshaofa/easy-admin": "^1.0.2",
         "zhongshaofa/thinkphp-log-trace": "^1.0",
-        "cshaptx4869/http-crontab": "dev-master",
+        "cshaptx4869/http-crontab": "^2.0",
         "guzzlehttp/guzzle": "^6.0"
     },
     "require-dev": {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "496c71dc44f77258587ccde91f8d1386",
+    "content-hash": "71ac6a38cf6a4e2898f5f767f95bc0b5",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -245,16 +245,16 @@
         },
         {
             "name": "cshaptx4869/http-crontab",
-            "version": "dev-master",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cshaptx4869/http-crontab.git",
-                "reference": "7ec7cfb3e76acfda0c195bb87a611fe0e5e942bc"
+                "reference": "ec1fd6374b1e2ff30b981e82a3602b2bee90464d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cshaptx4869/http-crontab/zipball/7ec7cfb3e76acfda0c195bb87a611fe0e5e942bc",
-                "reference": "7ec7cfb3e76acfda0c195bb87a611fe0e5e942bc",
+                "url": "https://api.github.com/repos/cshaptx4869/http-crontab/zipball/ec1fd6374b1e2ff30b981e82a3602b2bee90464d",
+                "reference": "ec1fd6374b1e2ff30b981e82a3602b2bee90464d",
                 "shasum": ""
             },
             "require": {
@@ -265,7 +265,6 @@
                 "workerman/mysql": "^1.0",
                 "workerman/workerman": "^4.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -289,9 +288,9 @@
             ],
             "support": {
                 "issues": "https://github.com/cshaptx4869/http-crontab/issues",
-                "source": "https://github.com/cshaptx4869/http-crontab/tree/v1.1.0"
+                "source": "https://github.com/cshaptx4869/http-crontab/tree/v2.0.0"
             },
-            "time": "2023-01-14T08:32:38+00:00"
+            "time": "2023-01-15T06:45:04+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -3293,9 +3292,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "cshaptx4869/http-crontab": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

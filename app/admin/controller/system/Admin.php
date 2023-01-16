@@ -14,6 +14,7 @@ namespace app\admin\controller\system;
 
 
 use app\admin\model\SystemAdmin;
+use app\admin\model\SystemAuth;
 use app\admin\service\TriggerService;
 use app\common\constants\AdminConstant;
 use app\common\controller\AdminController;
@@ -62,6 +63,21 @@ class Admin extends AdminController
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();
+            if (!$list->isEmpty()) {
+                $roleColumn = SystemAuth::column('title', 'id');
+                foreach ($list as $item) {
+                    $item->roles = null;
+                    if (!empty($item->auth_ids)) {
+                        $rules = [];
+                        foreach (explode(',',$item->auth_ids) as $authId) {
+                            if (isset($roleColumn[$authId])) {
+                                $rules[] = $roleColumn[$authId];
+                            }
+                        }
+                        $item->roles = join(',', $rules);
+                    }
+                }
+            }
             $data = [
                 'code'  => 0,
                 'msg'   => '',

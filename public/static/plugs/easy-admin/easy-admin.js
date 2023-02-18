@@ -122,6 +122,7 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                 option.prefix = option.prefix || false;
                 option.statusName = option.statusName || 'code';
                 option.statusCode = option.statusCode || 1;
+                option.loading = option.loading !== false;
                 ok = ok || function (res) {
                 };
                 no = no || function (res) {
@@ -138,7 +139,9 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                 if (option.prefix == true) {
                     option.url = admin.url(option.url);
                 }
-                var index = admin.msg.loading('加载中');
+                if (option.loading === true) {
+                    var index = admin.msg.loading('加载中');
+                }
                 $.ajax({
                     url: option.url,
                     type: type,
@@ -148,7 +151,7 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                     data: option.data,
                     timeout: 60000,
                     success: function (res) {
-                        admin.msg.close(index);
+                        typeof index !== "undefined" && admin.msg.close(index);
                         if (eval('res.' + option.statusName) == option.statusCode) {
                             return ok(res);
                         } else {

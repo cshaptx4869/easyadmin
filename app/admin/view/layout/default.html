@@ -21,6 +21,7 @@
             VERSION: "{$version|default='1.0.0'}",
             CSRF_TOKEN: "{:token()}",
         };
+        window.$variables = {$jsVariables|raw|default='null'};
     </script>
 </head>
 <body>

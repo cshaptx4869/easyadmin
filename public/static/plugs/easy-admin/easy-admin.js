@@ -729,7 +729,10 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                             operat.url = admin.table.toolSpliceUrl(operat.url, operat.fieldAlias, data);
                             if (admin.checkAuth(operat.auth, elem)) {
                                 if (typeof operat.render === 'function') {
-                                    html += operat.render(data, option) ? admin.table.buildOperatHtml(operat) : '';
+                                    var renderResult = operat.render(data, option);
+                                    if (renderResult) {
+                                        html += typeof renderResult === 'string' ? renderResult : admin.table.buildOperatHtml(operat);
+                                    }
                                 } else {
                                     html += admin.table.buildOperatHtml(operat);
                                 }

@@ -663,11 +663,7 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                                 };
                                 operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                                 if (admin.checkAuth(operat.auth, elem)) {
-                                    if (typeof operat.render === 'function') {
-                                        html += operat.render(data, option) ? admin.table.buildOperatHtml(operat) : '';
-                                    } else {
-                                        html += admin.table.buildOperatHtml(operat);
-                                    }
+                                    html += admin.table.buildOperatHtml(operat);
                                 }
                                 break;
                             case 'delete':
@@ -684,11 +680,7 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                                 };
                                 operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                                 if (admin.checkAuth(operat.auth, elem)) {
-                                    if (typeof operat.render === 'function') {
-                                        html += operat.render(data, option) ? admin.table.buildOperatHtml(operat) : '';
-                                    } else {
-                                        html += admin.table.buildOperatHtml(operat);
-                                    }
+                                    html += admin.table.buildOperatHtml(operat);
                                 }
                                 break;
                         }

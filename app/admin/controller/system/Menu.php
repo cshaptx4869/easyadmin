@@ -61,6 +61,8 @@ class Menu extends AdminController
             ];
             return json($data);
         }
+        $this->setJsVariables(['homePid' => MenuConstant::HOME_PID]);
+
         return $this->fetch();
     }
 
@@ -151,6 +153,11 @@ class Menu extends AdminController
         $this->checkPostRequest();
         $row = $this->model->whereIn('id', $id)->select();
         empty($row) && $this->error('数据不存在');
+        foreach ($row as $item) {
+            if ($item->pid == MenuConstant::HOME_PID) {
+                $this->error('后台首页菜单不允许删除');
+            }
+        }
         try {
             $save = $row->delete();
         } catch (\Exception $e) {

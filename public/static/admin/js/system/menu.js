@@ -69,6 +69,9 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                     auth: 'add',
                                     class: 'layui-btn layui-btn-xs layui-btn-normal',
                                     extend: 'data-full="true"',
+                                    render: function (d) {
+                                        return d.pid != $variables.homePid;
+                                    }
                                 }, {
                                     text: '编辑',
                                     url: init.edit_url,
@@ -85,7 +88,10 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                     title: '确定删除？',
                                     auth: 'delete',
                                     url: init.delete_url,
-                                    extend: 'data-treetable-delete-row'
+                                    extend: 'data-treetable-delete-row',
+                                    render: function (d) {
+                                        return d.pid != $variables.homePid;
+                                    }
                                 }]
                             ]
                         }

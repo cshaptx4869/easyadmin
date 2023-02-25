@@ -195,6 +195,11 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                 });
             });
 
+            form.on("submit(*)", function (data) {
+                treetable.search(init.table_elem, data.field.keyword)
+                return false;
+            });
+
             ea.listen();
         },
         add: function () {

@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="__STATIC__/plugs/lay-module/treetable-lay/treetable.css?v={$version}" media="all">
 <style>
     .layui-btn:not(.layui-btn-lg ):not(.layui-btn-sm):not(.layui-btn-xs) {
         height: 34px;
@@ -7,6 +8,23 @@
 </style>
 <div class="layuimini-container">
     <div class="layuimini-main">
+        <fieldset class="table-search-fieldset">
+            <legend>条件搜索</legend>
+            <form class="layui-form layui-form-pane form-search">
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">关键字</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" class="layui-input" value="" placeholder="请输入关键字">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline" style="margin-left: 115px">
+                    <button type="submit" class="layui-btn layui-btn-normal" data-type="tableSearch" lay-submit lay-filter="*"> 搜 索</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"> 重 置</button>
+                </div>
+            </form>
+        </fieldset>
+
         <table id="currentTable" class="layui-table layui-hide"
                data-auth-add="{:auth('system.menu/add')}"
                data-auth-edit="{:auth('system.menu/edit')}"

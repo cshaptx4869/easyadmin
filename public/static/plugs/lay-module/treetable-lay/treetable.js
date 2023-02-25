@@ -3,10 +3,13 @@ layui.define(['layer', 'table'], function (exports) {
     var layer = layui.layer;
     var table = layui.table;
 
+    var instances = [];
+
     var treetable = {
         // 渲染树形表格
         render: function (param) {
-            param.homdPid =  param.homdPid || -1;
+            param.homdPid = param.homdPid || -1;
+            param.method = param.method || "GET";
             // 检查参数
             if (!treetable.checkParam(param)) {
                 return;
@@ -15,9 +18,23 @@ layui.define(['layer', 'table'], function (exports) {
             if (param.data) {
                 treetable.init(param, param.data);
             } else {
-                $.getJSON(param.url, param.where, function (res) {
-                    treetable.init(param, res.data);
-                });
+                if (param.method === 'post' || param.method === 'POST') {
+                    $.post(param.url, param.where, function (res) {
+                        if (param.parseData) {
+                            res = param.parseData(res);
+                            param.data = res.data;
+                        }
+                        treetable.init(param, res.data);
+                    });
+                } else {
+                    $.get(param.url, param.where, function (res) {
+                        if (param.parseData) {
+                            res = param.parseData(res);
+                            param.data = res.data;
+                        }
+                        treetable.init(param, res.data);
+                    });
+                }
             }
         },
         // 渲染表格
@@ -29,20 +46,12 @@ layui.define(['layer', 'table'], function (exports) {
             for (var i = 0; i < tNodes.length; i++) {
                 var tt = tNodes[i];
                 if (!tt.id) {
-                    if (!param.treeIdName) {
-                        layer.msg('参数treeIdName不能为空', {icon: 5});
-                        return;
-                    }
                     tt.id = tt[param.treeIdName];
                 }
                 if (!tt.pid) {
-                    if (!param.treePidName) {
-                        layer.msg('参数treePidName不能为空', {icon: 5});
-                        return;
-                    }
                     tt.pid = tt[param.treePidName];
                 }
-                if(tt.pid == param.homdPid){
+                if (tt.pid == param.homdPid) {
                     mData.push(tt);
                 }
             }
@@ -62,7 +71,7 @@ layui.define(['layer', 'table'], function (exports) {
             };
             sort(param.treeSpid, tNodes);
 
-            // 重写参数
+            param.prevUrl = param.url;
             param.url = undefined;
             param.data = mData;
             param.page = {
@@ -93,10 +102,6 @@ layui.define(['layer', 'table'], function (exports) {
                 $(param.elem).next().addClass('treeTable');
                 $('.treeTable .layui-table-page').css('display', 'none');
                 $(param.elem).next().attr('treeLinkage', param.treeLinkage);
-                // 绑定事件换成对body绑定
-                /*$('.treeTable .treeTable-icon').click(function () {
-                    treetable.toggleRows($(this), param.treeLinkage);
-                });*/
                 if (param.treeDefaultClose) {
                     treetable.foldAll(param.elem);
                 }
@@ -107,6 +112,49 @@ layui.define(['layer', 'table'], function (exports) {
 
             // 渲染表格
             table.render(param);
+
+            // 记录渲染
+            var result = instances.some(item => item.key === param.elem);
+            if (!result) {
+                instances.push({key: param.elem, value: param});
+            }
+        },
+        // 重载
+        reload: function (elem) {
+            instances.forEach(function (item) {
+                if (item.key === elem) {
+                    $(elem).next().remove();
+                    item.value.data = undefined;
+                    item.value.url = item.value.prevUrl;
+                    treetable.render(item.value);
+                }
+            })
+        },
+        // 搜索
+        search: function (elem, keyword) {
+            var $tds = $(elem).next('.treeTable').find('.layui-table-body tbody tr td');
+            if (!keyword) {
+                $tds.css('background-color', 'transparent');
+                layer.msg("请输入关键字", {icon: 5});
+                return;
+            }
+            var searchCount = 0;
+            $tds.each(function () {
+                $(this).css('background-color', 'transparent');
+                if ($(this).text().indexOf(keyword) >= 0) {
+                    $(this).css('background-color', 'rgba(250,230,160,0.5)');
+                    if (searchCount == 0) {
+                        $('body,html').stop(true);
+                        $('body,html').animate({scrollTop: $(this).offset().top - 150}, 500);
+                    }
+                    searchCount++;
+                }
+            });
+            if (searchCount == 0) {
+                layer.msg("没有匹配结果", {icon: 5});
+            } else {
+                treetable.expandAll(elem);
+            }
         },
         // 计算缩进的数量
         getEmptyNum: function (pid, data, indent) {
@@ -164,6 +212,16 @@ layui.define(['layer', 'table'], function (exports) {
                 return false;
             }
 
+            if (!param.treeIdName) {
+                layer.msg('参数treeIdName不能为空', {icon: 5});
+                return false;
+            }
+
+            if (!param.treePidName) {
+                layer.msg('参数treePidName不能为空', {icon: 5});
+                return false;
+            }
+
             if (!param.treeColIndex && param.treeColIndex != 0) {
                 layer.msg('参数treeColIndex不能为空', {icon: 5});
                 return false;
@@ -193,25 +251,6 @@ layui.define(['layer', 'table'], function (exports) {
             });
         }
     };
-
-    // layui.link(layui.cache.base + '/treetable-lay/treetable.css');
-    $('head').append('<style>\n' +
-        '.treeTable-empty {\n' +
-        '   width: 20px;\n' +
-        '   display: inline-block;\n' +
-        '}\n' +
-        '.treeTable-icon {\n' +
-        '   cursor: pointer;\n' +
-        '}\n' +
-        '.treeTable-icon .layui-icon-triangle-d:before {\n' +
-        '   content: "\\e623";\n' +
-        '}\n' +
-        '.treeTable-icon.open .layui-icon-triangle-d:before {\n' +
-        '   content: "\\e625";\n' +
-        '   background-color: transparent;\n' +
-        '}\n' +
-        '</style>'
-    );
 
     // 给图标列绑定事件
     $('body').on('click', '.treeTable .treeTable-icon', function () {

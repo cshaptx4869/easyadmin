@@ -1,4 +1,4 @@
-define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect) {
+define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function ($, xmSelect, Sortable) {
 
     var form = layui.form,
         layer = layui.layer,
@@ -1487,12 +1487,25 @@ define(["jquery", "xmSelect", "tableSelect", "ckeditor"], function ($, xmSelect)
                                 var liHtml = '';
                                 $.each(urlArray, function (i, v) {
                                     if (admin.isImage(v)) {
-                                        liHtml += '<li><a><img src="' + v + '" data-images  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/image.png\';this.onerror=null"></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+                                        liHtml += '<li data-id="' + i + '"><img src="' + v + '" data-images  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/image.png\';this.onerror=null"><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
                                     } else {
-                                        liHtml += '<li><a><img src="' + BASE_URL + 'admin/images/upload-icons/' + (uploadIcon ? uploadIcon + '.png' : admin.uploadIcon(v, true)) + '" data-images></a><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+                                        liHtml += '<li data-id="' + i + '"><img src="' + BASE_URL + 'admin/images/upload-icons/' + (uploadIcon ? uploadIcon + '.png' : admin.uploadIcon(v, true)) + '" data-images><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
                                     }
                                 });
                                 parant.after('<ul id="bing-' + uploadName + '" class="layui-input-block layuimini-upload-show">\n' + liHtml + '</ul>');
+                                // 多图时可拖拽排序
+                                if (uploadNumber !== 'one') {
+                                    var sortable = Sortable.create(document.getElementById('bing-' + uploadName), {
+                                        animation: 800,
+                                        onUpdate: function (evt) {
+                                            var newUrlArray = []
+                                            $.each(sortable.toArray(), function (i, v) {
+                                                newUrlArray.push(urlArray[v])
+                                            })
+                                            $(event.currentTarget).val(newUrlArray.join(uploadSign));
+                                        }
+                                    });
+                                }
                             }
 
                         });

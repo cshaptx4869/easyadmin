@@ -1,25 +1,24 @@
 <?php
-$cdnurl = function_exists('config') ? config('view_replace_str.__CDN__') : '';
-$publicurl = function_exists('config') ? config('view_replace_str.__PUBLIC__') : '/';
-$debug = function_exists('config') ? config('app_debug') : false;
+$debug = function_exists('env') ? env('app_debug') : false;
 
 $lang = [
     'An error occurred' => '发生错误',
-'Home' => '返回主页',
-'Feedback' => '反馈错误',
-'The page you are looking for is temporarily unavailable' => '你所浏览的页面暂时无法访问',
-'You can return to the previous page and try again' => '你可以返回上一页重试，或直接向我们反馈错误报告'
+    'Home' => '返回主页',
+    'Feedback' => '反馈错误',
+    'The page you are looking for is temporarily unavailable' => '你所浏览的页面暂时无法访问',
+    'You can return to the previous page and try again' => '你可以返回上一页重试，或直接向我们反馈错误报告'
 ];
 
 $langSet = '';
-
-if (isset($_GET['lang'])) {
-$langSet = strtolower($_GET['lang']);
+if (function_exists('config')) {
+    $langSet = config('lang.default_lang');
+} elseif (isset($_GET['lang'])) {
+    $langSet = strtolower($_GET['lang']);
 } elseif (isset($_COOKIE['think_var'])) {
-$langSet = strtolower($_COOKIE['think_var']);
+    $langSet = strtolower($_COOKIE['think_var']);
 } elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-preg_match('/^([a-z\d\-]+)/i', $_SERVER['HTTP_ACCEPT_LANGUAGE'], $matches);
-$langSet     = strtolower($matches[1]);
+    preg_match('/^([a-z\d\-]+)/i', $_SERVER['HTTP_ACCEPT_LANGUAGE'], $matches);
+    $langSet = strtolower($matches[1]);
 }
 $langSet = $langSet && in_array($langSet, ['zh-cn', 'en']) ? $langSet : 'zh-cn';
 $langSet == 'en' && $lang = array_combine(array_keys($lang), array_keys($lang));
@@ -32,7 +31,7 @@ $langSet == 'en' && $lang = array_combine(array_keys($lang), array_keys($lang));
     <title><?=$lang['An error occurred']?></title>
     <meta name="robots" content="noindex,nofollow" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="shortcut icon" href="<?php echo $cdnurl;?>/assets/img/favicon.ico" />
+    <link rel="shortcut icon" href="/favicon.ico" />
     <style>
         * {-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;}
         html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,caption,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video {margin:0;padding:0;border:0;outline:0;vertical-align:baseline;background:transparent;}

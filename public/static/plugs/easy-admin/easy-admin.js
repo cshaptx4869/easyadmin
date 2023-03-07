@@ -26,7 +26,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
             shade: [0.02, '#000'],
         },
         fileExt: function (filename) {
-            return filename.split('.').pop();
+            return filename.split('.').pop().toLowerCase();
         },
         isImage(filename) {
             return ['bmp', 'ico', 'gif', 'jpg', 'jpeg', 'png', 'svg', 'tif', 'tiff', 'webp'].includes(admin.fileExt(filename));

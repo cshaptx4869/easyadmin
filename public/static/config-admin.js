@@ -24,10 +24,17 @@ require.config({
         "vue": ["plugs/vue-2.6.10/vue.min"],
         "ckeditor": ["plugs/ckeditor4/ckeditor"],
         "sortable": ["plugs/sortable/Sortable.min"],
+        "css": ["plugs/req-module/require-css/css.min"]
     },
     shim: {
         "jquery-particleground": {
             deps: ["jquery"]
+        },
+        "treetable": {
+            deps: ["css!plugs/lay-module/treetable-lay/treetable.css"]
+        },
+        "autocomplete": {
+            deps: ["css!plugs/lay-module/autocomplete/autocomplete.css"]
         }
     }
 });

@@ -20,20 +20,28 @@
 
 ### 个人扩展版
 
-> 本仓库 **master** 分支为基于官方 v2 分支，**个人**觉得好用而集成但部分未被官方合并的代码。
+> 本仓库为基于官方 v2 分支，**个人**觉得好用而集成，其中包含部分未被官方合并的代码。
+>
+> 基于 **thinkphp6.1.1** 和 **layui2.7.6**，PHP 版本要求 **>=7.2.5**。
 
 - [增加可视化定时任务管理模块](https://www.cnblogs.com/cshaptx4869/p/14679615.html)
 - [支持根据检索条件导出数据](https://github.com/zhongshaofa/easyadmin/pull/123)
 - [增加列表检索条件的下拉多选支持](https://github.com/zhongshaofa/easyadmin/pull/121)
+- [增加列 operat 操作栏的 render 参数，可动态控制列表操作按钮是否渲染](https://github.com/zhongshaofa/easyadmin/pull/91)
 - [修改列内置的 image 方法，如果有多张图时支持放大一组图片](https://github.com/zhongshaofa/easyadmin/pull/98)
-- [增加列 operat 操作栏的 render 参数](https://github.com/zhongshaofa/easyadmin/pull/91)
 - [增加上传图片回显的批量放大功能](https://github.com/cshaptx4869/easyadmin/commit/5dc472c5a2f2dc812852dabd3171cf403759e640) 
-- [增加系统节点按节点字典排序](https://github.com/cshaptx4869/easyadmin/commit/9a6a542c2edd4ee079e0d5fba6fc6829f09f84dd) 
+- [上传多图时多图之间可拖拽排序](https://github.com/zhongshaofa/easyadmin/pull/142)
+- [优化文件上传大小控制](https://github.com/zhongshaofa/easyadmin/pull/147)
+- [使用require-css管理插件所依赖的样式](https://github.com/zhongshaofa/easyadmin/pull/146)
+- [table操作列extra属性增加链式调用和函数回调用法](https://github.com/zhongshaofa/easyadmin/pull/144)
+- [增加向js文件传递变量的方法](https://github.com/zhongshaofa/easyadmin/pull/143)
 - [修复列表检索条件有关联查询时，字段名带点号比如 category.id, 设置的 searchOp 配置参数不生效问题](https://github.com/zhongshaofa/easyadmin/pull/99)
-- [修复列表操作列点击删除后，树表格没有自动刷新问题](https://github.com/zhongshaofa/easyadmin/pull/92)
 - [修复设置管理员密码checkPostRequest方法判断问题](https://github.com/cshaptx4869/easyadmin/commit/2b612081d7c74d7d273eafa7af1717c9a02b694d) 
 - [修复编辑管理员时个别字段数据回显错乱问题](https://github.com/cshaptx4869/easyadmin/commit/91a11f59813c22779c27a0e216a2e155cfcde14b) 
 - [修复tableSelect文件列表非图片时的渲染问题](https://github.com/cshaptx4869/easyadmin/commit/fa648c8cc0372973842cfc4a507dcc05be29887a) 
+- [修复列表检索form和普通form同时存在时,普通form监听被跳过问题](https://github.com/zhongshaofa/easyadmin/pull/145)
+- [修复当菜单链接带query部分时,节点权限匹配失败问题](https://github.com/zhongshaofa/easyadmin/pull/138)
+- [修复菜单管理的一些问题](https://github.com/zhongshaofa/easyadmin/pull/136)
 - [更新OSCS检测出存在安全隐患的扩展包](https://github.com/cshaptx4869/easyadmin/commit/9d877351475deaf97d164acb3ed86a1beb31cd62) 
 - [......](https://github.com/zhongshaofa/easyadmin/pulls/cshaptx4869)
 

@@ -1462,7 +1462,11 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                             acceptMime: uploadAcceptMime,//规定打开文件选择框时，筛选出的文件类型
                             multiple: uploadNumber !== 'one',//是否多文件上传
                             headers: admin.headers(),
+                            before: function(){
+                                layer.load();
+                            },
                             done: function (res) {
+                                layer.closeAll('loading');
                                 if (res.code === 1) {
                                     var url = res.data.url;
                                     if (uploadNumber !== 'one') {
@@ -1478,6 +1482,9 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                                     admin.msg.error(res.msg);
                                 }
                                 return false;
+                            },
+                            error: function () {
+                                layer.closeAll('loading');
                             }
                         });
 

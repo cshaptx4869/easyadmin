@@ -1403,7 +1403,11 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                         // 表格搜索不做自动提交
                         if (type !== 'tableSearch') {
                             // 判断是否需要刷新表格
-                            refresh = refresh !== 'false';
+                            if (refresh === 'false') {
+                                refresh = false;
+                            } else if (refresh === undefined || refresh === '') {
+                                refresh = true;
+                            }
                             // 自动添加layui事件过滤器
                             if (filter === undefined || filter === '') {
                                 filter = 'save_form_' + (i + 1);

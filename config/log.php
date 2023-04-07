@@ -20,7 +20,7 @@ return [
     'channels'     => [
         'file' => [
             // 日志记录方式
-            'type'           => \LogTrace\FileLog::class,
+            'type'           => 'file',
             // 日志保存目录
             'path'           => '',
             // 单文件日志写入
@@ -36,7 +36,7 @@ return [
             // 关闭通道日志写入
             'close'          => false,
             // 格式化时间
-            'time_format'    =>    'Y-m-d H:i:s',
+            'time_format'    => 'Y-m-d H:i:s',
             // 日志输出格式化
             'format'         => '[%s][%s] %s',
             // 是否实时写入

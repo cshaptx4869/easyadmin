@@ -1,6 +1,7 @@
 <?php
 namespace app;
 
+use app\admin\model\SystemExceptionLog;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\ModelNotFoundException;
 use think\exception\Handle;
@@ -36,6 +37,12 @@ class ExceptionHandle extends Handle
      */
     public function report(Throwable $exception): void
     {
+        // 添加自定义异常记录机制
+        if (!$this->isIgnoreReport($exception)) {
+            try {
+                SystemExceptionLog::report($exception);
+            } catch (\Exception $e) {};
+        }
         // 使用内置的方式记录异常日志
         parent::report($exception);
     }

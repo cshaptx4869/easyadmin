@@ -190,10 +190,10 @@ INSERT INTO `ea_system_menu` VALUES ('245', '228', '角色管理', 'fa fa-bitbuc
 INSERT INTO `ea_system_menu` VALUES ('246', '228', '节点管理', 'fa fa-list', 'system.node/index', '', '_self', '9', '1', '', '1573435919', '1588228648', null);
 INSERT INTO `ea_system_menu` VALUES ('247', '228', '配置管理', 'fa fa-asterisk', 'system.config/index', '', '_self', '8', '1', '', '1573457448', '1588228566', null);
 INSERT INTO `ea_system_menu` VALUES ('248', '228', '上传管理', 'fa fa-arrow-up', 'system.uploadfile/index', '', '_self', '0', '1', '', '1573542953', '1588228043', null);
-INSERT INTO `ea_system_menu` VALUES ('249', '0', '商城管理', 'fa fa-list', '', '', '_self', '0', '1', '', '1589439884', '1589439884', null);
 INSERT INTO `ea_system_menu` VALUES ('252', '228', '快捷入口', 'fa fa-list', 'system.quick/index', '', '_self', '0', '1', '', '1589623683', '1589623683', null);
 INSERT INTO `ea_system_menu` VALUES ('253', '228', '日志管理', 'fa fa-connectdevelop', 'system.log/index', '', '_self', '0', '1', '', '1589623684', '1589623684', null);
 INSERT INTO `ea_system_menu` VALUES ('254', '228', '定时任务', 'fa fa-clock-o', 'system.crontab/index', '', '_self', '0', '1', '', '1642576980', '1642576980', null);
+INSERT INTO `ea_system_menu` VALUES ('255', '228', '异常日志', 'fa fa-clipboard', 'system.exception_log/index', '', '_self', '0', '1', '', '1680316382', '1680316382', null);
 
 -- ----------------------------
 -- Table structure for ea_system_node
@@ -267,6 +267,17 @@ INSERT INTO `ea_system_node` VALUES ('65', 'system.quick/export', '导出', '2',
 INSERT INTO `ea_system_node` VALUES ('66', 'system.quick/modify', '属性修改', '2', '1', '1589623188', '1589623188');
 INSERT INTO `ea_system_node` VALUES ('67', 'system.log', '操作日志管理', '1', '1', '1589623188', '1589623188');
 INSERT INTO `ea_system_node` VALUES ('68', 'system.log/index', '列表', '2', '1', '1589623188', '1589623188');
+INSERT INTO `ea_system_node` VALUES ('69', 'system.crontab', '定时任务管理', '1', '1', '1679472487', '1679472487');
+INSERT INTO `ea_system_node` VALUES ('70', 'system.crontab/index', '列表', '2', '1', '1679472487', '1679472487');
+INSERT INTO `ea_system_node` VALUES ('71', 'system.crontab/add', '添加', '2', '1', '1679472487', '1679472487');
+INSERT INTO `ea_system_node` VALUES ('72', 'system.crontab/edit', '编辑', '2', '1', '1679472487', '1679472487');
+INSERT INTO `ea_system_node` VALUES ('73', 'system.crontab/modify', '属性修改', '2', '1', '1679472487', '1679472487');
+INSERT INTO `ea_system_node` VALUES ('74', 'system.crontab/delete', '删除', '2', '1', '1679472487', '1679472487');
+INSERT INTO `ea_system_node` VALUES ('75', 'system.crontab/reload', '重启', '2', '1', '1679472487', '1679472487');
+INSERT INTO `ea_system_node` VALUES ('76', 'system.crontab/flow', '日志', '2', '1', '1679472487', '1679472487');
+INSERT INTO `ea_system_node` VALUES ('77', 'system.crontab/ping', '心跳', '2', '1', '1679472487', '1679472487');
+INSERT INTO `ea_system_node` VALUES ('78', 'system.exception_log', '异常日志管理', '1', '1', '1680830805', '1680830805');
+INSERT INTO `ea_system_node` VALUES ('79', 'system.exception_log/index', '列表', '2', '1', '1680830805', '1680830805');
 
 -- ----------------------------
 -- Table structure for ea_system_quick
@@ -337,3 +348,21 @@ INSERT INTO `ea_system_uploadfile` VALUES ('299', 'local', 'head.jpg', 'http://a
 INSERT INTO `ea_system_uploadfile` VALUES ('300', 'local', '896e5b87c9ca70e4.jpg', 'http://admin.host/upload/20200514/577c65f101639f53dbbc9e7aa346f81c.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', '1589427798', null, null);
 INSERT INTO `ea_system_uploadfile` VALUES ('301', 'local', '896e5b87c9ca70e4.jpg', 'http://admin.host/upload/20200514/98fc09b0c4ad4d793a6f04bef79a0edc.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', '1589427840', null, null);
 INSERT INTO `ea_system_uploadfile` VALUES ('302', 'local', '18811e7611c8f292.jpg', 'http://admin.host/upload/20200514/e1c6c9ef6a4b98b8f7d95a1a0191a2df.jpg', '', '', '', '0', 'image/jpeg', '0', 'jpg', '', '1589438645', null, null);
+
+-- ----------------------------
+-- Table structure for system_exception_log
+-- ----------------------------
+DROP TABLE IF EXISTS `ea_system_exception_log`;
+CREATE TABLE `ea_system_exception_log` (
+   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+   `message` varchar(255) DEFAULT NULL COMMENT '异常消息内容',
+   `code` int(11) DEFAULT NULL COMMENT '异常代码',
+   `file` varchar(255) DEFAULT NULL COMMENT '创建异常时的程序文件名称',
+   `line` int(11) DEFAULT NULL COMMENT '创建的异常所在文件中的行号',
+   `trace` text COMMENT '异常追踪信息',
+   `caller_file` varchar(255) DEFAULT NULL COMMENT '方法调用者文件名',
+   `caller_line` int(11) DEFAULT NULL COMMENT '方法调用者行号',
+   `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+   `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+   PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='异常日志';

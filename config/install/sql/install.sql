@@ -329,7 +329,8 @@ CREATE TABLE `ea_system_uploadfile` (
   `upload_time` int(10) DEFAULT NULL COMMENT '上传时间',
   PRIMARY KEY (`id`),
   KEY `upload_type` (`upload_type`),
-  KEY `original_name` (`original_name`)
+  KEY `original_name` (`original_name`),
+  KEY `sha1` (`sha1`)
 ) ENGINE=InnoDB AUTO_INCREMENT=316 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='上传文件表';
 
 -- ----------------------------

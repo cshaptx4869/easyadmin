@@ -16,34 +16,39 @@
 技术交流QQ群：[763822524](https://jq.qq.com/?_wv=1027&k=5IHJawE) `加群请备注来源：如gitee、github、官网等`。
 
 ## 安装教程
->EasyAdmin 使用 Composer 来管理项目依赖。因此，在使用 EasyAdmin 之前，请确保你的机器已经安装了 Composer。
+EasyAdmin 使用 Composer 来管理项目依赖。因此，在使用 EasyAdmin 之前，请确保你的机器已经安装了 Composer。
 
-### 个人扩展版
+### 扩展版
 
-> 本仓库为基于官方 v2 分支，**个人**觉得好用而集成，其中包含部分未被官方合并的代码。
+> 注意：本仓库是基于官方 [v2](https://github.com/zhongshaofa/easyadmin/tree/v2) 分支的**个人扩展维护**版本。使用的是 **thinkphp6.1** 和 **layui2.7.6**，PHP 版本要求 **>=7.2.5**。
 >
-> 基于 **thinkphp6.1.1** 和 **layui2.7.6**，PHP 版本要求 **>=7.2.5**。
+> 文档地址：https://github.com/cshaptx4869/easyadmin/wiki
 
-- [增加可视化定时任务管理模块](https://www.cnblogs.com/cshaptx4869/p/14679615.html)
-- [支持根据检索条件导出数据](https://github.com/zhongshaofa/easyadmin/pull/123)
-- [增加列表检索条件的下拉多选支持](https://github.com/zhongshaofa/easyadmin/pull/121)
-- [增加列 operat 操作栏的 render 参数，可动态控制列表操作按钮是否渲染](https://github.com/zhongshaofa/easyadmin/pull/91)
-- [修改列内置的 image 方法，如果有多张图时支持放大一组图片](https://github.com/zhongshaofa/easyadmin/pull/98)
-- [增加上传图片回显的批量放大功能](https://github.com/cshaptx4869/easyadmin/commit/5dc472c5a2f2dc812852dabd3171cf403759e640) 
-- [上传多图时多图之间可拖拽排序](https://github.com/zhongshaofa/easyadmin/pull/142)
-- [优化文件上传大小控制](https://github.com/zhongshaofa/easyadmin/pull/147)
-- [使用require-css管理插件所依赖的样式](https://github.com/zhongshaofa/easyadmin/pull/146)
-- [table操作列extra属性增加链式调用和函数回调用法](https://github.com/zhongshaofa/easyadmin/pull/144)
-- [增加向js文件传递变量的方法](https://github.com/zhongshaofa/easyadmin/pull/143)
-- [修复列表检索条件有关联查询时，字段名带点号比如 category.id, 设置的 searchOp 配置参数不生效问题](https://github.com/zhongshaofa/easyadmin/pull/99)
-- [修复设置管理员密码checkPostRequest方法判断问题](https://github.com/cshaptx4869/easyadmin/commit/2b612081d7c74d7d273eafa7af1717c9a02b694d) 
-- [修复编辑管理员时个别字段数据回显错乱问题](https://github.com/cshaptx4869/easyadmin/commit/91a11f59813c22779c27a0e216a2e155cfcde14b) 
-- [修复tableSelect文件列表非图片时的渲染问题](https://github.com/cshaptx4869/easyadmin/commit/fa648c8cc0372973842cfc4a507dcc05be29887a) 
-- [修复列表检索form和普通form同时存在时,普通form监听被跳过问题](https://github.com/zhongshaofa/easyadmin/pull/145)
-- [修复当菜单链接带query部分时,节点权限匹配失败问题](https://github.com/zhongshaofa/easyadmin/pull/138)
-- [修复菜单管理的一些问题](https://github.com/zhongshaofa/easyadmin/pull/136)
-- [更新OSCS检测出存在安全隐患的扩展包](https://github.com/cshaptx4869/easyadmin/commit/9d877351475deaf97d164acb3ed86a1beb31cd62) 
-- [......](https://github.com/zhongshaofa/easyadmin/pulls/cshaptx4869)
+**主要扩展维护功能：**
+
+- 增加可视化定时任务管理模块
+- 增加系统异常日志管理模块
+- 增加后台向 js 文件传递变量的方法
+- 上传文件大小可根据类型独立配置
+- 相同文件实现"快速上传"
+- 可根据检索条件导出数据
+- 上传图片回显时可批量放大一组
+- 上传多图时多图之间可拖拽排序
+- table 检索条件支持下拉多选
+- 增加 table 列 operat 项的 render 参数，可实现动态控制当前行的操作按钮渲染
+- 使用 require-css 管理插件所依赖的样式
+- 修改 ea 内置的 image 方法，如果有多张图时支持放大一组图片
+- table 操作列 extra 属性增加链式调用和函数回调用法
+- 优化 tableSelect 文件列表非图片时的渲染问题 
+- 修复列表检索条件有关联查询时，字段名带点号比如 category.id，设置的 searchOp 配置参数不生效问题
+- 修复列表检索 form 和普通 form 同时存在时，普通 form 监听被跳过问题
+- 修复当菜单链接带 query 部分时，节点权限匹配失败问题
+- 修复管理员信息修改的一些 bug 
+- 修复菜单管理的一些 bug
+- 修复 OSCS 检测出存在安全隐患的扩展包问题
+- [等等......](https://github.com/zhongshaofa/easyadmin/pulls/cshaptx4869)
+
+**下载安装：**
 
 ```bash
 第一步，下载安装包
@@ -54,6 +59,8 @@ git clone https://gitee.com/cshaptx4869/easyadmin
 第二步，安装依赖包
 composer install
 ```
+
+![](https://foruda.gitee.com/images/1680915293572426711/2433d945_5507348.jpeg)
 
 ### 官方版
 

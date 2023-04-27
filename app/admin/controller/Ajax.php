@@ -15,10 +15,10 @@ namespace app\admin\controller;
 use app\admin\model\SystemUploadfile;
 use app\common\controller\AdminController;
 use app\common\service\MenuService;
-use EasyAdmin\upload\Uploadfile;
+use app\common\service\UploadService;
 use think\db\Query;
+use think\exception\ValidateException;
 use think\facade\Cache;
-use think\Validate;
 
 class Ajax extends AdminController
 {
@@ -41,7 +41,7 @@ class Ajax extends AdminController
             'logoInfo' => [
                 'title' => sysconfig('site', 'logo_title'),
                 'image' => sysconfig('site', 'logo_image'),
-                'href'  => __url('index/index'),
+                'href' => __url('index/index'),
             ],
             'homeInfo' => $menuService->getHomeInfo(),
             'menuInfo' => $menuService->getMenuTree(),
@@ -65,45 +65,16 @@ class Ajax extends AdminController
     public function upload()
     {
         $this->checkPostRequest();
-        $data = [
-            'upload_type' => $this->request->post('upload_type'),
-            'file'        => $this->request->file('file'),
-        ];
-        $uploadConfig = sysconfig('upload');
-        empty($data['upload_type']) && $data['upload_type'] = $uploadConfig['upload_type'];
-        list($mainType, $subtype) = explode('/', $data['file']->getOriginalMime());
-        switch (strtolower($mainType)) {
-            case 'image':
-                $uploadAllowSize = $uploadConfig['upload_allow_image_size'];
-                break;
-            case 'audio':
-                $uploadAllowSize = $uploadConfig['upload_allow_audio_size'];
-                break;
-            case 'video':
-                $uploadAllowSize = $uploadConfig['upload_allow_video_size'];
-                break;
-            default:
-                $uploadAllowSize = $uploadConfig['upload_allow_size'];
-        }
-        $rule = [
-            'upload_type|指定上传类型有误' => "in:{$uploadConfig['upload_allow_type']}",
-            'file|文件'              => "require|file|fileExt:{$uploadConfig['upload_allow_ext']}|fileSize:{$uploadAllowSize}",
-        ];
-        $this->validate($data, $rule);
+        $file = $this->request->file('file');
+        empty($file) && $this->error('文件不能为空');
+        $uploadService = new UploadService($file, $this->request->post('upload_type'));
         try {
-            $upload = Uploadfile::instance()
-                ->setUploadType($data['upload_type'])
-                ->setUploadConfig($uploadConfig)
-                ->setFile($data['file'])
-                ->save();
-        } catch (\Exception $e) {
+            $upload = $uploadService->upload();
+        } catch (ValidateException | \Exception $e) {
             $this->error($e->getMessage());
         }
-        if ($upload['save'] == true) {
-            $this->success($upload['msg'], ['url' => $upload['url']]);
-        } else {
-            $this->error($upload['msg']);
-        }
+
+        $upload['save'] == true ? $this->success($upload['msg'], ['url' => $upload['url']]) : $this->error($upload['msg']);
     }
 
     /**
@@ -113,72 +84,44 @@ class Ajax extends AdminController
     public function uploadEditor()
     {
         $this->checkPostRequest();
-        $data = [
-            'upload_type' => $this->request->post('upload_type'),
-            'file'        => $this->request->file('upload'),
-        ];
-        $uploadConfig = sysconfig('upload');
-        empty($data['upload_type']) && $data['upload_type'] = $uploadConfig['upload_type'];
-        list($mainType, $subtype) = explode('/', $data['file']->getOriginalMime());
-        switch (strtolower($mainType)) {
-            case 'image':
-                $uploadAllowSize = $uploadConfig['upload_allow_image_size'];
-                break;
-            case 'audio':
-                $uploadAllowSize = $uploadConfig['upload_allow_audio_size'];
-                break;
-            case 'video':
-                $uploadAllowSize = $uploadConfig['upload_allow_video_size'];
-                break;
-            default:
-                $uploadAllowSize = $uploadConfig['upload_allow_size'];
-        }
-        $rule = [
-            'upload_type|指定上传类型有误' => "in:{$uploadConfig['upload_allow_type']}",
-            'file|文件'              => "require|file|fileExt:{$uploadConfig['upload_allow_ext']}|fileSize:{$uploadAllowSize}",
-        ];
-        $validate = new Validate();
-        $validate->rule($rule);
-        if (!$validate->check($data)) {
+        $file = $this->request->file('upload');
+        if (empty($file)) {
             return json([
                 'uploaded' => 0,
-                'error'    => [
-                    'message' => $validate->getError(),
+                'error' => [
+                    'message' => '文件不能为空',
                 ],
             ]);
-        };
+        }
+
+        $uploadService = new UploadService($file, $this->request->post('upload_type'));
         try {
-            $upload = Uploadfile::instance()
-                ->setUploadType($data['upload_type'])
-                ->setUploadConfig($uploadConfig)
-                ->setFile($data['file'])
-                ->save();
-        } catch (\Exception $e) {
+            $upload = $uploadService->upload();
+        } catch (ValidateException | \Exception $e) {
             return json([
                 'uploaded' => 0,
-                'error'    => [
+                'error' => [
                     'message' => $e->getMessage(),
                 ],
             ]);
         }
-        if ($upload['save'] == true) {
-            return json([
-                'error'    => [
+
+        $result = $upload['save'] == true ?
+            [
+                'uploaded' => 1,
+                'error' => [
                     'message' => '上传成功',
-                    'number'  => 201,
+                    'number' => 201,
                 ],
                 'fileName' => '',
-                'uploaded' => 1,
-                'url'      => $upload['url'],
-            ]);
-        } else {
-            return json([
+                'url' => $upload['url'],
+            ] : [
                 'uploaded' => 0,
-                'error'    => [
+                'error' => [
                     'message' => $upload['msg'],
                 ],
-            ]);
-        }
+            ];
+        return json($result);
     }
 
     /**
@@ -211,10 +154,10 @@ class Ajax extends AdminController
             ->order($this->sort)
             ->select();
         $data = [
-            'code'  => 0,
-            'msg'   => '',
+            'code' => 0,
+            'msg' => '',
             'count' => $count,
-            'data'  => $list,
+            'data' => $list,
         ];
         return json($data);
     }

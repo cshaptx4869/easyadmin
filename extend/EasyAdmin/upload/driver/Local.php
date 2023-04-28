@@ -13,7 +13,6 @@
 namespace EasyAdmin\upload\driver;
 
 use EasyAdmin\upload\FileBase;
-use EasyAdmin\upload\trigger\SaveDb;
 
 /**
  * 本地上传
@@ -24,12 +23,12 @@ class Local extends FileBase
 {
 
     /**
-     * 重写上传方法
-     * @return array|void
+     * 实现上传方法
+     * @return array
      */
     public function save()
     {
-        $hashFile = SaveDb::sha1File($this->tableName, $this->file->hash());
+        $hashFile = $this->sha1File();
         if ($hashFile) {
             return [
                 'save' => true,
@@ -37,21 +36,13 @@ class Local extends FileBase
                 'url'  => $hashFile['url'],
             ];
         } else {
-            parent::save();
-            SaveDb::trigger($this->tableName, [
-                'upload_type'   => $this->uploadType,
-                'original_name' => $this->file->getOriginalName(),
-                'mime_type'     => $this->file->getOriginalMime(),
-                'file_ext'      => strtolower($this->file->getOriginalExtension()),
-                'file_size'     => $this->file->getSize(),
-                'sha1'          => $this->file->hash(),
-                'url'           => $this->completeFileUrl,
-                'create_time'   => time(),
-            ]);
+            $this->localSave();
+            $completeFileUrl = request()->domain() . '/' . str_replace(DIRECTORY_SEPARATOR, '/',  $this->completeFilePath);
+            $this->dbSave($completeFileUrl);
             return [
                 'save' => true,
                 'msg'  => '上传成功',
-                'url'  => $this->completeFileUrl,
+                'url'  => $completeFileUrl,
             ];
         }
     }

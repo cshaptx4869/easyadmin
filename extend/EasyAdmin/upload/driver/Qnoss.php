@@ -12,9 +12,8 @@
 
 namespace EasyAdmin\upload\driver;
 
-use EasyAdmin\upload\FileBase;
 use EasyAdmin\upload\driver\qnoss\Oss;
-use EasyAdmin\upload\trigger\SaveDb;
+use EasyAdmin\upload\FileBase;
 
 /**
  * 七牛云上传
@@ -25,12 +24,12 @@ class Qnoss extends FileBase
 {
 
     /**
-     * 重写上传方法
+     * 实现上传方法
      * @return array|void
      */
     public function save()
     {
-        $hashFile = SaveDb::sha1File($this->tableName, $this->file->hash());
+        $hashFile = $this->sha1File();
         if ($hashFile) {
             return [
                 'save' => true,
@@ -38,24 +37,14 @@ class Qnoss extends FileBase
                 'url'  => $hashFile['url'],
             ];
         } else {
-            parent::save();
+            $this->localSave();
             $upload = Oss::instance($this->uploadConfig)
                 ->save($this->completeFilePath, $this->completeFilePath);
             if ($upload['save'] == true) {
-                SaveDb::trigger($this->tableName, [
-                    'upload_type'   => $this->uploadType,
-                    'original_name' => $this->file->getOriginalName(),
-                    'mime_type'     => $this->file->getOriginalMime(),
-                    'file_ext'      => strtolower($this->file->getOriginalExtension()),
-                    'file_size'     => $this->file->getSize(),
-                    'sha1'          => $this->file->hash(),
-                    'url'           => $upload['url'],
-                    'create_time'   => time(),
-                ]);
+                $this->dbSave($upload['url']);
             }
             $this->rmLocalSave();
             return $upload;
         }
     }
-
 }

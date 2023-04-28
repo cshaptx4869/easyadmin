@@ -13,6 +13,7 @@
 namespace EasyAdmin\upload;
 
 
+use think\facade\Db;
 use think\facade\Filesystem;
 use think\File;
 
@@ -21,7 +22,7 @@ use think\File;
  * Class Base
  * @package EasyAdmin\upload
  */
-class FileBase
+abstract class FileBase
 {
 
     /**
@@ -32,7 +33,7 @@ class FileBase
 
     /**
      * 上传文件对象
-     * @var object
+     * @var File
      */
     protected $file;
 
@@ -43,16 +44,10 @@ class FileBase
     protected $completeFilePath;
 
     /**
-     * 上传完成的文件的URL
-     * @var string
-     */
-    protected $completeFileUrl;
-
-    /**
      * 保存上传文件的数据表
      * @var string
      */
-    protected $tableName;
+    protected $tableName = 'system_uploadfile';
 
     /**
      * 上传类型
@@ -105,13 +100,17 @@ class FileBase
     }
 
     /**
+     * 上传
+     * @return array
+     */
+    abstract public function save();
+
+    /**
      * 保存文件
      */
-    public function save()
+    public function localSave()
     {
-
         $this->completeFilePath = Filesystem::disk('public')->putFile('upload', $this->file);
-        $this->completeFileUrl = request()->domain() . '/' . str_replace(DIRECTORY_SEPARATOR, '/', $this->completeFilePath);
     }
 
     /**
@@ -128,4 +127,23 @@ class FileBase
         return $rm;
     }
 
+    public function sha1File()
+    {
+        return Db::name($this->tableName)->where('sha1', $this->file->hash())->find();
+    }
+
+    public function dbSave($url)
+    {
+        $data = [
+            'upload_type'   => $this->uploadType,
+            'original_name' => htmlspecialchars($this->file->getOriginalName(), ENT_QUOTES),
+            'mime_type'     => $this->file->getOriginalMime(),
+            'file_ext'      => strtolower($this->file->getOriginalExtension()),
+            'file_size'     => $this->file->getSize(),
+            'sha1'          => $this->file->hash(),
+            'url'           => $url,
+            'create_time'   => \time(),
+        ];
+        return Db::name($this->tableName)->save($data);
+    }
 }

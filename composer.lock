@@ -53,16 +53,16 @@
         },
         {
             "name": "cshaptx4869/http-crontab",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cshaptx4869/http-crontab.git",
-                "reference": "ec1fd6374b1e2ff30b981e82a3602b2bee90464d"
+                "reference": "93dfae36a0fa42ffb3620bb09b5cd2b7cc5d64eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cshaptx4869/http-crontab/zipball/ec1fd6374b1e2ff30b981e82a3602b2bee90464d",
-                "reference": "ec1fd6374b1e2ff30b981e82a3602b2bee90464d",
+                "url": "https://api.github.com/repos/cshaptx4869/http-crontab/zipball/93dfae36a0fa42ffb3620bb09b5cd2b7cc5d64eb",
+                "reference": "93dfae36a0fa42ffb3620bb09b5cd2b7cc5d64eb",
                 "shasum": ""
             },
             "require": {
@@ -96,9 +96,9 @@
             ],
             "support": {
                 "issues": "https://github.com/cshaptx4869/http-crontab/issues",
-                "source": "https://github.com/cshaptx4869/http-crontab/tree/v2.0.0"
+                "source": "https://github.com/cshaptx4869/http-crontab/tree/v2.0.1"
             },
-            "time": "2023-01-15T06:45:04+00:00"
+            "time": "2023-05-07T04:03:44+00:00"
         },
         {
             "name": "doctrine/annotations",

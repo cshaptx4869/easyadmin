@@ -265,8 +265,12 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                     icon: 'layui-icon-search',
                     extend: 'data-table-id="' + options.id + '"'
                 }];
-                // 解决非默认高度时，固定列行错位问题
-                options.done = options.done || function () {
+
+                //数据渲染完毕回调
+                var optionDone = options.done;
+                options.done = function (res, curr, count) {
+                    typeof optionDone === 'function' && optionDone(res, curr, count);
+                    // 解决非默认高度时，固定列行错位问题
                     $(".layui-table-main tr").each(function (index, val) {
                         $(".layui-table-fixed").each(function () {
                             $($(this).find(".layui-table-body tbody tr")[index]).height($(val).height());

@@ -807,7 +807,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                     var value = undefined;
                 }
                 var checked = value === option.checked ? 'checked' : '';
-                return laytpl('<input type="checkbox" name="' + option.field + '" value="' + data.id + '" lay-skin="switch" lay-text="' + option.tips + '" lay-filter="' + option.filter + '" ' + checked + ' >').render(data);
+                return laytpl('<input type="checkbox" name="' + option.field + '" value="' + data.id + '" lay-skin="switch" title="' + option.tips + '" lay-filter="' + option.filter + '" ' + checked + ' >').render(data);
             },
             price: function (data) {
                 var option = this;

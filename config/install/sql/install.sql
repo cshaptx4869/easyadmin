@@ -355,15 +355,18 @@ INSERT INTO `ea_system_uploadfile` VALUES ('302', 'local', '18811e7611c8f292.jpg
 -- ----------------------------
 DROP TABLE IF EXISTS `ea_system_exception_log`;
 CREATE TABLE `ea_system_exception_log` (
-   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-   `message` varchar(255) DEFAULT NULL COMMENT '异常消息内容',
-   `code` int(11) DEFAULT NULL COMMENT '异常代码',
-   `file` varchar(255) DEFAULT NULL COMMENT '创建异常时的程序文件名称',
-   `line` int(11) DEFAULT NULL COMMENT '创建的异常所在文件中的行号',
-   `trace` text COMMENT '异常追踪信息',
-   `caller_file` varchar(255) DEFAULT NULL COMMENT '方法调用者文件名',
-   `caller_line` int(11) DEFAULT NULL COMMENT '方法调用者行号',
-   `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
-   `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-   PRIMARY KEY (`id`) USING BTREE
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `message` varchar(255) DEFAULT NULL COMMENT '异常消息内容',
+  `code` int(11) DEFAULT NULL COMMENT '异常代码',
+  `file` varchar(255) DEFAULT NULL COMMENT '创建异常时的程序文件名称',
+  `line` int(11) DEFAULT NULL COMMENT '创建的异常所在文件中的行号',
+  `trace` text COMMENT '异常追踪信息',
+  `url` varchar(255) DEFAULT '' COMMENT '请求url',
+  `method` varchar(20) DEFAULT NULL COMMENT '请求方法',
+  `param` text COMMENT '请求参数',
+  `ip` varchar(30) DEFAULT '' COMMENT '请求ip',
+  `header` text COMMENT '请求头',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='异常日志';

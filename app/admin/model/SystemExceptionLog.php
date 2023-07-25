@@ -15,17 +15,18 @@ class SystemExceptionLog extends TimeModel
      */
     static public function report(Throwable $exception)
     {
+        $request = \request();
         self::create([
             'message' => $exception->getMessage(),
             'code' => $exception->getCode(),
             'file' => $exception->getFile(),
             'line' => $exception->getLine(),
             'trace' => $exception->getTraceAsString(),
-            'url' => \request()->url(),
-            'method' => \request()->method(),
-            'param' => print_r(\request()->param(), true),
-            'ip' => \request()->ip(),
-            'header' => print_r(\request()->header(), true)
+            'ip' => $request->ip(),
+            'method' => $request->method(),
+            'url' => $request->url(),
+            'header' => var_export($request->header(), true),
+            'param' => var_export($request->param(), true)
         ]);
     }
 }

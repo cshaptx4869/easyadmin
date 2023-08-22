@@ -11,11 +11,4 @@ return [
     // Csrf安全校验
     \app\admin\middleware\CsrfMiddleware::class,
 
-    // 后台视图初始化
-//    \app\admin\middleware\ViewInit::class,
-
-    // 检测用户是否登录
-//    \app\admin\middleware\CheckAdmin::class,
-
-
 ];

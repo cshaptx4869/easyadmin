@@ -15,29 +15,28 @@ namespace app\admin\middleware;
 
 use app\admin\service\ConfigService;
 use app\common\constants\AdminConstant;
-use think\App;
-use think\facade\Request;
 use think\facade\View;
+use think\Request;
 
 /**
- * @deprecated  废弃，新版TP不支持在中间件获取控制器相关信息 转而通过AdminController的viewInit方法实现
+ * 初始化视图参数
  * Class ViewInit
  * @package app\admin\middleware
  */
 class ViewInit
 {
 
-    public function handle(\app\Request $request, \Closure $next)
+    public function handle(Request $request, \Closure $next)
     {
-        list($thisModule, $thisController, $thisAction) = [app('http')->getName(), Request::controller(), $request->action()];
+        list($thisModule, $thisController, $thisAction) = [app('http')->getName(), $request->controller(), $request->action()];
         list($thisControllerArr, $jsPath) = [explode('.', $thisController), null];
         foreach ($thisControllerArr as $vo) {
             empty($jsPath) ? $jsPath = parse_name($vo) : $jsPath .= '/' . parse_name($vo);
         }
-        $autoloadJs = file_exists(root_path('public')."static/{$thisModule}/js/{$jsPath}.js") ? true : false;
+        $autoloadJs = file_exists(root_path('public') . "static/{$thisModule}/js/{$jsPath}.js");
         $thisControllerJsPath = "{$thisModule}/js/{$jsPath}.js";
         $adminModuleName = config('app.admin_alias_name');
-        $isSuperAdmin = session('admin.id') == AdminConstant::SUPER_ADMIN_ID ? true : false;
+        $isSuperAdmin = session('admin.id') == AdminConstant::SUPER_ADMIN_ID;
         $data = [
             'adminModuleName'      => $adminModuleName,
             'thisController'       => parse_name($thisController),

@@ -16,7 +16,6 @@ use app\common\service\AuthService;
 use think\Request;
 
 /**
- * @deprecated  废弃，新版TP不支持在中间件获取控制器相关信息 转而通过AdminController的checkAuth方法实现
  * 检测用户登录和节点权限
  * Class CheckAdmin
  * @package app\admin\middleware

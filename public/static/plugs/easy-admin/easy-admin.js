@@ -18,7 +18,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
         upload_url: 'ajax/upload',
-        upload_exts: 'doc|gif|ico|icon|jpg|mp3|mp4|p12|pem|png|rar'
+        upload_exts: 'doc|docx|ppt|pptx|xls|xlsx|pdf|zip|rar|txt|ico|icon|gif|jpg|jpeg|png|mp3|mp4|p12|pem'
     };
 
     var admin = {
@@ -31,14 +31,17 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
         isImage(filename) {
             return ['bmp', 'ico', 'gif', 'jpg', 'jpeg', 'png', 'svg', 'tif', 'tiff', 'webp'].includes(admin.fileExt(filename));
         },
-        uploadIcon: function (ext, parse = false) {
-            parse && (ext = admin.fileExt(ext));
+        uploadIcon: function (ext, toUrl = true) {
             var icon = '';
+            if (ext.indexOf('.') !== -1) {
+                ext = admin.fileExt(ext)
+            }
             switch (ext) {
                 case 'doc':
                 case 'docx':
                     icon = 'doc.png';
                     break;
+                case 'ico':
                 case 'gif':
                 case 'jpeg':
                 case 'jpg':
@@ -77,7 +80,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                 default:
                     icon = 'file.png';
             }
-            return icon;
+            return toUrl ? BASE_URL + 'admin/images/upload-icons/' + icon : icon;
         },
         url: function (url) {
             return '/' + CONFIG.ADMIN + '/' + url;
@@ -710,7 +713,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                                     case 'string':
                                         if (data[operat.extra] !== undefined) {
                                             operat.title = data[operat.extra] + ' - ' + operat.title;
-                                        } else if (operat.extra.includes('.')){
+                                        } else if (operat.extra.includes('.')) {
                                             var extraArr = operat.extra.split('.');
                                             var extraData = JSON.parse(JSON.stringify(data));
                                             try {
@@ -782,9 +785,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                     var values = value.split(option.imageSplit),
                         valuesHtml = [];
                     values.forEach((value, index) => {
-                        if (admin.isImage(value)) {
-                            valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '" onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/image.png\'">');
-                        }
+                        valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + (admin.isImage(value) ? value : admin.uploadIcon(value)) + '" data-image="' + title + '" onerror="this.src=\'' + admin.uploadIcon(value) + '\'">');
                     });
                     return valuesHtml.join(option.imageJoin);
                 }
@@ -1470,7 +1471,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                             acceptMime: uploadAcceptMime,//规定打开文件选择框时，筛选出的文件类型
                             multiple: uploadNumber !== 'one',//是否多文件上传
                             headers: admin.headers(),
-                            before: function(){
+                            before: function () {
                                 layer.load();
                             },
                             done: function (res) {
@@ -1499,19 +1500,14 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                         // 监听上传input值变化
                         $(elem).bind("input propertychange", function (event) {
                             var urlString = $(this).val(),
-                                urlArray = urlString.split(uploadSign),
-                                uploadIcon = $(uploadElem).attr('data-upload-icon');
+                                urlArray = urlString.split(uploadSign);
 
                             $('#bing-' + uploadName).remove();
                             if (urlString.length > 0) {
                                 var parant = $(this).parent('div');
                                 var liHtml = '';
                                 $.each(urlArray, function (i, v) {
-                                    if (admin.isImage(v)) {
-                                        liHtml += '<li data-id="' + i + '"><img src="' + v + '" data-images  onerror="this.src=\'' + BASE_URL + 'admin/images/upload-icons/image.png\';this.onerror=null"><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
-                                    } else {
-                                        liHtml += '<li data-id="' + i + '"><img src="' + BASE_URL + 'admin/images/upload-icons/' + (uploadIcon ? uploadIcon + '.png' : admin.uploadIcon(v, true)) + '" data-images><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
-                                    }
+                                    liHtml += '<li data-id="' + i + '"><img src="' + (admin.isImage(v) ? v : admin.uploadIcon(v)) + '" data-images onerror="this.src=\'' + admin.uploadIcon(v) + '\';this.onerror=null"><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
                                 });
                                 parant.after('<ul id="bing-' + uploadName + '" class="layui-input-block layuimini-upload-show">\n' + liHtml + '</ul>');
                                 // 多图时可拖拽排序

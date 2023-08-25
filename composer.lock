@@ -2221,16 +2221,16 @@
         },
         {
             "name": "topthink/framework",
-            "version": "v6.1.1",
+            "version": "v6.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/framework.git",
-                "reference": "2cb56f3e6f3c479fe90ea5f28d38d3b5ef6c4210"
+                "reference": "66eb9cf4d627df12911344cd328faf9bb596bf2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/framework/zipball/2cb56f3e6f3c479fe90ea5f28d38d3b5ef6c4210",
-                "reference": "2cb56f3e6f3c479fe90ea5f28d38d3b5ef6c4210",
+                "url": "https://api.github.com/repos/top-think/framework/zipball/66eb9cf4d627df12911344cd328faf9bb596bf2c",
+                "reference": "66eb9cf4d627df12911344cd328faf9bb596bf2c",
                 "shasum": ""
             },
             "require": {
@@ -2242,7 +2242,7 @@
                 "psr/log": "~1.0",
                 "psr/simple-cache": "^1.0",
                 "topthink/think-helper": "^3.1.1",
-                "topthink/think-orm": "^2.0"
+                "topthink/think-orm": "^2.0|^3.0"
             },
             "require-dev": {
                 "guzzlehttp/psr7": "^2.1.0",
@@ -2280,9 +2280,9 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/framework/issues",
-                "source": "https://github.com/top-think/framework/tree/v6.1.1"
+                "source": "https://github.com/top-think/framework/tree/v6.1.4"
             },
-            "time": "2022-10-26T03:48:53+00:00"
+            "time": "2023-07-11T15:16:03+00:00"
         },
         {
             "name": "topthink/think-captcha",
@@ -2431,21 +2431,21 @@
         },
         {
             "name": "topthink/think-multi-app",
-            "version": "v1.0.15",
+            "version": "v1.0.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-multi-app.git",
-                "reference": "387e0dac059c20f92cac5da41a871e10829c1c97"
+                "reference": "4055a6187296ac16c0bc7bbab4ed5d92f82f791c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-multi-app/zipball/387e0dac059c20f92cac5da41a871e10829c1c97",
-                "reference": "387e0dac059c20f92cac5da41a871e10829c1c97",
+                "url": "https://api.github.com/repos/top-think/think-multi-app/zipball/4055a6187296ac16c0bc7bbab4ed5d92f82f791c",
+                "reference": "4055a6187296ac16c0bc7bbab4ed5d92f82f791c",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1.0",
-                "topthink/framework": "^6.0"
+                "topthink/framework": "^6.0|^8.0"
             },
             "type": "library",
             "extra": {
@@ -2470,12 +2470,12 @@
                     "email": "liu21st@gmail.com"
                 }
             ],
-            "description": "thinkphp6 multi app support",
+            "description": "thinkphp multi app support",
             "support": {
                 "issues": "https://github.com/top-think/think-multi-app/issues",
-                "source": "https://github.com/top-think/think-multi-app/tree/v1.0.15"
+                "source": "https://github.com/top-think/think-multi-app/tree/v1.0.17"
             },
-            "time": "2022-10-26T08:03:06+00:00"
+            "time": "2023-03-29T02:04:29+00:00"
         },
         {
             "name": "topthink/think-orm",

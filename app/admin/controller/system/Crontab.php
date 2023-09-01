@@ -27,9 +27,9 @@ class Crontab extends AdminController
     public function __construct(App $app)
     {
         parent::__construct($app);
-        $this->baseUri = env('easyadmin.crontab_base_uri') ?: 'http://127.0.0.1:2345';
-        $this->safeKey = env('easyadmin.crontab_safe_key') ?: null;
-
+        $config = config('crontab');
+        $this->baseUri = $config['base_uri'];
+        $this->safeKey = $config['safe_key'];
         $this->assign('typeOptions', [0 => '请求url', 1 => '执行sql', 2 => '执行shell']);
     }
 

@@ -316,6 +316,10 @@ return [
     'deny_app_list'    => ['common'],
     // 异常页面的模板文件
     'exception_tmpl'   => Env::get('app_debug') == 1 ? app()->getThinkPath() . 'tpl/think_exception.tpl' : app()->getBasePath() . 'common' . DIRECTORY_SEPARATOR . 'tpl' . DIRECTORY_SEPARATOR . 'think_exception.tpl',
+    // http异常页面的模板文件
+    'http_exception_template' => [
+        404 => base_path('common' . DIRECTORY_SEPARATOR . 'tpl') . '404.html'
+    ],
     // 跳转页面的成功模板文件
     'dispatch_success_tmpl'   => app()->getBasePath() . 'common' . DIRECTORY_SEPARATOR . 'tpl' . DIRECTORY_SEPARATOR . 'dispatch_jump.tpl',
     // 跳转页面的失败模板文件

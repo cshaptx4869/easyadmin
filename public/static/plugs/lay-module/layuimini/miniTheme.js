@@ -270,7 +270,7 @@ define(["jquery"], function ($) {
          * @param options
          */
         render: function (options) {
-            options.bgColorDefault = options.bgColorDefault || false;
+            options.bgColorDefault = options.bgColorDefault || 0;
             options.listen = options.listen || false;
             var bgcolorId = sessionStorage.getItem('layuiminiBgcolorId');
             if (bgcolorId === null || bgcolorId === undefined || bgcolorId === '') {
@@ -286,10 +286,12 @@ define(["jquery"], function ($) {
          * @returns {boolean}
          */
         buildThemeCss: function (bgcolorId) {
-            if (!bgcolorId) {
-                return false;
+            var bgColorConfig = miniTheme.config();
+            bgcolorId = parseInt(bgcolorId);
+            if (bgcolorId < 0 || bgcolorId > bgColorConfig.length) {
+                bgcolorId = 0;
             }
-            var bgcolorData = miniTheme.config(bgcolorId);
+            var bgcolorData = bgColorConfig[bgcolorId];
             var styleHtml = '/*头部右侧背景色 headerRightBg */\n' +
                 '.layui-layout-admin .layui-header {\n' +
                 '    background-color: ' + bgcolorData.headerRightBg + ' !important;\n' +
@@ -304,6 +306,7 @@ define(["jquery"], function ($) {
                 '.layui-layout-admin .layui-header .layui-nav .layui-nav-item a {\n' +
                 '    color:  ' + bgcolorData.headerRightColor + ';\n' +
                 '}\n' +
+                '\n' +
                 '/**头部右侧下拉字体颜色 headerRightChildColor */\n' +
                 '.layui-layout-admin .layui-header .layui-nav .layui-nav-item .layui-nav-child a {\n' +
                 '    color:  ' + bgcolorData.headerRightChildColor + '!important;\n' +

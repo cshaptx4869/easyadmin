@@ -1,33 +1,24 @@
-<link rel="stylesheet" href="__STATIC__/plugs/lay-module/layuimini/layuimini.css?v={:time()}" media="all">
-<link rel="stylesheet" href="__STATIC__/plugs/lay-module/layuimini/themes/default.css?v={:time()}" media="all">
-<style id="layuimini-bg-color">
-</style>
+<link rel="stylesheet" href="__STATIC__/plugs/lay-module/layuimini/layuimini.css?v={$version}" media="all">
+<link rel="stylesheet" href="__STATIC__/plugs/lay-module/layuimini/themes/default.css?v={$version}" media="all">
+<style id="layuimini-bg-color"></style>
 <body class="layui-layout-body layuimini-all">
 <div class="layui-layout layui-layout-admin">
-
+    <!--头部栏-->
     <div class="layui-header header">
         <div class="layui-logo layuimini-logo"></div>
-
         <div class="layuimini-header-content">
-            <a>
-                <div class="layuimini-tool"><i title="展开" class="fa fa-outdent" data-side-fold="1"></i></div>
-            </a>
-
+            <div class="layuimini-tool"><a><i title="展开" class="fa fa-outdent" data-side-fold="1"></i></a></div>
             <!--电脑端头部菜单-->
-            <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-menu-header-pc layuimini-pc-show">
-            </ul>
-
+            <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-menu-header-pc layuimini-pc-show"></ul>
             <!--手机端头部菜单-->
             <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-mobile-show">
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="fa fa-list-ul"></i> 选择模块</a>
-                    <dl class="layui-nav-child layuimini-menu-header-mobile">
-                    </dl>
+                    <dl class="layui-nav-child layuimini-menu-header-mobile"></dl>
                 </li>
             </ul>
-
+            <!--右侧工具-->
             <ul class="layui-nav layui-layout-right">
-
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;" data-refresh="刷新"><i class="fa fa-refresh"></i></a>
                 </li>
@@ -39,8 +30,8 @@
                 </li>
                 <li class="layui-nav-item layuimini-setting">
                     <a href="javascript:;">
-                        <img src="{:session('admin.head_img')}" class="layui-nav-img" width="50" height="50">
-                        <cite class="adminName">{:session('admin.username')}</cite>
+                        <img src="{$admin.head_img}" class="layui-nav-img" width="50" height="50">
+                        <cite class="adminName">{$admin.username}</cite>
                         <span class="layui-nav-more"></span>
                     </a>
                     <dl class="layui-nav-child">
@@ -66,8 +57,7 @@
     </div>
 
     <!--无限极左侧菜单-->
-    <div class="layui-side layui-bg-black layuimini-menu-left">
-    </div>
+    <div class="layui-side layui-bg-black layuimini-menu-left"></div>
 
     <!--初始化加载层-->
     <div class="layuimini-loader">
@@ -80,8 +70,10 @@
     <!-- 移动导航 -->
     <div class="layuimini-site-mobile"><i class="layui-icon"></i></div>
 
+    <!--主体内容-->
     <div class="layui-body">
         <div class="layuimini-tab layui-tab-rollTool layui-tab" lay-filter="layuiminiTab" lay-allowclose="true">
+            <!--标签选项栏-->
             <ul class="layui-tab-title">
                 <li class="layui-this" id="layuiminiHomeTabId" lay-id=""></li>
             </ul>
@@ -101,6 +93,7 @@
                     </ul>
                 </li>
             </div>
+            <!--标签内容-->
             <div class="layui-tab-content">
                 <div id="layuiminiHomeTabIframe" class="layui-tab-item layui-show"></div>
             </div>

@@ -7,7 +7,6 @@ use app\admin\model\SystemAdmin;
 use app\admin\model\SystemQuick;
 use app\common\controller\AdminController;
 use think\App;
-use think\facade\Env;
 
 class Index extends AdminController
 {
@@ -19,9 +18,8 @@ class Index extends AdminController
      */
     public function index()
     {
-        return $this->fetch('', [
-            'admin' => session('admin'),
-        ]);
+        $this->assign('admin', session('admin'));
+        return $this->fetch();
     }
 
     /**

@@ -31,7 +31,11 @@ define(["jquery", "easy-admin", "echarts", "miniAdmin", "miniTab", "echarts-them
             miniTab.listen();
 
             // 数字滚动
-            layui.countTo.start(".no-margins", {
+            var countTo = layui.countTo;
+            countTo.start(".no-margins", {
+                startVal: 0,
+                endVal: 1234,
+                decimals: 0,
                 duration: 1500,
             });
 

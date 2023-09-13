@@ -1,4 +1,4 @@
-define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTab"], function ($, ea, echarts, undefined, miniAdmin, miniTab) {
+define(["jquery", "easy-admin", "echarts", "miniAdmin", "miniTab", "echarts-theme", "countTo"], function ($, ea, echarts, miniAdmin, miniTab) {
 
     var Controller = {
         index: function () {
@@ -29,6 +29,11 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
         welcome: function () {
 
             miniTab.listen();
+
+            // 数字滚动
+            layui.countTo.start(".no-margins", {
+                duration: 1500,
+            });
 
             /**
              * 查看公告信息

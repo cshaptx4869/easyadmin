@@ -39,7 +39,7 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
             options.bgColorDefault = options.bgColorDefault || 0;
             options.multiModule = options.multiModule || false;
             options.menuChildOpen = options.menuChildOpen || false;
-            options.loadingTime = options.loadingTime || 1;
+            options.loadingTime = options.loadingTime || 0;
             options.pageAnim = options.pageAnim || false;
             options.maxTabNum = options.maxTabNum || 20;
             $.getJSON(options.iniUrl, function (data) {
@@ -198,7 +198,9 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
          * @param loadingTime
          */
         deleteLoader: function (loadingTime) {
-            $('.layuimini-loader').fadeOut();
+            setTimeout(function () {
+                $('.layuimini-loader').fadeOut();
+            }, loadingTime * 1000)
         },
 
         /**

@@ -129,7 +129,7 @@
 
 /**tab选项卡 */
 .layuimini-tab {
-    margin: 0px;
+    margin: 0;
     overflow: hidden;
     height: 100% !important;
 }
@@ -143,11 +143,10 @@
 }
 
 .layuimini-tab .layui-tab-content {
-    padding: 0px;
+    padding: 0;
 }
 
 .layuimini-tab .layui-tab-title {
-    border: none;
     border: 1px solid whitesmoke;
     background-color: white;
 }
@@ -218,7 +217,7 @@
 
 .layuimini-tab .layui-tab-control > li {
     position: absolute;
-    top: 0px;
+    top: 0;
     height: 35px;
     line-height: 35px;
     width: 35px;
@@ -229,7 +228,7 @@
 }
 
 .layuimini-tab .layuimini-tab-roll-left {
-    left: 0px;
+    left: 0;
     border-right: whitesmoke 1px solid;
     border-left: whitesmoke 1px solid;
 }
@@ -240,7 +239,7 @@
 }
 
 .layuimini-tab .layui-tab-tool {
-    right: 0px;
+    right: 0;
     border-left: 1px solid whitesmoke;
 }
 
@@ -256,7 +255,7 @@
 }
 
 .layuimini-tab.layui-tab-roll .layui-tab-control .layuimini-tab-roll-right {
-    right: 0px;
+    right: 0;
     border-right: 1px solid whitesmoke;
 }
 
@@ -271,7 +270,7 @@
 }
 
 .layuimini-tab.layui-tab-tool .layui-tab-title {
-    padding-left: 0px;
+    padding-left: 0;
     padding-right: 35px;
 }
 
@@ -292,7 +291,6 @@
     height: 43px !important;
     top: 0;
     width: 100%;
-    height: 100%;
     padding: 0;
     background: 0 0;
 }
@@ -399,7 +397,7 @@
 /**内容主体（通用） */
 .layui-layout-admin .layui-body {
     overflow: hidden;
-    bottom: 0px !important;
+    bottom: 0 !important;
     top: 60px !important;
     transition: all .2s;
 }
@@ -502,7 +500,7 @@
 }
 
 .layui-tab-card {
-    box-shadow: 0px 0px 0px #888888;
+    box-shadow: 0 0 0 #888888;
     border-bottom: 0;
 }
 
@@ -648,8 +646,8 @@
     display: none;
     width: 80px;
     position: absolute;
-    top: 0px !important;
-    left: 0px !important;
+    top: 0 !important;
+    left: 0 !important;
 }
 
 .layuimini-tab-mousedown dd a {
@@ -660,10 +658,10 @@
 .layuimini-tab-make {
     position: absolute;
     top: 36px;
-    bottom: 0px;
+    bottom: 0;
     width: 100%;
-    background: rgb(255, 255, 255);
-    padding: 0px;
+    background: rgba(255, 255, 255, 0);
+    padding: 0;
     overflow: hidden;
 }
 
@@ -781,7 +779,7 @@
     .layuimini-mini .layuimini-menu-left .layui-nav .layui-nav-item a {
         height: 40px;
         line-height: 40px;
-        padding-right: 0px !important;
+        padding-right: 0 !important;
     }
 
     /**内容主体（缩放） */
@@ -861,7 +859,7 @@
     }
 
     .layuimini-all .layui-layout-admin .layui-body {
-        left: 0px !important;
+        left: 0 !important;
     }
 
     .layuimini-mini .layui-layout-admin .layuimini-menu-left,

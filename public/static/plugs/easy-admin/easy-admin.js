@@ -251,6 +251,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
             render: function (options) {
                 options.init = options.init || init;
                 options.modifyReload = admin.parame(options.modifyReload, true);
+                options.topBar = admin.parame(options.topBar, false);
                 options.elem = options.elem || options.init.table_elem;
                 options.id = options.id || options.init.table_render_id;
                 options.layFilter = options.id + '_LayFilter';
@@ -294,6 +295,8 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                             $($(this).find(".layui-table-header thead tr")[index]).height($(val).height());
                         });
                     });
+                    // 顶部返回
+                    options.topBar && util.fixbar({bgcolor: '#1e9fff'});
                 };
 
                 // 判断元素对象是否有嵌套的

@@ -1698,11 +1698,23 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                 if (selectList.length > 0) {
                     $.each(selectList, function (i, v) {
                         var name = $(v).attr('name') || 'select';
+                        var layVerify = $(v).attr('xm-select-layVerify') || '';
+                        var layVerType = $(v).attr('xm-select-layVerType') || '';
+                        var layReqText = $(v).attr('xm-select-layReqText') || '';
+                        var max = $(v).attr('xm-select-max') || 0;
                         var tips = $(v).attr('xm-select-tips') || '请选择';
                         var size = $(v).attr('xm-select-size') || 'medium';
+                        var direction = $(v).attr('xm-select-direction') || 'auto';
+                        var empty = $(v).attr('xm-select-empty') || '暂无数据';
+                        var searchTips = $(v).attr('xm-select-searchTips') || '请选择';
+                        var height = $(v).attr('xm-select-height') || '200px';
+                        var themeColor = $(v).attr('xm-select-themeColor') || '#1e9fff';
+                        var radio = $(v).attr('multiple') === undefined;
                         var filterable = $(v).attr('xm-select-filterable') !== undefined;
                         var toolbarShow = $(v).attr('xm-select-toolbar') !== undefined;
-                        var radio = $(v).attr('multiple') === undefined;
+                        var autoRow = $(v).attr('xm-select-autoRow') !== undefined;
+                        var repeat = $(v).attr('xm-select-repeat') !== undefined;
+                        var clickClose = $(v).attr('xm-select-clickClose') !== undefined;
                         var initValue = [];
                         var data = [];
                         var options = $(v).find('option[value!=""]');
@@ -1722,22 +1734,33 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                         }
                         xmSelect.render({
                             el: '#c-' + name,
-                            name: name,
                             data: data,
                             initValue: initValue,
-                            radio: radio,
-                            size: size,
                             tips: tips,
+                            empty: empty,
                             filterable: filterable,
+                            searchTips: searchTips,
+                            direction: direction,
+                            height: height,
+                            radio: radio,
+                            repeat: repeat,
+                            clickClose: clickClose,
+                            theme: {
+                                color: themeColor
+                            },
+                            max: max,
+                            name: name,
+                            layVerify: layVerify,
+                            layVerType: layVerType,
+                            layReqText: layReqText,
                             toolbar: {
                                 show: toolbarShow,
                                 showIcon: true,
                                 list: ['ALL', 'CLEAR', 'REVERSE']
                             },
-                            theme: {
-                                color: '#1e9fff'
-                            }
-                        })
+                            autoRow: autoRow,
+                            size: size,
+                        });
                     });
                 }
             }

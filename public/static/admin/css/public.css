@@ -494,9 +494,10 @@ table样式
  * 检索下的xmSelect样式
  */
 fieldset .form-search xm-select {
-    min-height: 30px;
-    line-height: 30px;
+    min-height: 32px;
+    line-height: 32px;
     margin: 0 -1px -1px 0;
+    box-sizing: border-box;
 }
 
 fieldset .form-search xm-select > .xm-label .xm-label-block {

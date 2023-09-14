@@ -373,7 +373,6 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                 cols = cols[0] || {};
                 var newCols = [];
                 var formHtml = '';
-                var xmSelectOptions = [];
                 var formatFilter = {};
                 var formatOp = {};
                 $.each(cols, function (i, d) {
@@ -382,7 +381,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                     d.title = d.title || d.field || '';
                     d.selectList = d.selectList || {};
                     d.search = admin.parame(d.search, true);
-                    d.searchTip = d.searchTip || (d.search === 'xmSelect' ? '请选择' : '请输入') + d.title || '';
+                    d.searchTip = d.searchTip || '请输入' + d.title || '';
                     d.searchValue = d.searchValue || '';
                     d.searchOp = d.searchOp || '%*%';
                     d.timeType = d.timeType || 'datetime';
@@ -418,25 +417,23 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                                 break;
                             case 'xmSelect':
                                 d.searchOp = 'in';
+                                var selectHtml = '';
+                                var selectedArr = String(d.searchValue).split(',');
+                                $.each(d.selectList, function (sI, sV) {
+                                    var selected = '';
+                                    if (selectedArr.includes(sI)) {
+                                        selected = 'selected=""';
+                                    }
+                                    selectHtml += '<option value="' + sI + '" ' + selected + '>' + sV + '</option>/n';
+                                });
                                 formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<div id="c-' + d.fieldAlias + '" data-search-op="' + d.searchOp + '"></div>\n' +
+                                    '<select class="layui-select" ' + (d.laySearch ? 'xm-select-filterable' : '') + ' id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '" multiple lay-ignore xm-select xm-select-size="small">\n' +
+                                    selectHtml +
+                                    '</select>\n' +
                                     '</div>\n' +
                                     '</div>';
-                                var data = [];
-                                $.each(d.selectList, function (sI, sV) {
-                                    data.push({name: sV, value: sI});
-                                })
-                                xmSelectOptions.push({
-                                    el: '#c-' + d.fieldAlias,
-                                    name: d.fieldAlias,
-                                    data: data,
-                                    initValue: d.searchValue.split(','),
-                                    tips: d.searchTip,
-                                    filterable: d.laySearch === true,
-                                    size: 'small',
-                                })
                                 break;
                             case 'range':
                                 d.searchOp = 'range';
@@ -485,9 +482,6 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                             laydate.render({type: ncV.timeType, elem: '[name="' + ncV.fieldAlias + '"]'});
                         }
                     });
-                    $.each(xmSelectOptions, function (xmI, xmV) {
-                        xmSelect.render(xmV);
-                    })
                     // 搜索条件
                     $.each(form.val(tableId), function (key, val) {
                         if (val !== '') {
@@ -1081,6 +1075,9 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
 
             // 监听时间控件生成
             admin.api.date();
+
+            // 监听select多选生成
+            admin.api.xmSelect();
 
             // 初始化layui表单
             form.render();
@@ -1696,6 +1693,54 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                     });
                 }
             },
+            xmSelect: function () {
+                var selectList = document.querySelectorAll("select[xm-select]");
+                if (selectList.length > 0) {
+                    $.each(selectList, function (i, v) {
+                        var name = $(v).attr('name') || 'select';
+                        var tips = $(v).attr('xm-select-tips') || '请选择';
+                        var size = $(v).attr('xm-select-size') || 'medium';
+                        var filterable = $(v).attr('xm-select-filterable') !== undefined;
+                        var toolbarShow = $(v).attr('xm-select-toolbar') !== undefined;
+                        var radio = $(v).attr('multiple') === undefined;
+                        var initValue = [];
+                        var data = [];
+                        var options = $(v).find('option[value!=""]');
+                        $.each(options, function (ii, vv) {
+                            var value = $(vv).val();
+                            var label = $(vv).text();
+                            data.push({name: label, value: value});
+                            $(vv).prop('selected') && initValue.push(value);
+                        });
+
+                        var id = $(v).attr('id');
+                        if (id && id.indexOf('c-') !== -1) {
+                            var searchOp = $(v).attr('data-search-op') || '%*%';
+                            $(v).after('<div id="' + id + '" data-search-op="' + searchOp + '"></div>').remove();
+                        } else {
+                            $(v).after('<div id="c-' + name + '"></div>').remove();
+                        }
+                        xmSelect.render({
+                            el: '#c-' + name,
+                            name: name,
+                            data: data,
+                            initValue: initValue,
+                            radio: radio,
+                            size: size,
+                            tips: tips,
+                            filterable: filterable,
+                            toolbar: {
+                                show: toolbarShow,
+                                showIcon: true,
+                                list: ['ALL', 'CLEAR', 'REVERSE']
+                            },
+                            theme: {
+                                color: '#1e9fff'
+                            }
+                        })
+                    });
+                }
+            }
         },
     };
     return admin;

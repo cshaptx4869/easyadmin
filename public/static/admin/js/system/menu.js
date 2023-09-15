@@ -77,10 +77,10 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                     url: init.edit_url,
                                     method: 'open',
                                     auth: 'edit',
-                                    class: 'layui-btn layui-btn-xs layui-btn-success',
+                                    class: 'layui-btn layui-btn-xs layuimini-btn-success',
                                     extend: 'data-full="true"',
                                 }, {
-                                    class: 'layui-btn layui-btn-danger layui-btn-xs',
+                                    class: 'layui-btn layuimini-btn-danger layui-btn-xs',
                                     method: 'url',
                                     field: 'id',
                                     icon: '',

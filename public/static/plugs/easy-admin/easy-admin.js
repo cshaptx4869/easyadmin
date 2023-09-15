@@ -10,10 +10,6 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
         tableSelect = layui.tableSelect,
         util = layui.util;
 
-    layer.config({
-        skin: 'layui-layer-easy'
-    });
-
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
@@ -343,11 +339,11 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                         }
                     } else if (v === 'delete') {
                         if (admin.checkAuth('delete', elem)) {
-                            toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-danger" data-url="' + init.delete_url + '" data-table-delete="' + tableId + '"><i class="fa fa-trash-o"></i> 删除</button>\n';
+                            toolbarHtml += '<button class="layui-btn layui-btn-sm layuimini-btn-danger" data-url="' + init.delete_url + '" data-table-delete="' + tableId + '"><i class="fa fa-trash-o"></i> 删除</button>\n';
                         }
                     } else if (v === 'export') {
                         if (admin.checkAuth('export', elem)) {
-                            toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success easyadmin-export-btn" data-url="' + init.export_url + '" data-table-export="' + tableId + '"><i class="fa fa-file-excel-o"></i> 导出</button>\n';
+                            toolbarHtml += '<button class="layui-btn layui-btn-sm layuimini-btn-success easyadmin-export-btn" data-url="' + init.export_url + '" data-table-export="' + tableId + '"><i class="fa fa-file-excel-o"></i> 导出</button>\n';
                         }
                     } else if (typeof v === "object") {
                         $.each(v, function (ii, vv) {
@@ -670,7 +666,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                         switch (item) {
                             case 'edit':
                                 var operat = {
-                                    class: 'layui-btn layui-btn-success layui-btn-xs',
+                                    class: 'layui-btn layuimini-btn-success layui-btn-xs',
                                     method: 'open',
                                     field: 'id',
                                     icon: '',
@@ -687,7 +683,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                                 break;
                             case 'delete':
                                 var operat = {
-                                    class: 'layui-btn layui-btn-danger layui-btn-xs',
+                                    class: 'layui-btn layuimini-btn-danger layui-btn-xs',
                                     method: 'get',
                                     field: 'id',
                                     icon: '',

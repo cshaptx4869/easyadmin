@@ -25,7 +25,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         url: 'system.node/refreshNode?force=0',
                         method: 'request',
                         auth: 'refresh',
-                        class: 'layui-btn layui-btn-success layui-btn-sm',
+                        class: 'layui-btn layuimini-btn-success layui-btn-sm',
                         icon: 'fa fa-hourglass',
                         extend: 'data-table="' + init.table_render_id + '"',
                     }, {
@@ -44,7 +44,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         url: 'system.node/clearNode',
                         method: 'request',
                         auth: 'clear',
-                        class: 'layui-btn layui-btn-sm layui-btn-danger',
+                        class: 'layui-btn layui-btn-sm layuimini-btn-danger',
                         icon: 'fa fa-trash-o',
                         extend: 'data-table="' + init.table_render_id + '"',
                     }

@@ -5,8 +5,7 @@
  * description:layuimini tab框架扩展
  */
 define(["jquery"], function ($) {
-    var $ = layui.$,
-        layer = layui.layer;
+    var layer = layui.layer;
 
     var miniTheme = {
 

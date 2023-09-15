@@ -4,12 +4,9 @@
  * version:2.0
  * description:layuimini 主体框架扩展
  */
-
-
 define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, miniTheme, miniTab) {
 
-    var $ = layui.$,
-        layer = layui.layer,
+    var layer = layui.layer,
         element = layui.element;
 
     if (!/http(s*):\/\//.test(location.href)) {

@@ -5,8 +5,7 @@
  * description:layuimini tab框架扩展
  */
 define(["jquery"], function ($) {
-    var element = layui.element,
-        $ = layui.$;
+    var element = layui.element;
 
 
     var miniTab = {

@@ -5,7 +5,6 @@
  * description:layuimini 统计框架扩展
  */
 define(["jquery"], function ($) {
-    var $ = layui.$;
 
     var miniTongji = {
 

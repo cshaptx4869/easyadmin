@@ -6,7 +6,6 @@
  */
 define(["jquery"], function ($) {
     var element = layui.element,
-        $ = layui.$,
         laytpl  = layui.laytpl,
         layer = layui.layer;
 

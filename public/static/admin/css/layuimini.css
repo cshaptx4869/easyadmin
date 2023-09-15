@@ -1,45 +1,3 @@
-/**
-配色方案（如有需要，请自行配置）
- */
-/**头部-配色*/
-.layui-layout-admin .layui-header {
-    background-color: #1aa094 !important;
-}
-
-.layui-header > ul > .layui-nav-item.layui-this,
-.layuimini-tool i:hover {
-    background-color: #197971 !important;
-}
-
-.layui-header .layuimini-header-content > ul > .layui-nav-item.layui-this,
-.layuimini-tool i:hover {
-    background-color: #197971 !important;
-}
-
-/**logo-配色*/
-.layui-layout-admin .layuimini-logo {
-    background-color: #243346 !important;
-}
-
-/**左侧-配色*/
-.layui-side.layui-bg-black,
-.layui-side.layui-bg-black > .layuimini-menu-left > ul {
-    background-color: #2f4056 !important;
-}
-
-.layuimini-menu-left .layui-nav .layui-nav-child a:hover:not(.layui-this) {
-    background-color: #3b3f4b;
-}
-
-/**左侧菜单选中-配色*/
-.layui-layout-admin .layui-nav-tree .layui-this,
-.layui-layout-admin .layui-nav-tree .layui-this > a,
-.layui-layout-admin .layui-nav-tree .layui-nav-child dd.layui-this,
-.layui-layout-admin .layui-nav-tree .layui-nav-child dd.layui-this a {
-    background-color: #1aa094 !important;
-}
-
-
 /**头部样式 */
 .layui-layout-admin .header {
     position: fixed;
@@ -49,12 +7,12 @@
     bottom: 0;
 }
 
-.layuimini-header-menu,
-.layui-header {
+.layui-header,
+.layuimini-header-menu {
     height: 60px !important;
 }
 
-.layuimini-header-menu > .layui-nav-item {
+.layui-header .layuimini-header-menu > .layui-nav-item {
     color: #1b1d21;
     height: 60px !important;
     line-height: 60px !important;
@@ -65,15 +23,14 @@
     line-height: 60px !important;
 }
 
-.layui-layout-left {
+.layui-header .layui-layout-left {
     left: 295px !important;
 }
 
-.layui-nav.layui-layout-left.layuimini-header-menu.layuimini-pc-show {
+.layui-header .layui-nav.layui-layout-left.layuimini-header-menu.layuimini-pc-show {
     font-weight: bold;
     transition: all .2s;
 }
-
 
 /**logo演示（通用） */
 .layui-layout-admin .layuimini-logo {
@@ -173,10 +130,6 @@
     margin-right: 5px;
 }
 
-.layuimini-tab .layui-tab-title .layui-this .layuimini-tab-active {
-    background-color: #1aa094;
-}
-
 .layuimini-tab > .layui-tab-title,
 .layuimini-tab > .close-box {
     height: 35px !important;
@@ -264,7 +217,6 @@
     padding-right: 35px;
 }
 
-
 .layuimini-tab.layui-tab-tool .layui-tab-control .layui-tab-tool {
     display: block;
 }
@@ -273,7 +225,6 @@
     padding-left: 0;
     padding-right: 35px;
 }
-
 
 .layuimini-tab.layui-tab-rollTool .layui-tab-title {
     padding-left: 35px;
@@ -312,7 +263,8 @@
 }
 
 .layuimini-tab .layui-tab-tool .layui-this a {
-    background-color: #009688;
+    background-color: #1e9fff;
+    color: #fff;
 }
 
 .layuimini-tab-loading {
@@ -370,7 +322,6 @@
 .layuimini-menu-left .layui-nav {
     background-color: transparent !important;
 }
-
 
 /**左侧菜单栏 (正常) */
 .layui-layout-body .layui-nav-itemed .layui-nav-child a,
@@ -511,7 +462,6 @@
     display: none
 }
 
-
 /*移动端遮罩层*/
 .layuimini-make {
     position: fixed;
@@ -589,7 +539,6 @@
 }
 
 /*系统设置*/
-
 .layuimini-color .layui-word-aux {
     position: absolute;
     left: 60px;
@@ -606,7 +555,6 @@
     width: 100%;
     margin-top: 30px;
 }
-
 
 .layuimini-color .more-menu-item:first-child {
     border-top: 1px solid #e8e8e8;
@@ -640,9 +588,7 @@
     font-family: layui-icon !important;
 }
 
-/**
-鼠标右键
- */
+/**鼠标右键*/
 .layuimini-tab-mousedown {
     display: none;
     width: 80px;
@@ -666,9 +612,7 @@
     overflow: hidden;
 }
 
-/**
-菜单缩放
- */
+/**菜单缩放*/
 .popup-tips .layui-layer-TipsG {
     display: none;
 }
@@ -738,10 +682,7 @@
     width: 20px;
 }
 
-
-/**
- PC版样式
- */
+/**PC版样式*/
 @media screen and (min-width: 1025px) {
     /**头部样式（缩放） */
     .layuimini-mini .layui-layout-left.layuimini-header-menu.layuimini-pc-show {
@@ -807,14 +748,9 @@
     }
 }
 
-/**
- 手机自适应样式
-*/
+/**手机自适应样式*/
 @media screen and (max-width: 1024px) {
-
-    /**
-    todo 修复低版本IOS不能滑动问题, 但还是有问题, 低版本IOS部分情况下子页面无法自适应
-    */
+    /**todo 修复低版本IOS不能滑动问题, 但还是有问题, 低版本IOS部分情况下子页面无法自适应*/
     .layuimini-tab .layui-tab-content .layui-tab-item {
         -webkit-overflow-scrolling: touch;
         overflow: scroll;
@@ -931,7 +867,6 @@
 }
 
 @media screen and (max-width: 550px) {
-
     /**头部右侧数据*/
     .layuimini-multi-module.layuimini-mini .layuimini-header-content .layui-layout-right {
         display: none;

@@ -422,7 +422,6 @@ define(["jquery"], function ($) {
         listen: function (options) {
             $('body').on('click', '[data-bgcolor]', function () {
                 var loading = layer.load(0, {shade: false, time: 2 * 1000});
-                var clientHeight = (document.documentElement.clientHeight) - 60;
                 var bgColorHtml = miniTheme.buildBgColorHtml(options);
                 var html = '<div class="layuimini-color">\n' +
                     '<div class="color-title">\n' +
@@ -441,11 +440,11 @@ define(["jquery"], function ($) {
                     type: 1,
                     title: false,
                     closeBtn: 0,
-                    shade: 0.2,
-                    anim: 2,
+                    shade: 0.1,
+                    anim: 'slideLeft',
                     shadeClose: true,
                     id: 'layuiminiBgColor',
-                    area: ['340px', clientHeight + 'px'],
+                    area: ['340px', '100%'],
                     offset: 'rb',
                     content: html,
                     success: function (index, layero) {

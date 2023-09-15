@@ -178,6 +178,16 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
         },
 
         /**
+         * 是否全屏
+         */
+        isFullScreen: function () {
+            return document.fullscreenElement ||
+                document.msFullscreenElement ||
+                document.mozFullScreenElement ||
+                document.webkitFullscreenElement || false;
+        },
+
+        /**
          * 初始化设备端
          */
         renderDevice: function () {
@@ -322,16 +332,18 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
              */
             $('body').on('click', '[data-check-screen]', function () {
                 var check = $(this).attr('data-check-screen');
-                if (check == 'full') {
-                    miniAdmin.fullScreen();
-                    $(this).attr('data-check-screen', 'exit');
-                    $(this).html('<i class="fa fa-compress"></i>');
-                } else {
-                    miniAdmin.exitFullScreen();
-                    $(this).attr('data-check-screen', 'full');
-                    $(this).html('<i class="fa fa-arrows-alt"></i>');
-                }
+                check === 'full' ? miniAdmin.fullScreen() : miniAdmin.exitFullScreen();
             });
+            var screenChangeEvents = ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'];
+            for (var i = 0; i < screenChangeEvents.length; i++) {
+                $(window).on(screenChangeEvents[i], function () {
+                    if (miniAdmin.isFullScreen() !== false) {
+                        $('[data-check-screen]').attr('data-check-screen', 'exit').html('<i class="fa fa-compress"></i>');
+                    } else {
+                        $('[data-check-screen]').attr('data-check-screen', 'full').html('<i class="fa fa-arrows-alt"></i>');
+                    }
+                });
+            }
 
             /**
              * 点击遮罩层

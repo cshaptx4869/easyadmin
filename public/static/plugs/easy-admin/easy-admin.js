@@ -1704,7 +1704,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                         var empty = $(v).attr('xm-select-empty') || '暂无数据';
                         var searchTips = $(v).attr('xm-select-searchTips') || '请选择';
                         var height = $(v).attr('xm-select-height') || '200px';
-                        var themeColor = $(v).attr('xm-select-themeColor') || '#1e9fff';
+                        var themeColor = $(v).attr('xm-select-themeColor') || '#16b777';
                         var radio = $(v).attr('multiple') === undefined;
                         var filterable = $(v).attr('xm-select-filterable') !== undefined;
                         var toolbarShow = $(v).attr('xm-select-toolbar') !== undefined;

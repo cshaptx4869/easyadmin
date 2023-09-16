@@ -101,7 +101,7 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
          * @param clearUrl
          */
         renderClear: function (clearUrl) {
-            $('.layuimini-clear').attr('data-href',clearUrl);
+            $('.layuimini-clear').attr('data-href', clearUrl);
         },
 
         /**
@@ -168,7 +168,7 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
                 el.msExitFullscreen();
             } else if (el.oRequestFullscreen) {
                 el.oCancelFullScreen();
-            }else if (el.mozCancelFullScreen) {
+            } else if (el.mozCancelFullScreen) {
                 el.mozCancelFullScreen();
             } else if (el.webkitCancelFullScreen) {
                 el.webkitCancelFullScreen();
@@ -298,14 +298,14 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
                     tips = $(this).prop("innerHTML"),
                     isShow = $('.layuimini-tool i').attr('data-side-fold');
                 if (isShow == 0 && tips) {
-                    tips = "<ul class='layuimini-menu-left-zoom layui-nav layui-nav-tree layui-this'><li class='layui-nav-item layui-nav-itemed'>"+tips+"</li></ul>" ;
+                    tips = "<ul class='layuimini-menu-left-zoom layui-nav layui-nav-tree layui-this'><li class='layui-nav-item layui-nav-itemed'>" + tips + "</li></ul>";
                     window.openTips = layer.tips(tips, $(this), {
                         tips: [2, '#2f4056'],
                         time: 300000,
-                        skin:"popup-tips",
-                        success:function (el) {
-                            var left = $(el).position().left - 10 ;
-                            $(el).css({ left:left });
+                        skin: "popup-tips",
+                        success: function (el) {
+                            var left = $(el).position().left - 10;
+                            $(el).css({left: left});
                             element.render();
                         }
                     });
@@ -334,16 +334,18 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
                 var check = $(this).attr('data-check-screen');
                 check === 'full' ? miniAdmin.fullScreen() : miniAdmin.exitFullScreen();
             });
-            var screenChangeEvents = ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'];
-            for (var i = 0; i < screenChangeEvents.length; i++) {
-                $(window).on(screenChangeEvents[i], function () {
-                    if (miniAdmin.isFullScreen() !== false) {
-                        $('[data-check-screen]').attr('data-check-screen', 'exit').html('<i class="fa fa-compress"></i>');
-                    } else {
-                        $('[data-check-screen]').attr('data-check-screen', 'full').html('<i class="fa fa-arrows-alt"></i>');
-                    }
-                });
-            }
+            //在浏览器进入或退出全屏模式后立即触发
+            $(window).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', function () {
+                var checkScreen = '', fa = '';
+                if (miniAdmin.isFullScreen() === false) {
+                    checkScreen = 'full';
+                    fa = 'fa-arrows-alt';
+                } else {
+                    checkScreen = 'exit';
+                    fa = 'fa-compress';
+                }
+                $('[data-check-screen]').attr('data-check-screen', checkScreen).html('<i class="fa ' + fa + '"></i>');
+            });
 
             /**
              * 点击遮罩层
@@ -354,7 +356,6 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
 
         }
     };
-
 
 
     return miniAdmin;

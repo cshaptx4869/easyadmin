@@ -27,7 +27,7 @@
 </head>
 <body>
 <?php
-	$codeText = $code == 1 ? 'success' : ($code == 0 ? 'error' : 'info');
+	$codeText = $code == 0 ? 'success' : ($code == 1 ? 'error' : 'info');
 ?>
     <div class="system-message {$codeText}">
         <div class="image">
@@ -51,7 +51,7 @@
                 if(time <= 0) {
                     location.href = href;
                     clearInterval(interval);
-                };
+                }
             }, 1000);
         })();
     </script>

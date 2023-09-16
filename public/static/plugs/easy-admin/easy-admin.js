@@ -120,7 +120,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                 option.data = option.data || {};
                 option.prefix = option.prefix || false;
                 option.statusName = option.statusName || 'code';
-                option.statusCode = option.statusCode || 1;
+                option.statusCode = option.statusCode || 0;
                 option.loading = option.loading !== false;
                 ok = ok || function (res) {
                 };

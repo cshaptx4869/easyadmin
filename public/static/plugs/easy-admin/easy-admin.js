@@ -1486,7 +1486,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                             },
                             done: function (res) {
                                 layer.closeAll('loading');
-                                if (res.code === 1) {
+                                if (res.code === 0) {
                                     var url = res.data.url;
                                     if (uploadNumber !== 'one') {
                                         var oldUrl = $(elem).val();

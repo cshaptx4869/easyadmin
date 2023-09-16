@@ -18,7 +18,15 @@ class Crontab extends AdminController
 {
     private $baseUri;
     private $safeKey;
-
+    private $typeOptions = [
+        0 => '请求url',
+        1 => '执行sql',
+        2 => '执行shell'
+    ];
+    private $statusOptions = [
+        0 => '禁用',
+        1 => '启用'
+    ];
     protected $allowModifyFields = [
         'status',
         'sort'
@@ -30,7 +38,6 @@ class Crontab extends AdminController
         $config = config('crontab');
         $this->baseUri = $config['base_uri'];
         $this->safeKey = $config['safe_key'];
-        $this->assign('typeOptions', [0 => '请求url', 1 => '执行sql', 2 => '执行shell']);
     }
 
     /**
@@ -41,13 +48,17 @@ class Crontab extends AdminController
         if ($this->request->isAjax()) {
             $response = $this->httpRequest(HttpCrontab::INDEX_PATH . '?' . $this->request->query());
             $data = [
-                'code' => 0,
+                'code' => $response['ok'] ? 0 : 1,
                 'msg' => $response['msg'],
                 'count' => $response['ok'] ? $response['data']['count'] : 0,
                 'data' => $response['ok'] ? $response['data']['list'] : [],
             ];
             return json($data);
         }
+        $this->setJsVariables([
+            'typeOptions' => $this->typeOptions,
+            'statusOptions' => $this->statusOptions
+        ]);
         return $this->fetch();
     }
 
@@ -68,7 +79,8 @@ class Crontab extends AdminController
             $response = $this->httpRequest(HttpCrontab::ADD_PATH, 'POST', $post);
             $response['ok'] ? $this->success('保存成功') : $this->error($response['msg']);
         }
-
+        $this->assign('typeOptions', $this->typeOptions);
+        $this->assign('statusOptions', $this->statusOptions);
         return $this->fetch();
     }
 
@@ -88,6 +100,7 @@ class Crontab extends AdminController
 
         $response = $this->httpRequest(HttpCrontab::READ_PATH . '?id=' . $id);
         $this->assign('row', $response['data']);
+        $this->assign('typeOptions', $this->typeOptions);
         return $this->fetch();
     }
 
@@ -144,8 +157,14 @@ class Crontab extends AdminController
             ];
             return json($data);
         }
-
-        return $this->fetch('', ['sid' => $id]);
+        $this->setJsVariables([
+            'sid' => $id,
+            'returnVarOptions' => [
+                0 => '成功',
+                1 => '失败'
+            ]
+        ]);
+        return $this->fetch();
     }
 
     /**
@@ -154,7 +173,7 @@ class Crontab extends AdminController
     public function ping()
     {
         $response = $this->httpRequest(HttpCrontab::PING_PATH);
-        return json(['code' => $response['ok'] ? 1 : 0]);
+        $response['ok'] ? $this->success('ping成功') : $this->error($response['msg']);
     }
 
     /**

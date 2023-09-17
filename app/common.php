@@ -16,7 +16,7 @@ if (!function_exists('__url')) {
      */
     function __url(string $url = '', array $vars = [], $suffix = true, $domain = false)
     {
-        return url($url, $vars, $suffix, $domain)->build();
+        return preg_match('/^https?:\/{2}/i', $url) ? $url : url($url, $vars, $suffix, $domain)->build();
     }
 }
 

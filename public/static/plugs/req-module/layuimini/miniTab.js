@@ -54,10 +54,37 @@ define(["jquery"], function ($) {
                 , content: '<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0"   src="' + options.href + '"></iframe>'
                 , id: options.tabId
             });
+            miniTab.tabIframeLoading(options.href, options.isIframe);
             $('.layuimini-menu-left').attr('layuimini-tab-tag', 'add');
             sessionStorage.setItem('layuiminimenu_' + options.tabId, options.title);
         },
 
+        /**'
+         * tab加载效果
+         * @param href
+         * @param isIframe
+         */
+        tabIframeLoading: function (href, isIframe) {
+            var index = Date.now();
+            var loadHtml = '<div id="layuimini-tab-loading' + index + '" class="layuimini-tab-loading">' +
+                '<div class="ball-loader">' +
+                '<span></span><span></span><span></span><span></span>' +
+                '</div>' +
+                '</div>';
+            var $iframe = isIframe ?
+                parent.$(".layuimini-tab .layui-tab-content .layui-tab-item").find("iframe[src='" + href + "']") :
+                $(".layuimini-tab .layui-tab-content .layui-tab-item").find("iframe[src='" + href + "']");
+            $iframe.parent().append(loadHtml);
+            var $loading = isIframe ?
+                parent.$(".layuimini-tab").find("#layuimini-tab-loading" + index) :
+                $(".layuimini-tab").find("#layuimini-tab-loading" + index);
+            $loading.css({display: "block"});
+            $iframe.on("load", function () {
+                $loading.fadeOut(1000, function () {
+                    $loading.remove();
+                });
+            });
+        },
 
         /**
          * 切换选项卡
@@ -89,7 +116,6 @@ define(["jquery"], function ($) {
         openNewTabByIframe: function (options) {
             options.href = options.href || null;
             options.title = options.title || null;
-            var loading = parent.layer.load(0, {shade: false, time: 2 * 1000});
             if (options.href === null || options.href === undefined) options.href = new Date().getTime();
             var checkTab = miniTab.check(options.href, true);
             if (!checkTab) {
@@ -101,7 +127,6 @@ define(["jquery"], function ($) {
                 });
             }
             parent.layui.element.tabChange('layuiminiTab', options.href);
-            parent.layer.close(loading);
         },
 
         /**
@@ -202,7 +227,6 @@ define(["jquery"], function ($) {
              * 打开新窗口
              */
             $('body').on('click', '[layuimini-href]', function () {
-                var loading = layer.load(0, {shade: false, time: 2 * 1000});
                 var tabId = $(this).attr('layuimini-href'),
                     href = $(this).attr('layuimini-href'),
                     title = $(this).text(),
@@ -216,7 +240,6 @@ define(["jquery"], function ($) {
                 }
 
                 if (target === '_blank') {
-                    layer.close(loading);
                     window.open(href, "_blank");
                     return false;
                 }
@@ -233,20 +256,17 @@ define(["jquery"], function ($) {
                     });
                 }
                 element.tabChange('layuiminiTab', tabId);
-                layer.close(loading);
             });
 
             /**
              * 在iframe子菜单上打开新窗口
              */
             $('body').on('click', '[layuimini-content-href]', function () {
-                var loading = parent.layer.load(0, {shade: false, time: 2 * 1000});
                 var tabId = $(this).attr('layuimini-content-href'),
                     href = $(this).attr('layuimini-content-href'),
                     title = $(this).attr('data-title'),
                     target = $(this).attr('target');
                 if (target === '_blank') {
-                    parent.layer.close(loading);
                     window.open(href, "_blank");
                     return false;
                 }
@@ -262,7 +282,6 @@ define(["jquery"], function ($) {
                     });
                 }
                 parent.layui.element.tabChange('layuiminiTab', tabId);
-                parent.layer.close(loading);
             });
 
             /**
@@ -402,10 +421,10 @@ define(["jquery"], function ($) {
             options.menuList = options.menuList || [];
             if (!options.urlHashLocation) return false;
             var tabId = location.hash.replace(/^#/, '');
-            if (tabId === null || tabId === undefined || tabId ==='') return false;
+            if (tabId === null || tabId === undefined || tabId === '') return false;
 
             // 判断是否为首页
-            if(tabId ===options.homeInfo.href) return false;
+            if (tabId === options.homeInfo.href) return false;
 
             // 判断是否为右侧菜单
             var menu = miniTab.searchMenu(tabId, options.menuList);

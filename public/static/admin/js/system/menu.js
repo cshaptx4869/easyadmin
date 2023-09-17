@@ -20,7 +20,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
         index: function () {
 
             var renderTable = function () {
-                layer.load(2);
+                layer.load(0);
                 treetable.render({
                     treeColIndex: 1,
                     treeSpid: 0,

@@ -327,7 +327,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
 
                 // 监听页面大小变化
                 $(window).on('resize', function (){
-                    table2card(options.id);
+                    admin.table.table2card(options.id);
                 });
 
                 return newTable;

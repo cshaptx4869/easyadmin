@@ -31,6 +31,12 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                     elem: init.table_elem,
                     id: init.table_render_id,
                     toolbar: '#toolbar',
+                    defaultToolbar: ['filter', 'print', {
+                        title: '搜索',
+                        layEvent: 'TABLE_SEARCH',
+                        icon: 'layui-icon-search',
+                        extend: 'data-table-id="' + init.table_render_id + '"'
+                    }],
                     page: false,
                     skin: 'line',
 
@@ -109,6 +115,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
             };
 
             renderTable();
+            ea.table.listenToolbar(init.table_render_id + '_LayFilter', init.table_render_id);
 
             $(window).on('resize', function (){
                 ea.table.table2card(init.table_render_id);
@@ -161,6 +168,8 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                         });
                     })
                 });
+            }).on('click', '[data-treetable-reset]', function () {
+                treetable.reset(init.table_elem);
             });
 
             //监听switch
@@ -206,7 +215,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
             });
 
             form.on("submit(*)", function (data) {
-                treetable.search(init.table_elem, data.field.keyword)
+                treetable.search(init.table_elem, data.field.keyword);
                 return false;
             });
 

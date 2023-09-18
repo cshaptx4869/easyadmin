@@ -7,7 +7,7 @@
 </style>
 <div class="layuimini-container">
     <div class="layuimini-main">
-        <fieldset class="table-search-fieldset">
+        <fieldset id="searchFieldset_currentTableRenderId" class="table-search-fieldset layui-hide">
             <legend>条件搜索</legend>
             <form class="layui-form layui-form-pane form-search">
                 <div class="layui-form-item layui-inline">
@@ -19,7 +19,7 @@
 
                 <div class="layui-form-item layui-inline" style="margin-left: 115px">
                     <button type="submit" class="layui-btn layui-btn-normal" data-type="tableSearch" lay-submit lay-filter="*"> 搜 索</button>
-                    <button type="reset" class="layui-btn layui-btn-primary"> 重 置</button>
+                    <button type="reset" class="layui-btn layui-btn-primary" data-treetable-reset="currentTableRenderId"> 重 置</button>
                 </div>
             </form>
         </fieldset>
@@ -28,7 +28,7 @@
                data-auth-add="{:auth('system.menu/add')}"
                data-auth-edit="{:auth('system.menu/edit')}"
                data-auth-delete="{:auth('system.menu/delete')}"
-               lay-filter="currentTable">
+               lay-filter="currentTableRenderId_LayFilter">
         </table>
     </div>
 </div>

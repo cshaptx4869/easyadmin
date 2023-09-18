@@ -156,6 +156,10 @@ layui.define(['layer', 'table'], function (exports) {
                 treetable.expandAll(elem);
             }
         },
+        // 重置搜索
+        reset: function (elem) {
+            $(elem).next('.treeTable').find('.layui-table-body tbody tr td').css('background-color', 'transparent');
+        },
         // 计算缩进的数量
         getEmptyNum: function (pid, data, indent) {
             var num = 0;

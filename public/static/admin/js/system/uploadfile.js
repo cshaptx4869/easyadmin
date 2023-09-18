@@ -35,12 +35,11 @@ define(["jquery", "easy-admin"], function ($, ea) {
             ea.listen();
         },
         add: function () {
-            ea.listen();
-        },
-        edit: function () {
-            ea.listen();
-        },
-        password: function () {
+            $('button').click(function () {
+                ea.api.closeCurrentOpen({
+                    refreshTable: true
+                });
+            });
             ea.listen();
         }
     };

@@ -279,48 +279,20 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                     // 分页参数精简
                     options.page = {
                         layout: ['first', 'prev', 'page', 'next', 'last', 'count']
-                    }
+                    };
                     // 返回顶部
                     options.topBar = true;
                 }
-                // 表格转卡片
-                var table2card = function () {
-                    var domTable = $('[lay-id="' + options.id + '"]');
-                    if (domTable.find('.data-item').length === 0) {
-                        var colsHeader = [];
-                        domTable.find('.layui-table-header').first().find('.layui-table-cell').each(function (index, cell) {
-                            if ($(cell).hasClass('laytable-cell-checkbox')) {
-                                colsHeader.push('选择');
-                            } else {
-                                colsHeader.push($(cell).find('span').first().text())
-                            }
-                        });
-                        domTable.find('.layui-table-main').find('tr').each(function (index, domTr) {
-                            $(domTr).find('td').each(function (indexTd, domTd) {
-                                $('<div class="data-item">' + colsHeader[indexTd] + '</div>').insertBefore($(domTd).find('.layui-table-cell'))
-                            });
-                        });
-                    }
-                };
                 //数据渲染完毕回调
                 var optionDone = options.done;
                 options.done = function (res, curr, count) {
                     typeof optionDone === 'function' && optionDone(res, curr, count);
                     // 解决非默认高度时，固定列行错位问题
-                    $(".layui-table-main tr").each(function (index, val) {
-                        $(".layui-table-fixed").each(function () {
-                            $($(this).find(".layui-table-body tbody tr")[index]).height($(val).height());
-                        });
-                    });
-                    $(".layui-table-header tr").each(function (index, val) {
-                        $(".layui-table-fixed").each(function () {
-                            $($(this).find(".layui-table-header thead tr")[index]).height($(val).height());
-                        });
-                    });
-                    // 顶部返回
-                    options.topBar && util.fixbar({bgcolor: '#1e9fff'});
+                    admin.table.autoHeight(options.id);
                     // 表格转卡片
-                    admin.checkMobile() && table2card();
+                    admin.checkMobile() && admin.table.table2card(options.id);
+                    // 顶部返回
+                    options.topBar && admin.table.fixbar();
                 };
 
                 // 判断元素对象是否有嵌套的
@@ -355,7 +327,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
 
                 // 监听页面大小变化
                 $(window).on('resize', function (){
-                    table2card();
+                    table2card(options.id);
                 });
 
                 return newTable;
@@ -684,6 +656,41 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                     }
                 }
                 return cols;
+            },
+            autoHeight(id) {
+                var domTable = $('[lay-id="' + id + '"]');
+                domTable.find(".layui-table-main tr").each(function (index, val) {
+                    $(".layui-table-fixed").each(function () {
+                        $($(this).find(".layui-table-body tbody tr")[index]).height($(val).height());
+                    });
+                });
+                domTable.find(".layui-table-header tr").each(function (index, val) {
+                    $(".layui-table-fixed").each(function () {
+                        $($(this).find(".layui-table-header thead tr")[index]).height($(val).height());
+                    });
+                });
+            },
+            table2card(id) {
+                var domTable = $('[lay-id="' + id + '"]');
+                if (domTable.find('.data-item').length === 0) {
+                    var colsHeader = [];
+                    domTable.find('.layui-table-header').first().find('.layui-table-cell').each(function (index, cell) {
+                        if ($(cell).hasClass('laytable-cell-checkbox')) {
+                            colsHeader.push('选择');
+                        } else {
+                            colsHeader.push($(cell).find('span').first().text())
+                        }
+                    });
+                    domTable.find('.layui-table-main').find('tr').each(function (index, domTr) {
+                        $(domTr).find('td').each(function (indexTd, domTd) {
+                            $('<div class="data-item">' + colsHeader[indexTd] + '</div>').insertBefore($(domTd).find('.layui-table-cell'))
+                        });
+                    });
+                }
+            },
+            fixbar(bgcolor) {
+                bgcolor = bgcolor || '#1e9fff';
+                util.fixbar({bgcolor: bgcolor});
             },
             tool: function (data) {
                 var option = this;

@@ -101,11 +101,18 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                     ]], init),
                     done: function () {
                         layer.closeAll('loading');
+                        ea.checkMobile() && ea.table.table2card(init.table_render_id);
+                        ea.table.autoHeight(init.table_render_id);
+                        ea.table.fixbar();
                     }
                 });
             };
 
             renderTable();
+
+            $(window).on('resize', function (){
+                ea.table.table2card(init.table_render_id);
+            });
 
             $('body').on('click', '[data-treetable-expand]', function () { //展开
                 treetable.expandAll(init.table_elem);

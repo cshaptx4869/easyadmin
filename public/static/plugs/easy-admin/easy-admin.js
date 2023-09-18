@@ -260,6 +260,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                 options.limits = options.limits || [10, 15, 20, 25, 50, 100];
                 options.cols = options.cols || [];
                 options.defaultToolbar = options.defaultToolbar || ['filter', 'print'];
+                options.init.form_full_screen = options.formFullScreen === true ? 'true' : 'false';
                 if (options.search) {
                     options.defaultToolbar.push({
                         title: '搜索',
@@ -335,7 +336,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                         toolbarHtml += ' <button class="layui-btn layui-btn-sm layuimini-btn-primary" data-table-refresh="' + tableId + '"><i class="fa fa-refresh"></i> </button>\n';
                     } else if (v === 'add') {
                         if (admin.checkAuth('add', elem)) {
-                            toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加"><i class="fa fa-plus"></i> 添加</button>\n';
+                            toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加" data-full="' + init.form_full_screen + '"><i class="fa fa-plus"></i> 添加</button>\n';
                         }
                     } else if (v === 'delete') {
                         if (admin.checkAuth('delete', elem)) {
@@ -670,7 +671,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                                     title: '编辑信息',
                                     auth: 'edit',
                                     url: option.init.edit_url,
-                                    extend: ""
+                                    extend: 'data-full="' + option.init.form_full_screen + '"'
                                 };
                                 operat.url = admin.table.toolSpliceUrl(operat.url, operat.field, data);
                                 if (admin.checkAuth(operat.auth, elem)) {

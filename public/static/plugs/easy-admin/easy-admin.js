@@ -283,6 +283,25 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                     // 返回顶部
                     options.topBar = true;
                 }
+                // 表格转卡片
+                var table2card = function () {
+                    var domTable = $('[lay-id="' + options.id + '"]');
+                    if (domTable.find('.data-item').length === 0) {
+                        var colsHeader = [];
+                        domTable.find('.layui-table-header').first().find('.layui-table-cell').each(function (index, cell) {
+                            if ($(cell).hasClass('laytable-cell-checkbox')) {
+                                colsHeader.push('选择');
+                            } else {
+                                colsHeader.push($(cell).find('span').first().text())
+                            }
+                        });
+                        domTable.find('.layui-table-main').find('tr').each(function (index, domTr) {
+                            $(domTr).find('td').each(function (indexTd, domTd) {
+                                $('<div class="data-item">' + colsHeader[indexTd] + '</div>').insertBefore($(domTd).find('.layui-table-cell'))
+                            });
+                        });
+                    }
+                };
                 //数据渲染完毕回调
                 var optionDone = options.done;
                 options.done = function (res, curr, count) {
@@ -301,24 +320,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                     // 顶部返回
                     options.topBar && util.fixbar({bgcolor: '#1e9fff'});
                     // 表格转卡片
-                    if (admin.checkMobile()) {
-                        var domTable = $('[lay-id="' + options.id + '"]');
-                        if (domTable.find('.data-item').length === 0) {
-                            var colsHeader = [];
-                            domTable.find('.layui-table-header').first().find('.layui-table-cell').each(function (index, cell) {
-                                if ($(cell).hasClass('laytable-cell-checkbox')) {
-                                    colsHeader.push('选择');
-                                } else {
-                                    colsHeader.push($(cell).find('span').first().text())
-                                }
-                            });
-                            domTable.find('.layui-table-main').find('tr').each(function (index, domTr) {
-                                $(domTr).find('td').each(function (indexTd, domTd) {
-                                    $('<div class="data-item">' + colsHeader[indexTd] + '</div>').insertBefore($(domTd).find('.layui-table-cell'))
-                                });
-                            });
-                        }
-                    }
+                    admin.checkMobile() && table2card();
                 };
 
                 // 判断元素对象是否有嵌套的
@@ -350,6 +352,11 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
 
                 // 监听表格开关切换
                 admin.table.listenEdit(options.init, options.layFilter, options.id, options.modifyReload);
+
+                // 监听页面大小变化
+                $(window).on('resize', function (){
+                    table2card();
+                });
 
                 return newTable;
             },

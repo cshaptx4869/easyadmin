@@ -336,3 +336,89 @@ body {
         display: none;
     }
 }
+
+@media screen and (max-width: 450px) {
+    /*表单*/
+    .layuimini-form > .layui-form-item .layui-form-label {
+        float: unset;
+        text-align: left;
+    }
+
+    .layuimini-form > .layui-form-item .required:after {
+        right: unset;
+        left: 0;
+        margin-left: 0;
+    }
+
+    .layuimini-form > .layui-form-item .layui-input-block {
+        margin-left: 0;
+    }
+
+    /*表格*/
+    .layuimini-container .layui-table-box {
+        border: none;
+    }
+
+    .layuimini-container .layui-table-box .layui-table-header {
+        display: none;
+    }
+
+    .layuimini-container .layui-table-box .layui-table-body .layui-table {
+        display: block;
+    }
+
+    .layuimini-container .layui-table-box .layui-table-body .layui-table tbody {
+        display: block;
+    }
+
+    .layuimini-container .layui-table-box .layui-table-body .layui-table tr {
+        background-color: #f8f8f8;
+        border-radius: 15px;
+        padding: 15px;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    .layuimini-container .layui-table-box .layui-table-body .layui-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-right: 0;
+        border-bottom: 1px solid #fff;
+        min-height: 30px;
+    }
+
+    .layuimini-container .layui-table-box .layui-table-body .layui-table td .data-item {
+        display: block;
+    }
+
+    .layuimini-container .layui-table-box .layui-table-body .layui-table td > div:first-child {
+        flex: 1;
+    }
+
+    .layuimini-container .layui-table-box .layui-table-body .layui-table td > div:nth-child(2) {
+        flex: 2;
+    }
+
+    .layuimini-container .layui-table-box .layui-table-body .layui-table td .layui-table-grid-down {
+        display: none;
+    }
+
+    .layuimini-container .layui-table-box .layui-table-body .layui-table .layui-table-cell {
+        width: auto;
+        padding: 0;
+        text-align: right;
+    }
+
+    .layuimini-container .layui-table-page {
+        overflow: auto;
+        height: 45px;
+    }
+}
+
+@media screen and (min-width: 450px) {
+    /*列表*/
+    .layuimini-container .layui-table-box .layui-table-main .layui-table td .data-item {
+        display: none;
+    }
+}

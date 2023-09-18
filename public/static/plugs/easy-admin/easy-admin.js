@@ -277,9 +277,11 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                         options.defaultToolbar.splice(printIndex, 1)
                     }
                     // 分页参数精简
-                    options.page = {
-                        layout: ['first', 'prev', 'page', 'next', 'last', 'count']
-                    };
+                    if (options.page !== false) {
+                        options.page = {
+                            layout: ['first', 'prev', 'page', 'next', 'last', 'count']
+                        };
+                    }
                     // 返回顶部
                     options.topBar = true;
                 }

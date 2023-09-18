@@ -40,12 +40,12 @@ if (!function_exists('xdebug')) {
 
     /**
      * debug调试
-     * @deprecated 不建议使用，建议直接使用框架自带的log组件
      * @param string|array $data 打印信息
      * @param string $type 类型
      * @param string $suffix 文件后缀名
      * @param bool $force
      * @param null $file
+     * @deprecated 不建议使用，建议直接使用框架自带的log组件
      */
     function xdebug($data, $type = 'xdebug', $suffix = null, $force = false, $file = null)
     {
@@ -54,7 +54,7 @@ if (!function_exists('xdebug')) {
             $file = is_null($suffix) ? runtime_path() . 'xdebug/' . date('Ymd') . '.txt' : runtime_path() . 'xdebug/' . date('Ymd') . "_{$suffix}" . '.txt';
         }
         file_put_contents($file, "[" . date('Y-m-d H:i:s') . "] " . "========================= {$type} ===========================" . PHP_EOL, FILE_APPEND);
-        $str = (is_string($data) ? $data : (is_array($data) || is_object($data)) ? print_r($data, true) : var_export($data, true)) . PHP_EOL;
+        $str = (is_string($data) ? $data : (is_array($data) || is_object($data) ? print_r($data, true) : var_export($data, true))) . PHP_EOL;
         $force ? file_put_contents($file, $str) : file_put_contents($file, $str, FILE_APPEND);
     }
 }

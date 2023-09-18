@@ -81,16 +81,19 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                     extend: 'data-full="true"',
                                 }, {
                                     class: 'layui-btn layuimini-btn-danger layui-btn-xs',
-                                    method: 'url',
+                                    method: 'open',
                                     field: 'id',
-                                    icon: '',
                                     text: '删除',
                                     title: '确定删除？',
                                     auth: 'delete',
                                     url: init.delete_url,
                                     extend: 'data-treetable-delete-row',
-                                    render: function (d) {
-                                        return d.pid != $variables.homePid;
+                                    render: function (d, o) {
+                                        if (d.pid == $variables.homePid) {
+                                            return;
+                                        }
+                                        var delOperat = o.operat[0][2];
+                                        return '<a class="' + delOperat.class + '" data-url="' + delOperat.url + '" data-title="' + delOperat.title + '" ' + delOperat.extend + '>' + delOperat.text + '</a>';
                                     }
                                 }]
                             ]

@@ -555,8 +555,6 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                     formatToolbar.method = formatToolbar.method !== '' ? 'data-open="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
                 } else if (toolbar.method === 'none') { // 常用于与extend配合，自定义监听按钮
                     formatToolbar.method = '';
-                } else if (toolbar.method === 'url') { // 与extend配合自定义监听url的处理方式
-                    formatToolbar.method = formatToolbar.method !== '' ? 'data-url="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
                 } else {
                     formatToolbar.method = formatToolbar.method !== '' ? 'data-request="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
                 }
@@ -585,8 +583,6 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                     formatOperat.method = formatOperat.method !== '' ? 'data-open="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
                 } else if (operat.method === 'none') { // 常用于与extend配合，自定义监听按钮
                     formatOperat.method = '';
-                } else if (operat.method === 'url') { // 与extend配合自定义监听url的处理方式
-                    formatOperat.method = formatOperat.method !== '' ? 'data-url="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
                 } else {
                     formatOperat.method = formatOperat.method !== '' ? 'data-request="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
                 }

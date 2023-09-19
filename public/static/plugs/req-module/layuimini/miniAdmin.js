@@ -264,10 +264,10 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
                 if (clearUrl != undefined && clearUrl != '' && clearUrl != null) {
                     $.getJSON(clearUrl, function (data, status) {
                         layer.close(loading);
-                        if (data.code != 1) {
-                            return miniAdmin.error(data.msg);
-                        } else {
+                        if (data.code == 0) {
                             return miniAdmin.success(data.msg);
+                        } else {
+                            return miniAdmin.error(data.msg);
                         }
                     }).fail(function () {
                         layer.close(loading);

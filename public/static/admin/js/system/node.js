@@ -47,8 +47,8 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         class: 'layui-btn layui-btn-sm layuimini-btn-danger',
                         icon: 'fa fa-trash-o',
                         extend: 'data-table="' + init.table_render_id + '"',
-                    }
-                    ]],
+                    }]
+                ],
                 cols: [[
                     {field: 'node', minWidth: 200, align: 'left', title: '系统节点'},
                     {field: 'title', minWidth: 80, title: '节点名称 <i class="table-edit-tips color-red">*</i>', align: 'left', edit: 'text'},

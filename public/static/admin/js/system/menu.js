@@ -44,8 +44,6 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                     cols: ea.table.formatCols([[
                         {type: 'checkbox'},
                         {field: 'title', width: 250, title: '菜单名称', align: 'left'},
-                        {field: 'icon', width: 80, title: '图标', templet: ea.table.icon},
-                        {field: 'href', minWidth: 120, title: '菜单链接'},
                         {
                             field: 'is_home',
                             width: 80,
@@ -61,6 +59,8 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                 }
                             }
                         },
+                        {field: 'icon', width: 80, title: '图标', templet: ea.table.icon},
+                        {field: 'href', minWidth: 120, title: '菜单链接', align: 'left'},
                         {field: 'status', title: '状态', width: 85, templet: ea.table.switch},
                         {field: 'sort', width: 80, title: '排序', edit: 'text'},
                         {

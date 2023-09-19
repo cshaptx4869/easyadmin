@@ -261,6 +261,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                 options.cols = options.cols || [];
                 options.defaultToolbar = options.defaultToolbar || ['filter', 'print'];
                 options.init.form_full_screen = options.formFullScreen === true ? 'true' : 'false';
+                options.init.align = options.align || 'center';
                 if (options.search) {
                     options.defaultToolbar.push({
                         title: '搜索',
@@ -630,7 +631,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
 
                         // 判断是否初始化对齐方式
                         if (val.align === undefined) {
-                            cols[i][index]['align'] = 'center';
+                            cols[i][index]['align'] = init.align !== undefined ? init.align : 'center';
                         }
 
                         // 部分字段开启排序

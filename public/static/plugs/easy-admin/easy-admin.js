@@ -292,7 +292,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                     // 解决非默认高度时，固定列行错位问题
                     admin.table.autoHeight(options.id);
                     // 表格转卡片
-                    admin.checkMobile() && admin.table.table2card(options.id);
+                    document.body.clientWidth < 768 && admin.table.table2card(options.id);
                     // 顶部返回
                     options.topBar && admin.table.fixbar();
                 };
@@ -330,6 +330,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                 // 监听页面大小变化
                 $(window).on('resize', function (){
                     admin.table.table2card(options.id);
+                    admin.table.fixbar();
                 });
 
                 return newTable;
@@ -673,21 +674,24 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                 });
             },
             table2card(id) {
-                var domTable = $('[lay-id="' + id + '"]');
-                if (domTable.find('.data-item').length === 0) {
-                    var colsHeader = [];
-                    domTable.find('.layui-table-header').first().find('.layui-table-cell').each(function (index, cell) {
-                        if ($(cell).hasClass('laytable-cell-checkbox')) {
-                            colsHeader.push('选择');
-                        } else {
-                            colsHeader.push($(cell).find('span').first().text())
-                        }
-                    });
-                    domTable.find('.layui-table-main').find('tr').each(function (index, domTr) {
-                        $(domTr).find('td').each(function (indexTd, domTd) {
-                            $('<div class="data-item">' + colsHeader[indexTd] + '</div>').insertBefore($(domTd).find('.layui-table-cell'))
+                var domTable = $('.layuimini-table2card [lay-id="' + id + '"]');
+                if (domTable.length > 0) {
+                    // 防止浏览器大小变化导致重复执行
+                    if (domTable.find('.data-item').length === 0) {
+                        var colsHeader = [];
+                        domTable.find('.layui-table-header').first().find('.layui-table-cell').each(function (index, cell) {
+                            if ($(cell).hasClass('laytable-cell-checkbox')) {
+                                colsHeader.push('选择');
+                            } else {
+                                colsHeader.push($(cell).find('span').first().text())
+                            }
                         });
-                    });
+                        domTable.find('.layui-table-main').find('tr').each(function (index, domTr) {
+                            $(domTr).find('td').each(function (indexTd, domTd) {
+                                $('<div class="data-item">' + colsHeader[indexTd] + '</div>').insertBefore($(domTd).find('.layui-table-cell'))
+                            });
+                        });
+                    }
                 }
             },
             fixbar(bgcolor) {

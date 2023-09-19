@@ -64,7 +64,7 @@ class SystemLog
                     'url'         => $url,
                     'method'      => $method,
                     'ip'          => $ip,
-                    'content'     => json_encode($params, JSON_UNESCAPED_UNICODE),
+                    'content'     => json_encode($params, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE), //不转义斜杠、中文不转码
                     'useragent'   => $_SERVER['HTTP_USER_AGENT'],
                     'create_time' => time(),
                 ];

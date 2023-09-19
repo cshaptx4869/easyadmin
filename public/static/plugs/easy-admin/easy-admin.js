@@ -1631,7 +1631,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                                 cols: [[
                                     {type: selectCheck},
                                     {field: 'id', minWidth: 80, title: 'ID', align: "left"},
-                                    {field: 'url', minWidth: 80, title: '文件预览', align: "left", templet: admin.table.image, imageHeight: 40},
+                                    {field: 'url', minWidth: 80, title: '文件预览', align: "left", templet: admin.table.image},
                                     {field: 'original_name', minWidth: 150, title: '文件原名', align: "left"},
                                     {field: 'mime_type', minWidth: 120, title: 'mime类型', align: "left"},
                                     {field: 'create_time', minWidth: 200, title: '创建时间', align: "left"},

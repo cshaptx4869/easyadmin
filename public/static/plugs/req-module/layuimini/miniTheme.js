@@ -271,7 +271,7 @@ define(["jquery"], function ($) {
         render: function (options) {
             options.bgColorDefault = options.bgColorDefault || 0;
             options.listen = options.listen || false;
-            var bgcolorId = sessionStorage.getItem('layuiminiBgcolorId');
+            var bgcolorId = localStorage.getItem('layuiminiBgcolorId');
             if (bgcolorId === null || bgcolorId === undefined || bgcolorId === '') {
                 bgcolorId = options.bgColorDefault;
             }
@@ -396,7 +396,7 @@ define(["jquery"], function ($) {
          */
         buildBgColorHtml: function (options) {
             options.bgColorDefault = options.bgColorDefault || 0;
-            var bgcolorId = parseInt(sessionStorage.getItem('layuiminiBgcolorId'));
+            var bgcolorId = parseInt(localStorage.getItem('layuiminiBgcolorId'));
             if (isNaN(bgcolorId)) bgcolorId = options.bgColorDefault;
             var bgColorConfig = miniTheme.config();
             var html = '';
@@ -460,7 +460,7 @@ define(["jquery"], function ($) {
                 var bgcolorId = $(this).attr('data-select-bgcolor');
                 $('.layuimini-color .color-content ul .layui-this').attr('class', '');
                 $(this).attr('class', 'layui-this');
-                sessionStorage.setItem('layuiminiBgcolorId', bgcolorId);
+                localStorage.setItem('layuiminiBgcolorId', bgcolorId);
                 miniTheme.render({
                     bgColorDefault: bgcolorId,
                     listen: false,

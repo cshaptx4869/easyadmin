@@ -74,7 +74,6 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                     method: 'open',
                                     auth: 'add',
                                     class: 'layui-btn layui-btn-xs layui-btn-normal',
-                                    extend: 'data-full="true"',
                                     render: function (d) {
                                         return d.pid != $variables.homePid;
                                     }
@@ -84,7 +83,6 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
                                     method: 'open',
                                     auth: 'edit',
                                     class: 'layui-btn layui-btn-xs layuimini-btn-success',
-                                    extend: 'data-full="true"',
                                 }, {
                                     class: 'layui-btn layuimini-btn-danger layui-btn-xs',
                                     method: 'open',

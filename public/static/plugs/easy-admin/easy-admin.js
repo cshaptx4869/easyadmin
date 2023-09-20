@@ -1,4 +1,4 @@
-define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function ($, xmSelect, Sortable) {
+define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"], function ($, miniTab, xmSelect, Sortable) {
 
     var form = layui.form,
         layer = layui.layer,
@@ -561,11 +561,13 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                 formatToolbar.icon = formatToolbar.icon !== '' ? '<i class="' + formatToolbar.icon + '"></i> ' : '';
                 formatToolbar.class = formatToolbar.class !== '' ? 'class="' + formatToolbar.class + '" ' : '';
                 if (toolbar.method === 'open') {
-                    formatToolbar.method = formatToolbar.method !== '' ? 'data-open="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
-                } else if (toolbar.method === 'none') { // 常用于与extend配合，自定义监听按钮
+                    formatToolbar.method = 'data-open="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ';
+                } else if (toolbar.method === 'request') {
+                    formatToolbar.method = 'data-request="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ';
+                } else if (toolbar.method === 'tab') {
+                    formatToolbar.method = 'layuimini-content-href="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ';
+                } else { //none,常用于与extend配合，自定义监听按钮
                     formatToolbar.method = '';
-                } else {
-                    formatToolbar.method = formatToolbar.method !== '' ? 'data-request="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
                 }
                 formatToolbar.checkbox = toolbar.checkbox ? ' data-checkbox="true" ' : '';
                 formatToolbar.tableId = tableId !== undefined ? ' data-table="' + tableId + '" ' : '';
@@ -588,12 +590,14 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                 var formatOperat = operat;
                 formatOperat.icon = formatOperat.icon !== '' ? '<i class="' + formatOperat.icon + '"></i> ' : '';
                 formatOperat.class = formatOperat.class !== '' ? 'class="' + formatOperat.class + '" ' : '';
-                if (operat.method === 'open') {
-                    formatOperat.method = formatOperat.method !== '' ? 'data-open="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
-                } else if (operat.method === 'none') { // 常用于与extend配合，自定义监听按钮
+                if (operat.method === 'open'){
+                    formatOperat.method = 'data-open="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ';
+                } else if (operat.method === 'request') {
+                    formatOperat.method = 'data-request="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ';
+                } else if (operat.method === 'tab') {
+                    formatOperat.method = 'layuimini-content-href="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ';
+                } else { //none,常用于与extend配合，自定义监听按钮
                     formatOperat.method = '';
-                } else {
-                    formatOperat.method = formatOperat.method !== '' ? 'data-request="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
                 }
                 html = '<a ' + formatOperat.class + formatOperat.method + formatOperat.extend + '>' + formatOperat.icon + formatOperat.text + '</a>';
 
@@ -727,7 +731,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                             case 'delete':
                                 var operat = {
                                     class: 'layui-btn layuimini-btn-danger layui-btn-xs',
-                                    method: 'get',
+                                    method: 'request',
                                     field: 'id',
                                     icon: '',
                                     text: '删除',
@@ -848,7 +852,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                 } catch (e) {
                     var value = undefined;
                 }
-                return '<a class="layuimini-table-url" href="' + value + '" target="_blank" class="label bg-green">' + value + '</a>';
+                return '<a class="layuimini-table-url" href="' + value + '" target="_blank">' + value + '</a>';
             },
             switch: function (data) {
                 var option = this;
@@ -1118,6 +1122,9 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
             // 监听select多选生成
             admin.api.xmSelect();
 
+            // 监听tab
+            miniTab.listen();
+
             // 初始化layui表单
             form.render();
 
@@ -1134,7 +1141,8 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                     dataFull = $(this).attr('data-full'),
                     checkbox = $(this).attr('data-checkbox'),
                     url = $(this).attr('data-open'),
-                    external = $(this).attr('data-external') || false,
+                    title = $(this).attr('data-title'),
+                    external = $(this).attr('data-external') === 'true',
                     tableId = $(this).attr('data-table');
 
                 if (checkbox === 'true') {
@@ -1173,7 +1181,7 @@ define(["jquery", "xmSelect", "sortable", "tableSelect", "ckeditor"], function (
                 }
 
                 admin.open(
-                    $(this).attr('data-title'),
+                    title,
                     external ? url : admin.url(url),
                     clienWidth,
                     clientHeight,

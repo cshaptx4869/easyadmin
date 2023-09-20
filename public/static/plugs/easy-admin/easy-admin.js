@@ -931,6 +931,25 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                 }
                 return '<span>' + value + '</span>';
             },
+            byte: function (data) {
+                var option = this;
+                var field = option.field;
+                var value = 0;
+                var unitArr = ["B", "KB", 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+                var index = 0;
+                try {
+                    value = eval("data." + field);
+                    while (value / 1024 > 1) {
+                        value /= 1024;
+                        index++;
+                        if (index >= unitArr.length - 1) {
+                            break;
+                        }
+                    }
+                } catch (e) {
+                }
+                return '<span>' + (String(value).indexOf('.') !== -1 ? value.toFixed(2) : value) + unitArr[index] + '</span>';
+            },
             listenTableSearch: function (tableId) {
                 form.on('submit(' + tableId + '_filter)', function (data) {
                     var dataField = data.field;

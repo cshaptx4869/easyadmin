@@ -98,12 +98,23 @@ class SystemLogService
      */
     protected function detectTable()
     {
-        $check = Db::query("show tables like '{$this->tableName}'");
-        if (empty($check)) {
+        if (!$this->isExistTable($this->tableSuffix)) {
             $sql = $this->getCreateSql();
-            Db::execute($sql);
+            return Db::execute($sql);
         }
         return true;
+    }
+
+    /**
+     * 表是否存在
+     * @param $tableSuffix
+     * @return bool
+     */
+    public function isExistTable($tableSuffix)
+    {
+        $tableName = "{$this->tablePrefix}system_log_{$tableSuffix}";
+        $arr = Db::query("SHOW TABLES LIKE '{$tableName}'");
+        return !empty($arr);
     }
 
     public function getAllTableList()

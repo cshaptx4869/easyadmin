@@ -4,6 +4,7 @@ namespace app\admin\controller\system;
 
 
 use app\admin\model\SystemLog;
+use app\admin\service\SystemLogService;
 use app\common\controller\AdminController;
 use EasyAdmin\annotation\ControllerAnnotation;
 use EasyAdmin\annotation\NodeAnotation;
@@ -35,23 +36,27 @@ class Log extends AdminController
             [$page, $limit, $where, $excludeFields] = $this->buildTableParames(['month']);
 
             $month = (isset($excludeFields['month']) && !empty($excludeFields['month']))
-                ? date('Ym',strtotime($excludeFields['month']))
+                ? date('Ym', strtotime($excludeFields['month']))
                 : date('Ym');
 
-            // todo TP6框架有一个BUG，非模型名与表名不对应时（name属性自定义），withJoin生成的sql有问题
-
-            $count = $this->model
-                ->setMonth($month)
-                ->with('admin')
-                ->where($where)
-                ->count();
-            $list = $this->model
-                ->setMonth($month)
-                ->with('admin')
-                ->where($where)
-                ->page($page, $limit)
-                ->order($this->sort)
-                ->select();
+            if (SystemLogService::instance()->isExistTable($month)) {
+                // todo TP6框架有一个BUG，非模型名与表名不对应时（name属性自定义），withJoin生成的sql有问题
+                $count = $this->model
+                    ->setMonth($month)
+                    ->with('admin')
+                    ->where($where)
+                    ->count();
+                $list = $this->model
+                    ->setMonth($month)
+                    ->with('admin')
+                    ->where($where)
+                    ->page($page, $limit)
+                    ->order($this->sort)
+                    ->select();
+            } else {
+                $count = 0;
+                $list = [];
+            }
 
             $data = [
                 'code'  => 0,

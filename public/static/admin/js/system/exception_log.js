@@ -22,7 +22,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'line', title: '异常行号'},
                     {field: 'error_sql', title: '错误SQL'},
                     {field: 'trace', title: '异常追踪', hide: true, search: false},
-                    {field: 'url', title: '请求url'},
+                    {field: 'url', title: '请求URL'},
                     {field: 'method', title: '请求方法'},
                     {field: 'param', title: '请求参数', search: false},
                     {field: 'ip', title: '请求IP'},

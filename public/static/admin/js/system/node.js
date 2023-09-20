@@ -8,6 +8,8 @@ define(["jquery", "easy-admin"], function ($, ea) {
         edit_url: 'system.node/edit',
         delete_url: 'system.node/delete',
         modify_url: 'system.node/modify',
+        refresh_url: 'system.node/refreshNode',
+        clear_url: 'system.node/clearNode',
     };
 
     var Controller = {
@@ -20,18 +22,18 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 page: false,
                 toolbar: ['refresh',
                     [{
-                        text: '更新节点',
+                        text: '更新',
                         title: '确定更新新节点？',
-                        url: 'system.node/refreshNode?force=0',
+                        url: init.refresh_url + '?force=0',
                         method: 'request',
                         auth: 'refresh',
                         class: 'layui-btn layuimini-btn-success layui-btn-sm',
                         icon: 'fa fa-hourglass',
                         extend: 'data-table="' + init.table_render_id + '"',
                     }, {
-                        text: '强制更新节点',
+                        text: '强制更新',
                         title: '该操作会覆盖已存在的节点信息。<br>确定强制更新节点？',
-                        url: 'system.node/refreshNode?force=1',
+                        url: init.refresh_url + '?force=1',
                         method: 'request',
                         auth: 'refresh',
                         class: 'layui-btn layui-btn-sm layui-btn-normal',
@@ -39,9 +41,9 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         extend: 'data-table="' + init.table_render_id + '"',
                     }, {
 
-                        text: '清除失效节点',
+                        text: '清除失效',
                         title: '确定清除失效节点？',
-                        url: 'system.node/clearNode',
+                        url: init.clear_url,
                         method: 'request',
                         auth: 'clear',
                         class: 'layui-btn layui-btn-sm layuimini-btn-danger',

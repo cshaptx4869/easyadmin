@@ -52,6 +52,7 @@ trait Curd
             ];
             return json($data);
         }
+        $this->layoutBgColor();
         return $this->fetch();
     }
 

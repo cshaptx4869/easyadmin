@@ -58,6 +58,7 @@ class Node extends AdminController
             ];
             return json($data);
         }
+        $this->layoutBgColor();
         return $this->fetch();
     }
 

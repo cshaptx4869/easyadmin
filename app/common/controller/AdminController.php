@@ -98,6 +98,14 @@ class AdminController extends BaseController
     }
 
     /**
+     * 布局背景色
+     */
+    public function layoutBgColor($color = '#f2f2f2')
+    {
+        return $this->assign('layoutBgColor', $color);
+    }
+
+    /**
      * 设置js变量
      * @param array $data
      * @return mixed

@@ -24,6 +24,14 @@
         };
         window.$variables = {$jsVariables|raw|default='null'};
     </script>
+    {if isset($layoutBgColor)}
+    <style>
+        /*覆盖public.css背景色*/
+        html,body {
+            background-color: {$layoutBgColor};
+        }
+    </style>
+    {/if}
 </head>
 <body>
 {__CONTENT__}

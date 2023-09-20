@@ -1073,18 +1073,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                 moveOut: true,
                 shadeClose: shadeClose,
                 success: function (layero, index) {
-                    var body = layer.getChildFrame('body', index);
-                    if (body.length > 0) {
-                        $.each(body, function (i, v) {
-
-                            // todo 优化弹出层背景色修改
-                            $(v).before('<style>\n' +
-                                'html, body {\n' +
-                                '    background: #ffffff;\n' +
-                                '}\n' +
-                                '</style>');
-                        });
-                    }
+                    // var body = layer.getChildFrame('body', index);
                 },
                 end: function () {
                     index = null

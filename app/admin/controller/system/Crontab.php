@@ -59,6 +59,7 @@ class Crontab extends AdminController
             'typeOptions' => $this->typeOptions,
             'statusOptions' => $this->statusOptions
         ]);
+        $this->layoutBgColor();
         return $this->fetch();
     }
 

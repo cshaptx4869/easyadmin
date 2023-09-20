@@ -35,6 +35,7 @@ class Index extends AdminController
             ->limit(8)
             ->select();
         $this->assign('quicks', $quicks);
+        $this->layoutBgColor();
         return $this->fetch();
     }
 

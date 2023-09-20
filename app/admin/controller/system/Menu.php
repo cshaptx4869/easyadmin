@@ -61,6 +61,7 @@ class Menu extends AdminController
             ];
             return json($data);
         }
+        $this->layoutBgColor();
         $this->setJsVariables(['homePid' => MenuConstant::HOME_PID]);
 
         return $this->fetch();

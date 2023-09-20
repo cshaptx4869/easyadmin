@@ -39,6 +39,7 @@ class Config extends AdminController
      */
     public function index()
     {
+        $this->layoutBgColor();
         return $this->fetch();
     }
 

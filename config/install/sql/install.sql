@@ -360,6 +360,7 @@ CREATE TABLE `ea_system_exception_log` (
   `code` int(11) DEFAULT NULL COMMENT '异常代码',
   `file` varchar(255) DEFAULT NULL COMMENT '创建异常时的程序文件名称',
   `line` int(11) DEFAULT NULL COMMENT '创建的异常所在文件中的行号',
+  `error_sql` text COMMENT '错误sql',
   `trace` text COMMENT '异常追踪信息',
   `url` varchar(255) DEFAULT '' COMMENT '请求url',
   `method` varchar(20) DEFAULT NULL COMMENT '请求方法',

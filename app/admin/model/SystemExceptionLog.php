@@ -3,6 +3,7 @@
 namespace app\admin\model;
 
 use app\common\model\TimeModel;
+use think\db\exception\DbException;
 use Throwable;
 
 class SystemExceptionLog extends TimeModel
@@ -22,6 +23,7 @@ class SystemExceptionLog extends TimeModel
             'file' => $exception->getFile(),
             'line' => $exception->getLine(),
             'trace' => $exception->getTraceAsString(),
+            'error_sql' => $exception instanceof DbException ? $exception->getData()['Database Status']['Error SQL'] : '',
             'ip' => $request->ip(),
             'method' => $request->method(),
             'url' => $request->url(),

@@ -2,8 +2,10 @@
 <div class="layuimini-container">
     <div class="layuimini-main">
         <div class="layui-row layui-col-space15">
+            <!-- 左侧部分 -->
             <div class="layui-col-md8">
                 <div class="layui-row layui-col-space15">
+                    <!-- 数据统计 -->
                     <div class="layui-col-md6">
                         <div class="layui-card">
                             <div class="layui-card-header"><i class="fa fa-warning icon"></i>数据统计</div>
@@ -71,13 +73,13 @@
                             </div>
                         </div>
                     </div>
+                    <!-- 快捷入口 -->
                     <div class="layui-col-md6">
                         <div class="layui-card">
                             <div class="layui-card-header"><i class="fa fa-credit-card icon icon-blue"></i>快捷入口</div>
                             <div class="layui-card-body">
                                 <div class="welcome-module">
                                     <div class="layui-row layui-col-space10 layuimini-qiuck">
-
                                         {foreach $quicks as $vo}
                                         <div class="layui-col-xs3 layuimini-qiuck-module">
                                             <a layuimini-content-href="{:url($vo['href'])}" data-title="{$vo['title']}">
@@ -86,13 +88,12 @@
                                             </a>
                                         </div>
                                         {/foreach}
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
+                    <!-- 报表统计 -->
                     <div class="layui-col-md12">
                         <div class="layui-card">
                             <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>报表统计</div>
@@ -101,11 +102,116 @@
                             </div>
                         </div>
                     </div>
+                    <!-- 访问信息 -->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-user icon icon-blue"></i>访问信息</div>
+                            <div class="layui-card-body overflow-auto">
+                                <table class="layui-table">
+                                    <tbody>
+                                    <tr>
+                                        <td class="bold">用户系统</td>
+                                        <td>{$systemInfo.user_os}</td>
+                                        <td class="bold">用户IP</td>
+                                        <td>{$systemInfo.user_ip}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bold">浏览器</td>
+                                        <td>{$systemInfo.user_browser}</td>
+                                        <td class="bold">所在城市</td>
+                                        <td>{$systemInfo.user_ip_address}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {if isset($systemInfo)}
+                    <!-- 系统信息 -->
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-windows icon icon-cray"></i>系统信息</div>
+                            <div class="layui-card-body overflow-auto">
+                                <table class="layui-table">
+                                    <tbody>
+                                    <tr>
+                                        <td class="bold">ThinkPHP版本</td>
+                                        <td>{$systemInfo.think_version}</td>
+                                        <td class="bold" id="admin_version" style="cursor: pointer;">后台系统版本</td>
+                                        <td>{$systemInfo.admin_version}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bold">服务器系统</td>
+                                        <td>{$systemInfo.server_os}</td>
+                                        <td class="bold">服务器IP</td>
+                                        <td>{$systemInfo.server_ip}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bold">服务器软件</td>
+                                        <td>{$systemInfo.server_software}</td>
+                                        <td class="bold">服务器软件端口</td>
+                                        <td>{$systemInfo.server_port}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bold">PHP版本</td>
+                                        <td>{$systemInfo.php_version}</td>
+                                        <td class="bold">MySQL版本</td>
+                                        <td>{$systemInfo.db_version}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bold">最大文件上传限制</td>
+                                        <td>{$systemInfo.upload_max_filesize}</td>
+                                        <td class="bold">单次上传数量限制</td>
+                                        <td>{$systemInfo.max_file_uploads}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bold">最大POST限制</td>
+                                        <td>{$systemInfo.post_max_size}</td>
+                                        <td class="bold">项目磁盘剩余容量</td>
+                                        <td>{$systemInfo.disk_free}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bold">运行内存限制</td>
+                                        <td>{$systemInfo.memory_limit}</td>
+                                        <td class="bold">PHP当前运行模式</td>
+                                        <td>{$systemInfo.php_sapi_name}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bold">PHP当前时区</td>
+                                        <td>{$systemInfo.timezone}</td>
+                                        <td class="bold">PHP当前时间</td>
+                                        <td>{$systemInfo.date_time}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 系统依赖 -->
+                    <div class="layui-hide" id="dependencies">
+                        <table class="layui-table">
+                            <tbody>
+                            {foreach name='systemInfo.require_list' id='item'}
+                            <tr>
+                                <td class="bold">{$key}</td>
+                                <td>{$item}</td>
+                            </tr>
+                            {/foreach}
+                            {foreach name='systemInfo.require_dev_list' id='item'}
+                            <tr>
+                                <td class="bold">{$key}</td>
+                                <td>{$item}</td>
+                            </tr>
+                            {/foreach}
+                            </tbody>
+                        </table>
+                    </div>
+                    {/if}
                 </div>
             </div>
-
+            <!-- 右侧部分 -->
             <div class="layui-col-md4">
-
+                <!-- 系统公告 -->
                 <div class="layui-card">
                     <div class="layui-card-header"><i class="fa fa-bullhorn icon icon-tip"></i>系统公告</div>
                     <div class="layui-card-body layui-text">
@@ -195,15 +301,18 @@
                         </div>
                     </div>
                 </div>
-
+                <!-- 时钟 -->
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="fa fa-clock-o icon"></i>本地时间</div>
+                    <div class="layui-card-body">
+                        <div id="echarts-clock" style="width: 100%;min-height:400px;"></div>
+                    </div>
+                </div>
+                <!-- 版本信息 -->
                 <div class="layui-card">
                     <div class="layui-card-header"><i class="fa fa-fire icon"></i>版本信息</div>
                     <div class="layui-card-body layui-text">
                         <table class="layui-table">
-                            <colgroup>
-                                <col width="100">
-                                <col>
-                            </colgroup>
                             <tbody>
                             <tr>
                                 <td>框架名称</td>
@@ -213,7 +322,7 @@
                             </tr>
                             <tr>
                                 <td>当前版本</td>
-                                <td>v2.0.0</td>
+                                <td>v{:sysconfig('site', 'site_version')}</td>
                             </tr>
                             <tr>
                                 <td>主要特色</td>
@@ -221,19 +330,19 @@
                             </tr>
                             <tr>
                                 <td>Gitee</td>
-                                <td style="padding-bottom: 0;">
+                                <td>
                                     <div class="layui-btn-container">
-                                        <a href="https://gitee.com/zhongshaofa/easyadmin" style="margin-right: 15px"><img src="https://gitee.com/zhongshaofa/easyadmin/badge/star.svg?theme=dark" alt="star"></a>
-                                        <a href="https://gitee.com/zhongshaofa/easyadmin"><img src="https://gitee.com/zhongshaofa/easyadmin/badge/fork.svg?theme=dark" alt="fork"></a>
+                                        <a target="_blank" href="https://gitee.com/cshaptx4869/easyadmin" style="margin-right: 15px"><img src="https://gitee.com/cshaptx4869/easyadmin/badge/star.svg?theme=dark" alt="star"></a>
+                                        <a target="_blank" href="https://gitee.com/cshaptx4869/easyadmin"><img src="https://gitee.com/cshaptx4869/easyadmin/badge/fork.svg?theme=dark" alt="fork"></a>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Github</td>
-                                <td style="padding-bottom: 0;">
+                                <td>
                                     <div class="layui-btn-container">
-                                        <iframe src="https://ghbtns.com/github-btn.html?user=zhongshaofa&repo=easyadmin&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                                        <iframe src="https://ghbtns.com/github-btn.html?user=zhongshaofa&repo=easyadmin&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                                        <iframe src="https://ghbtns.com/github-btn.html?user=cshaptx4869&repo=easyadmin&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                                        <iframe src="https://ghbtns.com/github-btn.html?user=cshaptx4869&repo=easyadmin&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
                                     </div>
                                 </td>
                             </tr>
@@ -241,17 +350,16 @@
                         </table>
                     </div>
                 </div>
-
+                <!-- 作者心语 -->
                 <div class="layui-card">
                     <div class="layui-card-header"><i class="fa fa-paper-plane-o icon"></i>作者心语</div>
-                    <div class="layui-card-body layui-text layadmin-text">
-                        <p>本模板基于layui2.5.4以及font-awesome-4.7.0进行实现。layui开发文档地址：<a class="layui-btn layui-btn-xs layuimini-btn-danger" target="_blank" href="http://www.layui.com/doc">layui文档</a></p>
+                    <div class="layui-card-body">
+                        <p>本模板基于layui2.8.17进行实现。layui开发文档地址：<a class="layui-btn layui-btn-xs layui-btn-danger" target="_blank" href="https://layui.dev">layui文档</a></p>
                         <p>技术交流QQ群：<a target="_blank" href="https://jq.qq.com/?_wv=1027&k=5JRGVfe"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="layuimini" title="layuimini"></a>（加群请备注来源：如gitee、github、官网等）</p>
                         <p>喜欢此后台模板的可以给我的GitHub和Gitee加个Star支持一下</p>
                         <p class="layui-red">备注：此后台框架永久开源，但请勿进行出售或者上传到任何素材网站，否则将追究相应的责任。</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

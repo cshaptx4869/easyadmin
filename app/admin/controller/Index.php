@@ -5,6 +5,7 @@ namespace app\admin\controller;
 
 use app\admin\model\SystemAdmin;
 use app\admin\model\SystemQuick;
+use app\admin\service\SystemInfoService;
 use app\common\controller\AdminController;
 use think\App;
 
@@ -29,6 +30,10 @@ class Index extends AdminController
      */
     public function welcome()
     {
+        if (is_super_admin()) {
+            $systemInfo = SystemInfoService::getInstance()->getAll();
+            $this->assign('systemInfo', $systemInfo);
+        }
         $quicks = SystemQuick::field('id,title,icon,href')
             ->where(['status' => 1])
             ->order('sort', 'desc')

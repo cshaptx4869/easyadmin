@@ -14,7 +14,6 @@ namespace app\admin\middleware;
 
 
 use app\admin\service\ConfigService;
-use app\common\constants\AdminConstant;
 use think\facade\View;
 use think\Request;
 
@@ -36,7 +35,7 @@ class ViewInit
         $autoloadJs = file_exists(root_path('public') . "static/{$thisModule}/js/{$jsPath}.js");
         $thisControllerJsPath = "{$thisModule}/js/{$jsPath}.js";
         $adminModuleName = config('app.admin_alias_name');
-        $isSuperAdmin = session('admin.id') == AdminConstant::SUPER_ADMIN_ID;
+        $isSuperAdmin = is_super_admin();
         $data = [
             'adminModuleName'      => $adminModuleName,
             'thisController'       => parse_name($thisController),

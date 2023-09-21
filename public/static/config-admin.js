@@ -21,6 +21,7 @@ require.config({
         "autocomplete": ["plugs/lay-module/autocomplete/autocomplete"],
         "countTo": ["plugs/lay-module/countTo/countTo"],
         "iconPickerFa": ["plugs/lay-module/iconPicker/iconPickerFa"],
+        "popover": ["plugs/lay-module/popover/popover"],
         "tableSelect": ["plugs/lay-module/tableSelect/tableSelect"],
         "treetable": ["plugs/lay-module/treetable-lay/treetable"],
         "xmSelect": ["plugs/lay-module/xmSelect/xm-select"],
@@ -31,6 +32,9 @@ require.config({
         },
         "autocomplete": {
             deps: ["css!plugs/lay-module/autocomplete/autocomplete.css"]
+        },
+        "popover": {
+            deps: ["css!plugs/lay-module/popover/popover.min.css"]
         },
         "treetable": {
             deps: ["css!plugs/lay-module/treetable-lay/treetable.css"]

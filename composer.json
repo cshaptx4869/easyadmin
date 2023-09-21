@@ -30,7 +30,8 @@
         "jianyan74/php-excel": "^1.0",
         "cshaptx4869/http-crontab": "^2.0",
         "guzzlehttp/guzzle": "^6.0",
-        "doctrine/annotations": "^1.13"
+        "doctrine/annotations": "^1.13",
+        "zoujingli/ip2region": "^2.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",

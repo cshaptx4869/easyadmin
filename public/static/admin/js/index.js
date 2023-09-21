@@ -45,11 +45,18 @@ define(["jquery", "easy-admin", "echarts", "miniAdmin", "miniTab", "echarts-them
             popover.create('#admin_version', {
                 title: '<i class="fa fa-link icon icon-cray"></i>系统依赖',
                 content: $('#dependencies').html(),
-                trigger: 'click',
+                trigger: 'hover',
+                delay: {
+                    show: null,
+                    hide: 100
+                },
+                type: 'html',
                 height: 150,
-                animation: 'pop',
                 placement: 'auto',
+                animation: 'pop',
+                closeable: true,
                 opacity: 0.98,
+                offsetTop: -6,
                 onShow: function ($element) {
                 },
             });
@@ -349,6 +356,7 @@ define(["jquery", "easy-admin", "echarts", "miniAdmin", "miniTab", "echarts-them
                 ]
             };
             echartsClock.setOption(optionClock);
+
             function echartsClockRun() {
                 var date = new Date();
                 var second = date.getSeconds();
@@ -375,6 +383,7 @@ define(["jquery", "easy-admin", "echarts", "miniAdmin", "miniTab", "echarts-them
                     ]
                 });
             }
+
             echartsClockRun();
             setInterval(echartsClockRun, 1000);
             window.addEventListener("resize", function () {

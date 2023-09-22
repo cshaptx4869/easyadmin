@@ -71,6 +71,7 @@ class Index extends AdminController
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
+        $this->layoutBgColor();
         $this->assign('row', $row);
         return $this->fetch();
     }
@@ -115,6 +116,7 @@ class Index extends AdminController
                 $this->error('保存失败');
             }
         }
+        $this->layoutBgColor();
         $this->assign('row', $row);
         return $this->fetch();
     }

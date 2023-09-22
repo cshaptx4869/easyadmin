@@ -3,6 +3,7 @@ var BASE_URL = document.scripts[document.scripts.length - 1].src.substring(0, do
 require.config({
     urlArgs: "v=" + CONFIG.VERSION,
     baseUrl: BASE_URL,
+    waitSeconds: 0,
     paths: {
         "vue": ["plugs/vue/vue.min"],
         "ckeditor": ["plugs/ckeditor/ckeditor"],

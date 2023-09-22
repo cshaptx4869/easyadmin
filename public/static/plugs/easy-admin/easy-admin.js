@@ -1528,8 +1528,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                             uploadSign = $(this).attr('data-upload-sign') || '|',
                             uploadAccept = $(this).attr('data-upload-accept') || 'file',
                             uploadAcceptMime = $(this).attr('data-upload-mimetype') || '',
-                            elem = "input[name='" + uploadName + "']",
-                            uploadElem = this;
+                            elem = "input[name='" + uploadName + "']";
 
                         // 监听上传事件
                         upload.render({

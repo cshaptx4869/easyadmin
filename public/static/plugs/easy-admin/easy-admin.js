@@ -1522,7 +1522,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
 
                 if (uploadList.length > 0) {
                     $.each(uploadList, function (i, v) {
-                        var uploadExts = $(this).attr('data-upload-exts') || init.upload_exts,
+                        var uploadExts = $(this).attr('data-upload-exts'),
                             uploadName = $(this).attr('data-upload'),
                             uploadNumber = $(this).attr('data-upload-number') || 'one',
                             uploadSign = $(this).attr('data-upload-sign') || '|',
@@ -1534,7 +1534,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                         upload.render({
                             elem: this,
                             url: admin.url(init.upload_url),
-                            exts: uploadExts,
+                            exts: uploadExts && uploadExts !== "*" ? uploadExts : init.upload_exts,
                             accept: uploadAccept,//指定允许上传时校验的文件类型
                             acceptMime: uploadAcceptMime,//规定打开文件选择框时，筛选出的文件类型
                             multiple: uploadNumber !== 'one',//是否多文件上传

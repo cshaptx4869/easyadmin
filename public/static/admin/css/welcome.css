@@ -15,6 +15,7 @@
 .main_btn > p {height:40px;}
 .bold {font-weight: bold;}
 .overflow-auto {overflow: auto;}
+.layui-table tbody tr:hover {background-color: #f8f8f8;}
 .layui-bg-number {background-color:#F8F8F8;}
 .layuimini-notice:hover {background:#f6f6f6;}
 .layuimini-notice {padding:7px 16px;clear:both;font-size:12px !important;cursor:pointer;position:relative;transition:background 0.2s ease-in-out;}

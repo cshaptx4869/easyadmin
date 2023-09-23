@@ -55,7 +55,10 @@ class CheckAdmin
         }
 
         // 判断是否为演示环境
-        if (env('easyadmin.is_demo', false) && $request->isPost() && !in_array($currentNode, ['login/index'])) {
+        if (env('easyadmin.is_demo', false) &&
+            $request->isPost() &&
+            !in_array($currentController, $adminConfig['no_demo_controller']) &&
+            !in_array($currentNode, $adminConfig['no_demo_node'])) {
             $this->error('演示环境下不允许操作');
         }
 

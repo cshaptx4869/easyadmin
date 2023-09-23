@@ -29,4 +29,12 @@ return [
 
     // 不需要验证权限的节点
     'no_auth_node'        => [],
+
+    // 不需要演示限制的控制器
+    'no_demo_controller'  => [],
+
+    // 不需要演示限制的节点
+    'no_demo_node'        => [
+        'login/index',
+    ]
 ];

@@ -11,8 +11,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         export_url: 'system.uploadfile/export',
     };
 
-    var Controller = {
-
+    return {
         index: function () {
             ea.table.render({
                 init: init,
@@ -38,12 +37,12 @@ define(["jquery", "easy-admin"], function ($, ea) {
         },
         add: function () {
             $('button').click(function () {
+                var refreshTable = $('[name="url"]').val().trim().length > 0 ? init.table_render_id : false;
                 ea.api.closeCurrentOpen({
-                    refreshTable: true
+                    refreshTable: refreshTable
                 });
             });
             ea.listen();
         }
     };
-    return Controller;
 });

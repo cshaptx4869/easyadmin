@@ -5,10 +5,10 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
         table = layui.table,
         laydate = layui.laydate,
         upload = layui.upload,
-        element = layui.element,
         laytpl = layui.laytpl,
-        tableSelect = layui.tableSelect,
-        util = layui.util;
+        util = layui.util,
+        flow = layui.flow,
+        tableSelect = layui.tableSelect;
 
     var init = {
         table_elem: '#currentTable',
@@ -76,7 +76,13 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                 default:
                     icon = 'file.png';
             }
-            return toUrl ? BASE_URL + 'admin/images/upload-icons/' + icon : icon;
+            return toUrl ? admin.imagePath('upload-icons') + icon : icon;
+        },
+        imagePath(path = '') {
+            if (path && path.charAt(path.length) !== '/') {
+                path = path + '/';
+            }
+            return BASE_URL + 'admin/images/' + path;
         },
         url: function (url) {
             return '/' + CONFIG.ADMIN + '/' + url;
@@ -246,6 +252,8 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
         table: {
             render: function (options) {
                 options.init = options.init || init;
+                options.init.align = options.align || 'center';
+                options.init.form_full_screen = options.formFullScreen === true ? 'true' : 'false';
                 options.modifyReload = admin.parame(options.modifyReload, true);
                 options.search = admin.parame(options.search, true);
                 options.topBar = admin.parame(options.topBar, false);
@@ -259,10 +267,8 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                 options.limit = options.limit || 15;
                 options.limits = options.limits || [10, 15, 20, 25, 50, 100];
                 options.cols = options.cols || [];
-                options.defaultToolbar = options.defaultToolbar || ['filter', 'print'];
                 options.cellExpandedMode = options.cellExpandedMode || 'tips';
-                options.init.form_full_screen = options.formFullScreen === true ? 'true' : 'false';
-                options.init.align = options.align || 'center';
+                options.defaultToolbar = options.defaultToolbar || ['filter', 'print'];
                 // 搜索按钮
                 if (options.search) {
                     options.defaultToolbar.push({
@@ -289,18 +295,6 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                     options.topBar = true;
                 }
 
-                //数据渲染完毕回调
-                var optionDone = options.done;
-                options.done = function (res, curr, count) {
-                    typeof optionDone === 'function' && optionDone(res, curr, count);
-                    // 解决非默认高度时，固定列行错位问题
-                    admin.table.autoHeight(options.id);
-                    // 表格转卡片
-                    document.body.clientWidth < 768 && admin.table.table2card(options.id);
-                    // 顶部返回
-                    options.topBar && admin.table.fixbar();
-                };
-
                 // 判断元素对象是否有嵌套的
                 options.cols = admin.table.formatCols(options.cols, options.init);
 
@@ -318,6 +312,20 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
 
                 // 判断是否有操作列表权限
                 options.cols = admin.table.renderOperat(options.cols, options.elem);
+
+                //数据渲染完毕回调
+                var optionDone = options.done;
+                options.done = function (res, curr, count) {
+                    typeof optionDone === 'function' && optionDone(res, curr, count);
+                    // 解决非默认高度时，固定列行错位问题
+                    admin.table.autoHeight(options.id);
+                    // 表格转卡片
+                    document.body.clientWidth < 768 && admin.table.table2card(options.id);
+                    // 顶部返回
+                    options.topBar && admin.table.fixbar();
+                    // 页面中lay-src的img元素开启懒加载
+                    options.init.lazyimg && flow.lazyimg();
+                };
 
                 // 初始化表格
                 var newTable = table.render(options);
@@ -616,6 +624,11 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                     for (index in col) {
                         var val = col[index];
 
+                        // 懒加载标识
+                        if (val.templet === admin.table.lazyimg && init.lazyimg === undefined) {
+                            init.lazyimg = true;
+                        }
+
                         // 判断是否包含初始化数据
                         if (val.init === undefined) {
                             cols[i][index]['init'] = init;
@@ -828,9 +841,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                 option.imageHeight = option.imageHeight || 40;
                 option.imageSplit = option.imageSplit || '|';
                 option.imageJoin = option.imageJoin || '<br>';
-                option.title = option.title || option.field;
-                var field = option.field,
-                    title = data[option.title] ? data[option.title] : option.title;
+                var field = option.field;
                 try {
                     var value = eval("data." + field);
                 } catch (e) {
@@ -842,10 +853,32 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                     var values = value.split(option.imageSplit),
                         valuesHtml = [];
                     values.forEach((value, index) => {
-                        valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + (admin.isImage(value) ? value : admin.uploadIcon(value)) + '" data-image="' + title + '" onerror="this.src=\'' + admin.uploadIcon(value) + '\'">');
+                        valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + (admin.isImage(value) ? value : admin.uploadIcon(value)) + '" data-image="' + option.title + '" onerror="this.src=\'' + admin.uploadIcon(value) + '\'">');
                     });
                     return valuesHtml.join(option.imageJoin);
                 }
+            },
+            lazyimg: function (data) {
+                var option = this;
+                option.imageWidth = option.imageWidth || 200;
+                option.imageHeight = option.imageHeight || 40;
+                option.imageSplit = option.imageSplit || '|';
+                option.imageJoin = option.imageJoin || '<br>';
+                var field = option.field;
+                try {
+                    var value = eval("data." + field);
+                } catch (e) {
+                    var value = undefined;
+                }
+                if (value === undefined || value === null || value === "") {
+                    return '';
+                }
+                var values = value.split(option.imageSplit),
+                    valuesHtml = [];
+                values.forEach((value, index) => {
+                    valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + admin.imagePath() + 'loading.gif" lay-src="' + (admin.isImage(value) ? value : admin.uploadIcon(value)) + '" data-image="' + option.title + '">');
+                });
+                return valuesHtml.join(option.imageJoin);
             },
             url: function (data) {
                 var option = this;
@@ -1650,11 +1683,19 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                                 cols: [[
                                     {type: selectCheck},
                                     {field: 'id', minWidth: 80, title: 'ID', align: "left"},
-                                    {field: 'url', minWidth: 80, title: '文件预览', align: "left", templet: admin.table.image},
+                                    {field: 'url', minWidth: 80, title: '文件预览', align: "left", templet: admin.table.lazyimg},
                                     {field: 'original_name', minWidth: 150, title: '文件原名', align: "left"},
                                     {field: 'mime_type', minWidth: 120, title: 'mime类型', align: "left"},
                                     {field: 'create_time', minWidth: 200, title: '创建时间', align: "left"},
-                                ]]
+                                ]],
+                                limit: 15,
+                                limits: [10, 15, 20, 25, 50, 100],
+                                done: function (res, curr, count) {
+                                    flow.lazyimg({
+                                        elem: '.tableSelect .layui-table-body img[lay-src]',
+                                        scrollElem: '.tableSelect .layui-table-body'
+                                    });
+                                }
                             },
                             done: function (e, data) {
                                 var urlArray = [];

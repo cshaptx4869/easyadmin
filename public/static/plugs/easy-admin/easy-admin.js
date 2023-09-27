@@ -247,6 +247,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
             render: function (options) {
                 options.init = options.init || init;
                 options.modifyReload = admin.parame(options.modifyReload, true);
+                options.search = admin.parame(options.search, true);
                 options.topBar = admin.parame(options.topBar, false);
                 options.elem = options.elem || options.init.table_elem;
                 options.id = options.id || options.init.table_render_id;
@@ -254,14 +255,15 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                 options.url = options.url || admin.url(options.init.index_url);
                 options.headers = admin.headers();
                 options.page = admin.parame(options.page, true);
-                options.search = admin.parame(options.search, true);
                 options.skin = options.skin || 'line';
                 options.limit = options.limit || 15;
                 options.limits = options.limits || [10, 15, 20, 25, 50, 100];
                 options.cols = options.cols || [];
                 options.defaultToolbar = options.defaultToolbar || ['filter', 'print'];
+                options.cellExpandedMode = options.cellExpandedMode || 'tips';
                 options.init.form_full_screen = options.formFullScreen === true ? 'true' : 'false';
                 options.init.align = options.align || 'center';
+                // 搜索按钮
                 if (options.search) {
                     options.defaultToolbar.push({
                         title: '搜索',
@@ -286,6 +288,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                     // 返回顶部
                     options.topBar = true;
                 }
+
                 //数据渲染完毕回调
                 var optionDone = options.done;
                 options.done = function (res, curr, count) {

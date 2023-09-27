@@ -76,13 +76,10 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                 default:
                     icon = 'file.png';
             }
-            return toUrl ? admin.imagePath('upload-icons') + icon : icon;
+            return toUrl ? admin.imageUrl('upload-icons/' + icon) : icon;
         },
-        imagePath(path = '') {
-            if (path && path.charAt(path.length) !== '/') {
-                path = path + '/';
-            }
-            return BASE_URL + 'admin/images/' + path;
+        imageUrl(filename = '') {
+            return BASE_URL + 'admin/images/' + filename;
         },
         url: function (url) {
             return '/' + CONFIG.ADMIN + '/' + url;
@@ -876,7 +873,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                 var values = value.split(option.imageSplit),
                     valuesHtml = [];
                 values.forEach((value, index) => {
-                    valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + admin.imagePath() + 'loading.gif" lay-src="' + (admin.isImage(value) ? value : admin.uploadIcon(value)) + '" data-image="' + option.title + '">');
+                    valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + admin.imageUrl('loading.gif') + '" lay-src="' + (admin.isImage(value) ? value : admin.uploadIcon(value)) + '" data-image="' + option.title + '">');
                 });
                 return valuesHtml.join(option.imageJoin);
             },

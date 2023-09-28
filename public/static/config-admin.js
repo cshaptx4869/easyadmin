@@ -20,6 +20,7 @@ require.config({
         "miniTheme": ["plugs/req-module/layuimini/miniTheme"],
         "miniTongji": ["plugs/req-module/layuimini/miniTongji"],
         "autocomplete": ["plugs/lay-module/autocomplete/autocomplete"],
+        "button": ["plugs/lay-module/button/button"],
         "countTo": ["plugs/lay-module/countTo/countTo"],
         "iconPickerFa": ["plugs/lay-module/iconPicker/iconPickerFa"],
         "popover": ["plugs/lay-module/popover/popover"],

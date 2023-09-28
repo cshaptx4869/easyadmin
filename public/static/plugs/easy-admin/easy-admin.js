@@ -1,4 +1,4 @@
-define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"], function ($, miniTab, xmSelect, Sortable) {
+define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", "button"], function ($, miniTab, xmSelect, Sortable) {
 
     var form = layui.form,
         layer = layui.layer,
@@ -8,6 +8,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
         laytpl = layui.laytpl,
         util = layui.util,
         flow = layui.flow,
+        button = layui.button,
         tableSelect = layui.tableSelect;
 
     var init = {
@@ -101,23 +102,19 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
             if (CONFIG.IS_SUPER_ADMIN) {
                 return true;
             }
-            if ($(elem).attr('data-auth-' + node) === '1') {
-                return true;
-            } else {
-                return false;
-            }
+            return $(elem).attr('data-auth-' + node) === '1';
         },
         parame: function (param, defaultParam) {
             return param !== undefined ? param : defaultParam;
         },
         request: {
-            post: function (option, ok, no, ex) {
-                return admin.request.ajax('post', option, ok, no, ex);
+            post: function (option, ok, no, ex, co) {
+                return admin.request.ajax('post', option, ok, no, ex, co);
             },
-            get: function (option, ok, no, ex) {
-                return admin.request.ajax('get', option, ok, no, ex);
+            get: function (option, ok, no, ex, co) {
+                return admin.request.ajax('get', option, ok, no, ex, co);
             },
-            ajax: function (type, option, ok, no, ex) {
+            ajax: function (type, option, ok, no, ex, co) {
                 type = type || 'get';
                 option.url = option.url || '';
                 option.data = option.data || {};
@@ -133,6 +130,8 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                     return false;
                 };
                 ex = ex || function (res) {
+                };
+                co = co || function (xhr, status) {
                 };
                 if (option.url == '') {
                     admin.msg.error('请求地址不能为空');
@@ -166,8 +165,9 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                         });
                         return false;
                     },
-                    complete: function () {
+                    complete: function (xhr, status) {
                         // @todo 刷新csrf-token
+                        co(xhr, status);
                     }
                 });
             }
@@ -200,26 +200,19 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
         msg: {
             // 成功消息
             success: function (msg, callback) {
-                if (callback === undefined) {
-                    callback = function () {
-                    }
-                }
-                var index = layer.msg(msg, {icon: 1, shade: admin.config.shade, scrollbar: false, time: 800, shadeClose: true}, callback);
-                return index;
+                callback = callback || function () {
+                };
+                return layer.msg(msg, {icon: 1, shade: admin.config.shade, scrollbar: false, time: 800, shadeClose: true}, callback);
             },
             // 失败消息
             error: function (msg, callback) {
-                if (callback === undefined) {
-                    callback = function () {
-                    }
-                }
-                var index = layer.msg(msg, {icon: 2, shade: admin.config.shade, scrollbar: false, time: 3000, shadeClose: true}, callback);
-                return index;
+                callback = callback || function () {
+                };
+                return layer.msg(msg, {icon: 2, shade: admin.config.shade, scrollbar: false, time: 3000, shadeClose: true}, callback);
             },
             // 警告消息框
             alert: function (msg, callback) {
-                var index = layer.alert(msg, {end: callback, scrollbar: false});
-                return index;
+                return layer.alert(msg, {end: callback, scrollbar: false});
             },
             // 对话框
             confirm: function (msg, ok, no) {
@@ -227,19 +220,27 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                     typeof ok === 'function' && ok.call(this);
                 }, function () {
                     typeof no === 'function' && no.call(this);
-                    self.close(index);
+                    layer.close(index);
                 });
                 return index;
             },
             // 消息提示
             tips: function (msg, time, callback) {
-                var index = layer.msg(msg, {time: (time || 3) * 1000, shade: this.shade, end: callback, shadeClose: true});
-                return index;
+                callback = callback || function () {
+                };
+                time = (time !== undefined ? time : 3) * 1000;
+                return layer.msg(msg, {time: time, shade: admin.config.shade, end: callback, shadeClose: true});
             },
             // 加载中提示
             loading: function (msg, callback) {
-                var index = msg ? layer.msg(msg, {icon: 16, scrollbar: false, shade: this.shade, time: 0, end: callback}) : layer.load(2, {time: 0, scrollbar: false, shade: this.shade, end: callback});
-                return index;
+                callback = callback || function () {
+                };
+                return msg ? layer.msg(msg, {icon: 16, scrollbar: false, shade: admin.config.shade, time: 0, end: callback}) : layer.load(2, {
+                    time: 0,
+                    scrollbar: false,
+                    shade: admin.config.shade,
+                    end: callback
+                });
             },
             // 关闭消息框
             close: function (index) {
@@ -337,7 +338,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                 admin.table.listenEdit(options.init, options.layFilter, options.id, options.modifyReload);
 
                 // 监听页面大小变化
-                $(window).on('resize', function (){
+                $(window).on('resize', function () {
                     admin.table.table2card(options.id);
                     admin.table.fixbar();
                 });
@@ -598,7 +599,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                 var formatOperat = operat;
                 formatOperat.icon = formatOperat.icon !== '' ? '<i class="' + formatOperat.icon + '"></i> ' : '';
                 formatOperat.class = formatOperat.class !== '' ? 'class="' + formatOperat.class + '" ' : '';
-                if (operat.method === 'open'){
+                if (operat.method === 'open') {
                     formatOperat.method = 'data-open="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ';
                 } else if (operat.method === 'request') {
                     formatOperat.method = 'data-request="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ';
@@ -788,7 +789,8 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                                                     extraData = extraData[item];
                                                 })
                                                 operat.title = extraData + ' - ' + operat.title;
-                                            } catch (e) {}
+                                            } catch (e) {
+                                            }
                                         }
                                         break;
                                     case 'function':
@@ -1140,13 +1142,13 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                 })
             }
         },
-        listen: function (preposeCallback, ok, no, ex) {
+        listen: function (preposeCallback, ok, no, ex, co) {
 
             // 监听表单是否为必填项
             admin.api.formRequired();
 
             // 监听表单提交事件
-            admin.api.formSubmit(preposeCallback, ok, no, ex);
+            admin.api.formSubmit(preposeCallback, ok, no, ex, co);
 
             // 初始化图片显示以及监听上传事件
             admin.api.upload();
@@ -1430,7 +1432,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
 
         },
         api: {
-            form: function (url, data, ok, no, ex, refreshTable) {
+            form: function (url, data, ok, no, ex, co, refreshTable) {
                 if (refreshTable === undefined) {
                     refreshTable = true;
                 }
@@ -1446,7 +1448,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                 admin.request.post({
                     url: url,
                     data: data,
-                }, ok, no, ex);
+                }, ok, no, ex, co);
                 return false;
             },
             closeCurrentOpen: function (option) {
@@ -1497,7 +1499,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                     });
                 }
             },
-            formSubmit: function (preposeCallback, ok, no, ex) {
+            formSubmit: function (preposeCallback, ok, no, ex, co) {
                 var formList = document.querySelectorAll("[lay-submit]");
 
                 // 表单提交自动处理
@@ -1506,19 +1508,18 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                         var filter = $(this).attr('lay-filter'),
                             type = $(this).attr('data-type'),
                             refresh = $(this).attr('data-refresh'),
+                            loading = $(this).attr('data-loading'),
                             url = $(this).attr('lay-submit');
                         // 表格搜索不做自动提交
                         if (type !== 'tableSearch') {
                             // 判断是否需要刷新表格
-                            if (refresh === 'false') {
-                                refresh = false;
-                            } else if (refresh === undefined || refresh === '') {
-                                refresh = true;
-                            }
+                            refresh = refresh !== 'false';
+                            // 是否需要按钮loading
+                            loading = loading !== 'false';
                             // 自动添加layui事件过滤器
                             if (filter === undefined || filter === '') {
                                 filter = 'save_form_' + (i + 1);
-                                $(this).attr('lay-filter', filter)
+                                $(this).attr('lay-filter', filter);
                             }
                             if (url === undefined || url === '' || url === null) {
                                 url = window.location.href;
@@ -1526,6 +1527,18 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                                 url = admin.url(url);
                             }
                             form.on('submit(' + filter + ')', function (data) {
+                                // 加载按钮
+                                if (loading) {
+                                    var loadingBtn = button.load({elem: data.elem});
+                                    var originCo = co;
+                                    co = function (xhr, status) {
+                                        typeof originCo === 'function' && originCo(xhr, status);
+                                        setTimeout(function () {
+                                            loadingBtn.stop();
+                                        }, 600);
+                                    };
+                                }
+
                                 var dataField = data.field;
 
                                 // 富文本数据处理
@@ -1540,7 +1553,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "tableSelect", "ckeditor"],
                                 if (typeof preposeCallback === 'function') {
                                     dataField = preposeCallback(dataField);
                                 }
-                                admin.api.form(url, dataField, ok, no, ex, refresh);
+                                admin.api.form(url, dataField, ok, no, ex, co, refresh);
 
                                 return false;
                             });

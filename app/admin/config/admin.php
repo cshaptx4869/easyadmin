@@ -36,5 +36,11 @@ return [
     // 不需要演示限制的节点
     'no_demo_node'        => [
         'login/index',
+    ],
+
+    // 不需要csrf校验的节点
+    'no_csrf_node'        => [
+        'ajax/upload',
+        'ajax/upload_editor'
     ]
 ];

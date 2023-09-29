@@ -86,7 +86,14 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
             return '/' + CONFIG.ADMIN + '/' + url;
         },
         headers: function () {
-            return {'X-CSRF-TOKEN': window.CONFIG.CSRF_TOKEN};
+            return {'X-CSRF-TOKEN': admin.csrfToken()};
+        },
+        csrfToken: function (val) {
+            if (val === undefined) {
+                return window.top.CONFIG.CSRF_TOKEN;
+            } else {
+                window.top.CONFIG.CSRF_TOKEN = val;
+            }
         },
         //js版empty，判断变量是否为空
         empty: function (r) {
@@ -109,6 +116,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
         },
         request: {
             post: function (option, ok, no, ex, co) {
+                option.headers = admin.headers();
                 return admin.request.ajax('post', option, ok, no, ex, co);
             },
             get: function (option, ok, no, ex, co) {
@@ -122,6 +130,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
                 option.statusName = option.statusName || 'code';
                 option.statusCode = option.statusCode || 0;
                 option.loading = option.loading !== false;
+                option.headers = option.headers || {};
                 ok = ok || function (res) {
                 };
                 no = no || function (res) {
@@ -148,7 +157,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
                     type: type,
                     contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                     dataType: "json",
-                    headers: admin.headers(),
+                    headers: option.headers,
                     data: option.data,
                     timeout: 60000,
                     success: function (res) {
@@ -166,8 +175,12 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
                         return false;
                     },
                     complete: function (xhr, status) {
-                        // @todo 刷新csrf-token
                         co(xhr, status);
+                        // 刷新csrf-token
+                        var csrfToken = xhr.getResponseHeader('X-CSRF-TOKEN');
+                        if (csrfToken !== null) {
+                            admin.csrfToken(csrfToken);
+                        }
                     }
                 });
             }
@@ -259,7 +272,6 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
                 options.id = options.id || options.init.table_render_id;
                 options.layFilter = options.id + '_LayFilter';
                 options.url = options.url || admin.url(options.init.index_url);
-                options.headers = admin.headers();
                 options.page = admin.parame(options.page, true);
                 options.skin = options.skin || 'line';
                 options.limit = options.limit || 15;
@@ -1584,7 +1596,6 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
                             accept: uploadAccept,//指定允许上传时校验的文件类型
                             acceptMime: uploadAcceptMime,//规定打开文件选择框时，筛选出的文件类型
                             multiple: uploadNumber !== 'one',//是否多文件上传
-                            headers: admin.headers(),
                             before: function () {
                                 layer.load();
                             },
@@ -1629,10 +1640,10 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
                                     var sortable = Sortable.create(document.getElementById('bing-' + uploadName), {
                                         animation: 800,
                                         onUpdate: function (evt) {
-                                            var newUrlArray = []
+                                            var newUrlArray = [];
                                             $.each(sortable.toArray(), function (i, v) {
                                                 newUrlArray.push(urlArray[v])
-                                            })
+                                            });
                                             $(event.currentTarget).val(newUrlArray.join(uploadSign));
                                         }
                                     });
@@ -1725,8 +1736,6 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
                 }
             },
             editor: function () {
-                CKEDITOR.tools.setCookie('ckCsrfToken', window.CONFIG.CSRF_TOKEN);
-
                 var editorList = document.querySelectorAll(".editor");
                 if (editorList.length > 0) {
                     $.each(editorList, function (i, v) {

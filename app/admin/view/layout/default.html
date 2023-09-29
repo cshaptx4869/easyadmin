@@ -20,7 +20,7 @@
             AUTOLOAD_JS: "{$autoloadJs|default='false'}",
             IS_SUPER_ADMIN: "{$isSuperAdmin|default='false'}",
             VERSION: "{$version|default='1.0.0'}",
-            CSRF_TOKEN: "{:token()}",
+            CSRF_TOKEN: "{$csrfToken|default=''}",
         };
         window.$variables = {$jsVariables|raw|default='null'};
     </script>

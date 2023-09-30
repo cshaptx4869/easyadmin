@@ -42,5 +42,11 @@ return [
     'no_csrf_node'        => [
         'ajax/upload',
         'ajax/upload_editor'
+    ],
+
+    // 生成csrf token的节点(iframe页从index/index读取、非iframe页需独立生成)
+    'csrf_token_node'     => [
+        'index/index',
+        'login/index'
     ]
 ];

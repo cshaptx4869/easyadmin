@@ -20,7 +20,6 @@ class Index extends AdminController
     public function index()
     {
         $this->assign('admin', session('admin'));
-        $this->assign('csrfToken', token());
         return $this->fetch();
     }
 

@@ -82,7 +82,6 @@ class SystemLogService
     {
         Db::startTrans();
         try {
-            $this->detectTable();
             Db::table($this->tableName)->insert($data);
             Db::commit();
         } catch (\Exception $e) {
@@ -96,7 +95,7 @@ class SystemLogService
      * 检测数据表
      * @return bool
      */
-    protected function detectTable()
+    public function detectTable()
     {
         if (!$this->isExistTable($this->tableSuffix)) {
             $sql = $this->getCreateSql();

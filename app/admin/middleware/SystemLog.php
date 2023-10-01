@@ -14,8 +14,6 @@ namespace app\admin\middleware;
 
 use app\admin\service\SystemLogService;
 use app\Request;
-use EasyAdmin\tool\CommonTool;
-use think\facade\Log;
 
 /**
  * 系统操作日志中间件
@@ -48,29 +46,24 @@ class SystemLog
         $method = strtolower($request->method());
         $url = $request->url();
 
-        trace([
-            'url'    => $url,
-            'method' => $method,
-            'params' => $params,
-        ],
-            'requestDebugInfo'
-        );
-
-        if ($request->isAjax()) {
-            if (in_array($method, ['post', 'put', 'delete'])) {
-                $ip = CommonTool::getRealIp();
-                $data = [
-                    'admin_id'    => session('admin.id'),
-                    'url'         => $url,
-                    'method'      => $method,
-                    'ip'          => $ip,
-                    'content'     => json_encode($params, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE), //不转义斜杠、中文不转码
-                    'useragent'   => $_SERVER['HTTP_USER_AGENT'],
-                    'create_time' => time(),
-                ];
-                SystemLogService::instance()->save($data);
-            }
+        $data = [
+            'admin_id'    => session('admin.id'),
+            'url'         => $url,
+            'method'      => $method,
+            'ip'          => $request->ip(),
+            'content'     => json_encode($params, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE), //不转义斜杠、中文不转码
+            'useragent'   => $request->server('http_user_agent'),
+            'create_time' => time(),
+        ];
+        // 由nginx或apache去做请求日志记录更好
+        env('app_debug') && trace($data, 'requestDebug');
+        // 按月自动创建系统日志分表
+        $logService = SystemLogService::instance();
+        $logService->detectTable();
+        if (in_array($method, ['post', 'put', 'delete'])) {
+            $logService->save($data);
         }
+
         return $next($request);
     }
 

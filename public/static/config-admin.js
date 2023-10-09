@@ -52,10 +52,10 @@ window.PATH_CONFIG = {
 };
 
 // 初始化控制器对应的JS自动加载
-if ("undefined" != typeof CONFIG.AUTOLOAD_JS && CONFIG.AUTOLOAD_JS) {
+if (typeof CONFIG.AUTOLOAD_JS !== "undefined" && CONFIG.AUTOLOAD_JS) {
     require([BASE_URL + CONFIG.CONTROLLER_JS_PATH], function (Controller) {
-        if (eval('Controller.' + CONFIG.ACTION)) {
-            eval('Controller.' + CONFIG.ACTION + '()');
+        if (Controller && typeof Controller === 'object' && typeof Controller[CONFIG.ACTION] === 'function') {
+            Controller[CONFIG.ACTION]();
         }
     });
 }

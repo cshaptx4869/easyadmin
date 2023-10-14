@@ -75,6 +75,10 @@ body {
     padding: 0;
 }
 
+.form-search .layui-input-affix {
+    line-height: 32px;
+}
+
 .form-search xm-select {
     min-height: 32px;
     line-height: 32px;

@@ -417,7 +417,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
                                 formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" data-search-op="' + d.searchOp + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input" autocomplete="off">\n' +
+                                    '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" data-search-op="' + d.searchOp + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input" lay-affix="clear" lay-filter="' + d.fieldAlias + '" autocomplete="off">\n' +
                                     '</div>\n' +
                                     '</div>';
                                 break;
@@ -466,7 +466,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
                                 formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input" autocomplete="off">\n' +
+                                    '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input" readonly autocomplete="off">\n' +
                                     '</div>\n' +
                                     '</div>';
                                 break;
@@ -475,7 +475,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
                                 formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input" autocomplete="off">\n' +
+                                    '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input" readonly autocomplete="off">\n' +
                                     '</div>\n' +
                                     '</div>';
                                 break;
@@ -495,26 +495,35 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
                         ' </div>' +
                         '</form>' +
                         '</fieldset>');
-
-                    admin.table.listenTableSearch(tableId);
-
                     // 初始化form表单
                     form.render();
+                    // 搜索项监听
                     $.each(newCols, function (ncI, ncV) {
                         if (ncV.search === 'range') {
                             laydate.render({range: true, type: ncV.timeType, elem: '[name="' + ncV.fieldAlias + '"]'});
-                        }
-                        if (ncV.search === 'time') {
+                        } else if (ncV.search === 'time') {
                             laydate.render({type: ncV.timeType, elem: '[name="' + ncV.fieldAlias + '"]'});
+                        } else if (ncV.search === true) {
+                            form.on('input-affix(' + ncV.fieldAlias + ')', function (data) {
+                                if (data.affix === 'clear') {
+                                    var tableOptions = table.getOptions(tableId);
+                                    if (tableOptions.where.filter !== undefined) {
+                                        var filter = JSON.parse(tableOptions.where.filter);
+                                        filter[data.elem.name] !== undefined && $('[data-table="' + tableId + '"]').trigger("click");
+                                    }
+                                }
+                            });
                         }
                     });
-                    // 搜索条件
+                    // 初始搜索条件
                     $.each(form.val(tableId), function (key, val) {
                         if (val !== '') {
                             formatFilter[key] = val;
                             formatOp[key] = $('[id=\'c-' + key + '\']').attr('data-search-op') || '%*%';
                         }
                     });
+                    // 监听搜索
+                    admin.table.listenTableSearch(tableId);
                 }
 
                 return {

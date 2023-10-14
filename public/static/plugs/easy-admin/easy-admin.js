@@ -499,10 +499,19 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
                     form.render();
                     // 搜索项监听
                     $.each(newCols, function (ncI, ncV) {
-                        if (ncV.search === 'range') {
-                            laydate.render({range: true, type: ncV.timeType, elem: '[name="' + ncV.fieldAlias + '"]'});
-                        } else if (ncV.search === 'time') {
-                            laydate.render({type: ncV.timeType, elem: '[name="' + ncV.fieldAlias + '"]'});
+                        if (ncV.search === 'range' || ncV.search === 'time') {
+                            laydate.render({
+                                range: ncV.search === 'range',
+                                type: ncV.timeType,
+                                elem: '[name="' + ncV.fieldAlias + '"]',
+                                onClear: function (value, date, endDate) {
+                                    var tableOptions = table.getOptions(tableId);
+                                    if (tableOptions.where.filter !== undefined) {
+                                        var filter = JSON.parse(tableOptions.where.filter);
+                                        filter[ncV.fieldAlias] !== undefined && $('[data-table="' + tableId + '"]').trigger("click");
+                                    }
+                                }
+                            });
                         } else if (ncV.search === true) {
                             form.on('input-affix(' + ncV.fieldAlias + ')', function (data) {
                                 if (data.affix === 'clear') {

@@ -9,6 +9,9 @@ use think\facade\Db;
  */
 class SystemInfoService
 {
+    /**
+     * @var SystemInfoService $instance
+     */
     private static $instance;
 
     private function __construct()

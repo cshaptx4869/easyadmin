@@ -30,16 +30,13 @@ class Index extends AdminController
      */
     public function welcome()
     {
-        if (is_super_admin()) {
-            $systemInfo = SystemInfoService::getInstance()->getAll();
-            $this->assign('systemInfo', $systemInfo);
-        }
         $quicks = SystemQuick::field('id,title,icon,href')
             ->where(['status' => 1])
             ->order('sort', 'desc')
             ->limit(8)
             ->select();
         $this->assign('quicks', $quicks);
+        $this->assign('systemInfo', SystemInfoService::getInstance()->getAll());
         $this->layoutBgColor();
         return $this->fetch();
     }

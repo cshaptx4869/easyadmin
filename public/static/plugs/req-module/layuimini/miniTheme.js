@@ -421,7 +421,7 @@ define(["jquery"], function ($) {
          */
         listen: function (options) {
             $('body').on('click', '[data-bgcolor]', function () {
-                var loading = layer.load(0, {shade: false, time: 2 * 1000});
+                var clientHeight = (document.documentElement.clientHeight) - 60;
                 var bgColorHtml = miniTheme.buildBgColorHtml(options);
                 var html = '<div class="layuimini-color">\n' +
                     '<div class="color-title">\n' +
@@ -444,7 +444,7 @@ define(["jquery"], function ($) {
                     anim: 'slideLeft',
                     shadeClose: true,
                     id: 'layuiminiBgColor',
-                    area: ['340px', '100%'],
+                    area: ['340px', clientHeight + 'px'],
                     offset: 'rb',
                     content: html,
                     success: function (index, layero) {
@@ -453,7 +453,6 @@ define(["jquery"], function ($) {
                         $('.layuimini-select-bgcolor').removeClass('layui-this');
                     }
                 });
-                layer.close(loading);
             });
 
             $('body').on('click', '[data-select-bgcolor]', function () {

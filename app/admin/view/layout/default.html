@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title>{:sysconfig('site','site_name')}</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <!--[if lt IE 9]>
-    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
-    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <link rel="icon" href="{:sysconfig('site', 'site_ico')}" type="image/x-icon">
     <link rel="stylesheet" href="__STATIC__/admin/css/public.css?v={$version}" media="all">
+    {if isset($layoutBgColor)}
+    <style>
+        /*覆盖public.css背景色*/
+        html,body {
+            background-color: {$layoutBgColor};
+        }
+    </style>
+    {/if}
     <script>
         window.CONFIG = {
             ADMIN: "{$adminModuleName|default='admin'}",
@@ -24,19 +28,15 @@
         };
         window.$variables = {$jsVariables|raw|default='null'};
     </script>
-    {if isset($layoutBgColor)}
-    <style>
-        /*覆盖public.css背景色*/
-        html,body {
-            background-color: {$layoutBgColor};
-        }
-    </style>
-    {/if}
+    <!--[if lt IE 9]>
+    <script src="__STATIC__/common/js/html5.min.js" defer></script>
+    <script src="__STATIC__/common/js/respond.min.js" defer></script>
+    <![endif]-->
+    <script src="__STATIC__/plugs/layui/layui.js?v={$version}" defer></script>
+    <script src="__STATIC__/plugs/require/require.js?v={$version}" defer></script>
+    <script src="__STATIC__/config-admin.js?v={$version}" defer></script>
 </head>
 <body>
 {__CONTENT__}
-<script src="__STATIC__/plugs/layui/layui.js?v={$version}" charset="utf-8"></script>
-<script src="__STATIC__/plugs/require/require.js?v={$version}" charset="utf-8"></script>
-<script src="__STATIC__/config-admin.js?v={$version}"></script>
 </body>
 </html>

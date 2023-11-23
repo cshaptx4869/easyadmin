@@ -1,4 +1,10 @@
-var BASE_URL = document.scripts[document.scripts.length - 1].src.substring(0, document.scripts[document.scripts.length - 1].src.lastIndexOf("/") + 1);
+var BASE_URL = "";
+for (var i = 0; i < document.scripts.length; i++) {
+    if (document.scripts[i].src.indexOf('config-admin.js') !== -1) {
+        BASE_URL = document.scripts[i].src.substring(0, document.scripts[i].src.lastIndexOf("/") + 1);
+        break;
+    }
+}
 // requireJS配置
 require.config({
     urlArgs: "v=" + CONFIG.VERSION,

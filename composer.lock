@@ -2286,20 +2286,20 @@
         },
         {
             "name": "topthink/think-captcha",
-            "version": "v3.0.8",
+            "version": "v3.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-captcha.git",
-                "reference": "52fba122c953995bec3013c635025172491ae299"
+                "reference": "b1ef360670578214edeebcf824aaf6ab7ee0528b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-captcha/zipball/52fba122c953995bec3013c635025172491ae299",
-                "reference": "52fba122c953995bec3013c635025172491ae299",
+                "url": "https://api.github.com/repos/top-think/think-captcha/zipball/b1ef360670578214edeebcf824aaf6ab7ee0528b",
+                "reference": "b1ef360670578214edeebcf824aaf6ab7ee0528b",
                 "shasum": ""
             },
             "require": {
-                "topthink/framework": "^6.0"
+                "topthink/framework": "^6.0|^8.0"
             },
             "type": "library",
             "extra": {
@@ -2333,9 +2333,9 @@
             "description": "captcha package for thinkphp",
             "support": {
                 "issues": "https://github.com/top-think/think-captcha/issues",
-                "source": "https://github.com/top-think/think-captcha/tree/v3.0.8"
+                "source": "https://github.com/top-think/think-captcha/tree/v3.0.9"
             },
-            "time": "2022-10-26T07:59:42+00:00"
+            "time": "2023-04-27T07:18:40+00:00"
         },
         {
             "name": "topthink/think-filesystem",

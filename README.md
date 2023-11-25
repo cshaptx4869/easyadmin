@@ -20,7 +20,7 @@ EasyAdmin 使用 Composer 来管理项目依赖。因此，在使用 EasyAdmin �
 
 ### 扩展版
 
-> 注意：本仓库是基于官方 [v2](https://github.com/zhongshaofa/easyadmin/tree/v2) 分支的**个人扩展维护**版本。使用的是 **thinkphp6.1** 和 **layui2.7.6**，PHP 版本要求 **>=7.2.5**。
+> 注意：本仓库是基于官方 [v2](https://github.com/zhongshaofa/easyadmin/tree/v2) 分支的**个人扩展维护**版本。使用的是 **thinkphp6.1** 和 **layui2.8**，PHP 版本要求 **>=7.2.5**。
 >
 > 文档地址：https://github.com/cshaptx4869/easyadmin/wiki
 
@@ -46,7 +46,7 @@ EasyAdmin 使用 Composer 来管理项目依赖。因此，在使用 EasyAdmin �
 - 修复管理员信息修改的一些 bug 
 - 修复菜单管理的一些 bug
 - 修复 OSCS 检测出存在安全隐患的扩展包问题
-- [等等......](https://github.com/zhongshaofa/easyadmin/pulls/cshaptx4869)
+- [等](https://github.com/zhongshaofa/easyadmin/pulls/cshaptx4869)[等](https://github.com/cshaptx4869/easyadmin/commits/master)......
 
 **下载安装：**
 
@@ -58,6 +58,9 @@ git clone https://gitee.com/cshaptx4869/easyadmin
 
 第二步，安装依赖包
 composer install
+
+第三步，配置 .env 文件（建议）
+cp .example.env .env
 ```
 
 ![](https://foruda.gitee.com/images/1680915293572426711/2433d945_5507348.jpeg)

@@ -8,6 +8,8 @@ use think\facade\Env;
 return [
     // 定时器名称
     'name'     => 'Http Crontab Server',
+    // worker进程运行用户
+    'user'     => 'root',
     // debug模式
     'debug'    => false,
     // socket 上下文选项

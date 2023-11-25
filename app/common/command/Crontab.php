@@ -35,6 +35,7 @@ class Crontab extends Command
         $server = new HttpCrontab($config['base_uri'], $config['context']);
         $config['debug'] && $server->setDebug();
         $server->setName($config['name'])
+            ->setUser($config['user'])
             ->setSafeKey($config['safe_key'])
             ->setDbConfig($config['database'])
             ->setTaskTable($config['table']['task'])

@@ -69,7 +69,7 @@ class Crontab extends AdminController
     public function add()
     {
         if ($this->request->isAjax()) {
-            $post = $this->request->post();
+            $post = $this->request->post('', null, null);
             $rule = [
                 'title|标题' => 'require',
                 'type|类型' => 'require',
@@ -91,9 +91,14 @@ class Crontab extends AdminController
      */
     public function edit($id)
     {
-        if ($this->request->isPost()) {
-            $post = $this->request->post();
-            $rule = [];
+        if ($this->request->isAjax()) {
+            $post = $this->request->post('', null, null);
+            $rule = [
+                'title|标题' => 'require',
+                'type|类型' => 'require',
+                'frequency|频率' => 'require',
+                'shell|脚本' => 'require',
+            ];
             $this->validate($post, $rule);
             $response = $this->httpRequest(HttpCrontab::EDIT_PATH . '?' . $this->request->query(), 'POST', $post);
             $response['ok'] ? $this->success('更新成功') : $this->error($response['msg']);

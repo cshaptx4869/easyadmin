@@ -1298,7 +1298,7 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
             });
 
             // 放大一组上传回显的图片
-            $('body').on('click', '[data-images]', function () {
+            $('body').on('click', '[data-upload-show]', function () {
                 var doms = $(this).closest(".layuimini-upload-show").children("li"),  // 从当前元素向上找layuimini-upload-show找到第一个后停止, 再找其所有子元素li
                     currentSrc = $(this).attr('src'), // 被点击的图片地址
                     start = 0,
@@ -1650,9 +1650,9 @@ define(["jquery", "miniTab", "xmSelect", "sortable", "ckeditor", "tableSelect", 
                                 var parant = $(this).parent('div');
                                 var liHtml = '';
                                 $.each(urlArray, function (i, v) {
-                                    liHtml += '<li data-id="' + i + '"><img src="' + (admin.isImage(v) ? v : admin.uploadIcon(v)) + '" data-images onerror="this.src=\'' + admin.uploadIcon(v) + '\';this.onerror=null"><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
+                                    liHtml += '<li data-id="' + i + '"><img src="' + (admin.isImage(v) ? v : admin.uploadIcon(v)) + '" data-upload-show onerror="this.src=\'' + admin.uploadIcon(v) + '\';this.onerror=null"><small class="uploads-delete-tip bg-red badge" data-upload-delete="' + uploadName + '" data-upload-url="' + v + '" data-upload-sign="' + uploadSign + '">×</small></li>\n';
                                 });
-                                parant.after('<ul id="bing-' + uploadName + '" class="layui-input-block layuimini-upload-show">\n' + liHtml + '</ul>');
+                                parant.after($('<ul id="bing-' + uploadName + '" class="layui-input-block layuimini-upload-show">\n' + liHtml + '</ul>').hide().fadeIn());
                                 // 多图时可拖拽排序
                                 if (uploadNumber !== 'one') {
                                     var sortable = Sortable.create(document.getElementById('bing-' + uploadName), {

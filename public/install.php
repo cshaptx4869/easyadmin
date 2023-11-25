@@ -197,7 +197,7 @@ function createDatabase($database)
     return true;
 }
 
-function parseSql($sql = '', $to, $from)
+function parseSql($sql, $to, $from)
 {
     list($pure_sql, $comment) = [[], false];
     $sql = explode("\n", trim(str_replace(["\r\n", "\r"], "\n", $sql)));
